@@ -1,16 +1,23 @@
 document.addEventListener("DOMContentLoaded", function() {
-    // Aggiorna l'anno nel footer
+    // 1. Aggiorna l'anno nel footer
     const yearSpan = document.getElementById("year");
-    yearSpan.textContent = new Date().getFullYear();
+    if (yearSpan) {
+        yearSpan.textContent = new Date().getFullYear();
+    }
 
-    // Scroll fluido quando si clicca sui link del menu
-    document.querySelectorAll('.dropdown-content a').forEach(anchor => {
+    // 2. Gestione scorrimento fluido (solo per link interni con #)
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
-            e.preventDefault();
             const targetId = this.getAttribute('href');
-            document.querySelector(targetId).scrollIntoView({
-                behavior: 'smooth'
-            });
+            if (targetId !== "#") {
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    e.preventDefault();
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            }
         });
     });
 });
