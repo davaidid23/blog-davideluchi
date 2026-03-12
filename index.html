@@ -3,37 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog dei Compiti</title>
+    <title>Il Mio Blog Progetti</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <header>
         <div class="container">
-            <h1>Il Mio Blog dei Compiti</h1>
-            <p>Aggiornamenti e consegne settimanali</p>
+            <h1>Il Mio Portfolio Online</h1>
+            <nav>
+                <ul class="navbar">
+                    <li><a href="#">Home</a></li>
+                    <li class="dropdown">
+                        <a href="javascript:void(0)" class="dropbtn">I Miei Progetti ▼</a>
+                        <div class="dropdown-content">
+                            <a href="#progetto1">Settimana 1: HTML</a>
+                            <a href="#progetto2">Settimana 2: CSS</a>
+                            <a href="#progetto3">Settimana 3: JavaScript</a>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
         </div>
     </header>
 
     <main class="container">
-        <article class="post">
+        <article class="post" id="progetto1">
             <span class="date">12 Marzo 2026</span>
-            <h2>Compito Settimana 1: Introduzione</h2>
-            <p>Questa settimana abbiamo studiato le basi dello sviluppo web. Il compito consiste nel creare una pagina HTML semplice con un titolo e un paragrafo.</p>
-            <a href="#" class="read-more">Leggi i dettagli</a>
+            <h2>Settimana 1: Le basi di HTML</h2>
+            <p>Descrizione del primo compito: abbiamo imparato i tag principali.</p>
         </article>
 
-        <article class="post">
-            <span class="date">5 Marzo 2026</span>
-            <h2>Compito Zero: Preparazione</h2>
-            <p>Installazione degli strumenti necessari, creazione dell'account GitHub e prima esplorazione di Visual Studio.</p>
-            <a href="#" class="read-more">Leggi i dettagli</a>
+        <article class="post" id="progetto2">
+            <span class="date">19 Marzo 2026</span>
+            <h2>Settimana 2: Stile con CSS</h2>
+            <p>In questo compito ho dato colore e forma alla mia pagina web.</p>
         </article>
     </main>
 
     <footer>
         <div class="container">
-            <p>&copy; <span id="year"></span> - Creato con cura per i miei compiti.</p>
+            <p>&copy; <span id="year"></span> - Archivio Compiti Settimanali</p>
         </div>
     </footer>
 
