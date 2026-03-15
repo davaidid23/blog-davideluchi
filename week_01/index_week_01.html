@@ -63,19 +63,19 @@
 
             <span class="code-badge">index.html</span>
             <pre><code>&lt;div id="target"&gt;
-    Questo testo originale verrà rimpiazzato...
+    Questo testo originale verrà rimpiazzato dal JavaScript...
 &lt;/div&gt;
 
 &lt;script src="funzioni.js"&gt;&lt;/script&gt;</code></pre>
 
             <span class="code-badge">funzioni.js</span>
-            <pre><code>// Seleziono l'elemento tramite l'ID 'target'
+            <pre><code>// Seleziono l'elemento tramite il suo ID, che in questo caso ho chiamato 'target'
 const elemento = document.getElementById('target');
 
-// Cambio il contenuto del testo
-elemento.textContent = "Testo modificato con JS esterno!";
+// Cambio il testo
+elemento.textContent = "Questo testo non è stato scritto sul file .html, ma è stato inserito tramite un file JS esterno!";
 
-// Imposto colore e stile
+// Imposto colore e stile per il nuovo testo cambiato
 elemento.style.color = "#ff4500";
 elemento.style.fontSize = "24px";
 elemento.style.fontWeight = "bold";</code></pre>
