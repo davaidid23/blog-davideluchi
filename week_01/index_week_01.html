@@ -5,7 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Compito Settimana 1</title>
     <link rel="stylesheet" href="style_week_01.css">
-    
+    <script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']]
+    }
+  };
+</script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
@@ -95,47 +103,51 @@ elemento.style.color = "#ff4500";
 elemento.style.fontSize = "24px";
 elemento.style.fontWeight = "bold";</code></pre>
 
-            <hr>
-
-            <h2>Dimostrazione della Varianza di Welford</h2>
-            <p>L'algoritmo di Welford permette di calcolare la varianza in modo ricorsivo. Questo è fondamentale quando si ha a che fare con valori molto grandi, perchè calcolar la varianza in modo standard potrebbe portare alla saturazione della memoria e alla conseguente perdita o approssimazione dei valori. Di seguito è riportata la dimostrazione matematica rigorosa.</p>
+        <hr>
+        
+        <h2>Dimostrazione della Varianza di Welford</h2>
+        <p>L'algoritmo di Welford permette di calcolare la varianza in modo ricorsivo. Questo è fondamentale quando si ha a che fare con dataset di grandi dimensioni, poiché calcolare la varianza in modo standard potrebbe portare a errori di precisione numerica (cancellazione catastrofica). Di seguito è riportata la dimostrazione matematica rigorosa.</p>
+        
+        <div class="math-box">
+            <h3>1. Qualche definizione basilare</h3>
+            <p>Sia $x_1, x_2, \dots, x_N$ la sequenza di dati composta da <b>N</b> campioni. Definiamo la media campionaria al passo $n < N$ come:</p>
+            $$\bar{x}_n = \frac{1}{n}\sum_{i=1}^n x_i$$
             
-            <div class="math-box">
-                <h3>1. Qualche definizione basilare</h3>
-                <p>Sia $$x_1, x_2, ..., x_N$$ la sequenza di dati composta da <b>N</b> campioni. Definisco la media campionaria al passo n\<N come:</p>
-                $$\bar{x}_n = \frac{1}{n}\sum_{i=1}^n x_i$$
-                <p>Definiamo la somma dei quadrati delle differenze dalla media al passo n come:</p>
-                $$M_n = \sum_{i=1}^n (x_i - \bar{x}_n)^2$$
-
-                <h3>2. Relazione sulla Media</h3>
-                <p>Isolando la somma dei dati, possiamo separare l'ennesimo termine:</p>
-                $$n\bar{x}_n = (n-1)\bar{x}_{n-1} + x_n$$
-                <p>Otteniamo quindi la relazione:</p>
-                $$(n-1)(\bar{x}_n - \bar{x}_{n-1}) = x_n - \bar{x}_n$$
-
-                <h3>3. Scomposizione di M_n</h3>
-                <p>Espandiamo la formula separando l'ultimo termine:</p>
-                $$M_n = \sum_{i=1}^{n-1} [(x_i - \bar{x}_{n-1}) - (\bar{x}_n - \bar{x}_{n-1})]^2 + (x_n - \bar{x}_n)^2$$
-                <p>Sviluppando il quadrato:</p>
-                $$M_n = \sum_{i=1}^{n-1} (x_i - \bar{x}_{n-1})^2 - 2(\bar{x}_n - \bar{x}_{n-1})\sum_{i=1}^{n-1} (x_i - \bar{x}_{n-1}) + \sum_{i=1}^{n-1} (\bar{x}_n - \bar{x}_{n-1})^2 + (x_n - \bar{x}_n)^2$$
-
-                <h3>4. Semplificazione</h3>
-                <p>Analizziamo i termini:</p>
-                <ul>
-                    <li>Il primo termine è: $$M_{n-1}$$</li>
-                    <li>Il secondo termine è nullo poiché la somma degli scarti è zero: $$\sum (x_i - \bar{x}_{n-1}) = 0$$</li>
-                    <li>Il terzo termine è: $$(n-1)(\bar{x}_n - \bar{x}_{n-1})^2$$</li>
-                </ul>
-                <p>L'equazione diventa:</p>
-                $$M_n = M_{n-1} + (n-1)(\bar{x}_n - \bar{x}_{n-1})^2 + (x_n - \bar{x}_n)^2$$
-
-                <h3>5. Conclusione</h3>
-                <p>Sostituendo i termini e raccogliendo a fattor comune, otteniamo la formula di aggiornamento finale:</p>
-                $$M_n = M_{n-1} + (x_n - \bar{x}_n)(x_n - \bar{x}_{n-1})$$
-                
-                <p>La varianza campionaria si ottiene infine con:</p>
-                $$s^2 = \frac{M_n}{n-1}$$
-            </div>
+            <p>Definiamo la somma dei quadrati delle differenze dalla media (Sum of Squares) al passo $n$ come:</p>
+            $$M_n = \sum_{i=1}^n (x_i - \bar{x}_n)^2$$
+        
+            <h3>2. Relazione sulla Media</h3>
+            <p>Isolando la somma dei dati, possiamo separare l'ennesimo termine $x_n$ per trovare il legame tra $\bar{x}_n$ e $\bar{x}_{n-1}$:</p>
+            $$n\bar{x}_n = (n-1)\bar{x}_{n-1} + x_n$$
+            
+            <p>Sottraendo $\bar{x}_n$ da entrambi i membri e manipolando l'espressione, otteniamo la relazione fondamentale:</p>
+            $$(n-1)(\bar{x}_n - \bar{x}_{n-1}) = x_n - \bar{x}_n$$
+        
+            <h3>3. Scomposizione di $M_n$</h3>
+            <p>Espandiamo $M_n$ inserendo il termine $\bar{x}_{n-1}$ all'interno della sommatoria e separando l'ultimo termine della serie:</p>
+            $$M_n = \sum_{i=1}^{n-1} [(x_i - \bar{x}_{n-1}) - (\bar{x}_n - \bar{x}_{n-1})]^2 + (x_n - \bar{x}_n)^2$$
+            
+            <p>Sviluppando il quadrato del binomio otteniamo:</p>
+            $$M_n = \sum_{i=1}^{n-1} (x_i - \bar{x}_{n-1})^2 - 2(\bar{x}_n - \bar{x}_{n-1})\sum_{i=1}^{n-1} (x_i - \bar{x}_{n-1}) + \sum_{i=1}^{n-1} (\bar{x}_n - \bar{x}_{n-1})^2 + (x_n - \bar{x}_n)^2$$
+        
+            <h3>4. Semplificazione</h3>
+            <p>Analizziamo i singoli componenti dell'equazione:</p>
+            <ul>
+                <li>Il primo termine corrisponde a $M_{n-1}$</li>
+                <li>Il secondo termine è nullo poiché la somma degli scarti dalla media $\sum (x_i - \bar{x}_{n-1})$ è per definizione zero</li>
+                <li>Il terzo termine, essendo una costante sommata $n-1$ volte, diventa $(n-1)(\bar{x}_n - \bar{x}_{n-1})^2$</li>
+            </ul>
+            
+            <p>L'equazione si semplifica quindi in:</p>
+            $$M_n = M_{n-1} + (n-1)(\bar{x}_n - \bar{x}_{n-1})^2 + (x_n - \bar{x}_n)^2$$
+        
+            <h3>5. Conclusione</h3>
+            <p>Sostituendo la relazione trovata al punto 2 e raccogliendo i termini, otteniamo la formula di aggiornamento ricorsiva di Welford:</p>
+            $$M_n = M_{n-1} + (x_n - \bar{x}_n)(x_n - \bar{x}_{n-1})$$
+            
+            <p>La varianza campionaria $s^2$ si ottiene infine dividendo per i gradi di libertà:</p>
+            $$s^2 = \frac{M_n}{n-1}$$
+        </div>
         </section>
 
         <div class="project-footer">
