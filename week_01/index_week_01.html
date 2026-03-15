@@ -35,9 +35,19 @@
         .math-box {
             background: #fff;
             border: 1px solid #e1e4e8;
-            padding: 20px;
+            padding: 30px;
             border-radius: 8px;
-            text-align: center;
+            text-align: left; /* Modificato a left per i testi lunghi */
+            line-height: 1.6;
+        }
+        .math-box h3 {
+            color: #2c3e50;
+            margin-top: 25px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 5px;
+        }
+        .math-box h3:first-child {
+            margin-top: 0;
         }
     </style>
 </head>
@@ -92,16 +102,47 @@ elemento.style.fontWeight = "bold";</code></pre>
             <hr>
 
             <h2>Dimostrazione della Varianza di Welford</h2>
-            <p>L'algoritmo di Welford permette di calcolare la varianza in modo incrementale. Ecco le formule principali:</p>
+            <p>L'algoritmo di Welford è fondamentale per calcolare la varianza campionaria in un singolo passaggio (<em>single-pass</em>), prevenendo gli errori di approssimazione causati dalla cancellazione catastrofica dei numeri floating-point. Di seguito la dimostrazione matematica rigorosa del calcolo iterativo della somma dei quadrati.</p>
             
             <div class="math-box">
-                <p>Aggiornamento della media:</p>
-                $$\bar{x}_n = \bar{x}_{n-1} + \frac{x_n - \bar{x}_{n-1}}{n}$$
+                <h3>1. Definizioni Preliminari</h3>
+                <p>Sia $x_1, x_2, \dots, x_n$ una sequenza di dati. Definiamo la media campionaria al passo $n$ come:</p>
+                $$\bar{x}_n = \frac{1}{n}\sum_{i=1}^n x_i$$
+                <p>Definiamo la somma dei quadrati delle differenze dalla media al passo $n$ (che indicheremo con $M_n$) come:</p>
+                $$M_n = \sum_{i=1}^n (x_i - \bar{x}_n)^2$$
+                <p>Il nostro obiettivo è trovare una relazione ricorsiva che leghi $M_n$ a $M_{n-1}$.</p>
+
+                <h3>2. Relazione sulla Media</h3>
+                <p>Isolando la somma dei dati, possiamo separare l'ennesimo termine:</p>
+                $$n\bar{x}_n = \sum_{i=1}^{n-1} x_i + x_n = (n-1)\bar{x}_{n-1} + x_n$$
+                <p>Da questa equazione, manipolando algebricamente i termini per trovare la differenza tra la media attuale e la precedente, otteniamo una relazione cruciale per i passaggi successivi:</p>
+                $$(n-1)(\bar{x}_n - \bar{x}_{n-1}) = x_n - \bar{x}_n$$
+
+                <h3>3. Scomposizione di $M_n$</h3>
+                <p>Espandiamo la formula di $M_n$ separando l'ultimo termine dalla sommatoria e inserendo $\bar{x}_{n-1}$ con un trucco algebrico (sommando e sottraendo all'interno del quadrato):</p>
+                $$M_n = \sum_{i=1}^{n-1} [(x_i - \bar{x}_{n-1}) - (\bar{x}_n - \bar{x}_{n-1})]^2 + (x_n - \bar{x}_n)^2$$
+                <p>Sviluppando il quadrato del binomio all'interno della sommatoria otteniamo:</p>
+                $$M_n = \sum_{i=1}^{n-1} (x_i - \bar{x}_{n-1})^2 - 2(\bar{x}_n - \bar{x}_{n-1})\sum_{i=1}^{n-1} (x_i - \bar{x}_{n-1}) + \sum_{i=1}^{n-1} (\bar{x}_n - \bar{x}_{n-1})^2 + (x_n - \bar{x}_n)^2$$
+
+                <h3>4. Semplificazione</h3>
+                <p>Analizziamo i termini della sommatoria espansa:</p>
+                <ul>
+                    <li>Il primo termine è esattamente la definizione di $M_{n-1}$.</li>
+                    <li>Il secondo termine è <strong>nullo</strong>, poiché la somma degli scarti di una variabile dalla propria media è sempre zero: $\sum_{i=1}^{n-1} (x_i - \bar{x}_{n-1}) = 0$.</li>
+                    <li>Il terzo termine è una costante sommata $n-1$ volte, pari a $(n-1)(\bar{x}_n - \bar{x}_{n-1})^2$.</li>
+                </ul>
+                <p>L'equazione si riduce quindi a:</p>
+                $$M_n = M_{n-1} + (n-1)(\bar{x}_n - \bar{x}_{n-1})^2 + (x_n - \bar{x}_n)^2$$
+
+                <h3>5. Passaggio Finale</h3>
+                <p>Utilizziamo l'identità trovata al Punto 2, sostituendo un fattore $(n-1)(\bar{x}_n - \bar{x}_{n-1})$ nel secondo termine con $(x_n - \bar{x}_n)$:</p>
+                $$M_n = M_{n-1} + (x_n - \bar{x}_n)(\bar{x}_n - \bar{x}_{n-1}) + (x_n - \bar{x}_n)^2$$
+                <p>Infine, raccogliamo a fattor comune $(x_n - \bar{x}_n)$ per gli ultimi due termini:</p>
+                $$M_n = M_{n-1} + (x_n - \bar{x}_n)[(\bar{x}_n - \bar{x}_{n-1}) + (x_n - \bar{x}_n)]$$
+                $$M_n = M_{n-1} + (x_n - \bar{x}_n)(x_n - \bar{x}_{n-1})$$
+                <p><strong>C.V.D.</strong></p>
                 
-                <p>Aggiornamento della somma dei quadrati ($M_n$):</p>
-                $$M_n = M_{n-1} + (x_n - \bar{x}_{n-1})(x_n - \bar{x}_n)$$
-                
-                <p>Varianza finale:</p>
+                <p style="margin-top: 20px;">Nota: la varianza campionaria (per $n > 1$) si calcola dividendo il risultato ottenuto per i gradi di libertà:</p>
                 $$s^2 = \frac{M_n}{n-1}$$
             </div>
         </section>
