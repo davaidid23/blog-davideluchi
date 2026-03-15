@@ -50,7 +50,7 @@
         </header>
 
         <section class="content">
-            <h2>Esercizio 1: Esercizio 1: modificare un testo cambiando parole e colore utilizzando un file div esterno.</h2>
+            <h2>Esercizio 1: modificare un testo cambiando parole e colore utilizzando un file JS esterno.</h2>
             <p>Nella casella sottostante appare il risultato del programmino creato. Il codice scritto è riportato successivamente.</p>
             
             <div class="box">
@@ -62,11 +62,20 @@
             <hr>
 
             <span class="code-badge">index.html</span>
-            <pre><code>&lt;div id="target"&gt;
-    Questo testo originale verrà rimpiazzato dal JavaScript...
-&lt;/div&gt;
+            <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="it"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;Esercizio: Inserire un testo colorato utilizzando un file JS Esterno&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
 
-&lt;script src="funzioni.js"&gt;&lt;/script&gt;</code></pre>
+    &lt;div id="target"&gt;Questo testo è ininfluente: se tutto va come deve, verrà sostituito dal testo scritto nel file JS esterno &lt;/div&gt;
+
+    &lt;script src="funzioni.js"&gt;&lt;/script&gt;
+    
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
 
             <span class="code-badge">funzioni.js</span>
             <pre><code>// Seleziono l'elemento tramite il suo ID, che in questo caso ho chiamato 'target'
