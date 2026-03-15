@@ -117,7 +117,7 @@ elemento.style.fontWeight = "bold";</code></pre>
             $$M_n = \sum_{i=1}^n (x_i - \bar{x}_n)^2$$
         
             <h3>2. Relazione tra $\bar{x}_n$ e $\bar{x}_{n-1}$</h3>
-            <p>Dobbiamo trovare il legame tra $\bar{x}_n$ e $\bar{x}_{n-1}$ per costruire la relazione ricorsiva. Possiamo osservare che Isolando la somma dei dati, possiamo separare l'ennesimo termine $x_n$ per trovare il legame tra $\bar{x}_n$ e $\bar{x}_{n-1}$:</p>
+            <p>Dobbiamo trovare il legame tra $\bar{x}_n$ e $\bar{x}_{n-1}$ per costruire la relazione ricorsiva. Possiamo osservare che isolando la somma dei dati, possiamo separare l'ennesimo termine $x_n$ per trovare il legame tra $\bar{x}_n$ e $\bar{x}_{n-1}$:</p>
             
             $$\bar{x}_n = \frac{(n-1)\bar{x}_{n-1} + x_n}{n}$$ 
             $$n\bar{x}_n = (n-1)\bar{x}_{n-1} + x_n$$
@@ -135,7 +135,7 @@ elemento.style.fontWeight = "bold";</code></pre>
             $$M_n = \sum_{i=1}^{n-1} (x_i - \bar{x}_{n-1})^2 - 2(\bar{x}_n - \bar{x}_{n-1})\sum_{i=1}^{n-1} (x_i - \bar{x}_{n-1}) + \sum_{i=1}^{n-1} (\bar{x}_n - \bar{x}_{n-1})^2 + (x_n - \bar{x}_n)^2$$
         
             <h3>4. Semplificazione</h3>
-            <p>Ora si possono osservare i songoli pezzi dell'equazione precedente:</p>
+            <p>Ora si possono osservare i singoli pezzi dell'equazione precedente:</p>
             <ul>
                 <li>Il primo termine è proprio $M_{n-1}$</li>
                 <li>Il secondo termine è nullo poiché la somma degli scarti dalla media $\sum (x_i - \bar{x}_{n-1})$ è per definizione zero</li>
@@ -146,7 +146,7 @@ elemento.style.fontWeight = "bold";</code></pre>
             $$M_n = M_{n-1} + (n-1)(\bar{x}_n - \bar{x}_{n-1})^2 + (x_n - \bar{x}_n)^2$$
         
             <h3>5. Conclusione</h3>
-            <p>Sostituendo la relazione ricavata nella sezione 2 e raccogliendo i termini si ottiene l'algorirmo per la varianza di Welford:</p>
+            <p>Sostituendo la relazione ricavata nella sezione 2 e raccogliendo i termini si ottiene l'algoritmo per la varianza di Welford:</p>
             $$M_n = M_{n-1} + (x_n - \bar{x}_n)(x_n - \bar{x}_{n-1})$$
             
             <p>La varianza campionaria $s^2$ si può ottenere dividendo $M_n$ per i gradi di libertà:</p>
