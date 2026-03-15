@@ -135,21 +135,21 @@ elemento.style.fontWeight = "bold";</code></pre>
             $$M_n = \sum_{i=1}^{n-1} (x_i - \bar{x}_{n-1})^2 - 2(\bar{x}_n - \bar{x}_{n-1})\sum_{i=1}^{n-1} (x_i - \bar{x}_{n-1}) + \sum_{i=1}^{n-1} (\bar{x}_n - \bar{x}_{n-1})^2 + (x_n - \bar{x}_n)^2$$
         
             <h3>4. Semplificazione</h3>
-            <p>Analizziamo i singoli componenti dell'equazione:</p>
+            <p>Ora si possono osservare i songoli pezzi dell'equazione precedente:</p>
             <ul>
-                <li>Il primo termine corrisponde a $M_{n-1}$</li>
+                <li>Il primo termine è proprio $M_{n-1}$</li>
                 <li>Il secondo termine è nullo poiché la somma degli scarti dalla media $\sum (x_i - \bar{x}_{n-1})$ è per definizione zero</li>
                 <li>Il terzo termine, essendo una costante sommata $n-1$ volte, diventa $(n-1)(\bar{x}_n - \bar{x}_{n-1})^2$</li>
             </ul>
             
-            <p>L'equazione si semplifica quindi in:</p>
+            <p>L'equazione diventa quindi:</p>
             $$M_n = M_{n-1} + (n-1)(\bar{x}_n - \bar{x}_{n-1})^2 + (x_n - \bar{x}_n)^2$$
         
             <h3>5. Conclusione</h3>
             <p>Sostituendo la relazione trovata al punto 2 e raccogliendo i termini, otteniamo la formula di aggiornamento ricorsiva di Welford:</p>
             $$M_n = M_{n-1} + (x_n - \bar{x}_n)(x_n - \bar{x}_{n-1})$$
             
-            <p>La varianza campionaria $s^2$ si ottiene infine dividendo per i gradi di libertà:</p>
+            <p>La varianza campionaria $s^2$ si può ottenere dividendo $M_n$ per i gradi di libertà:</p>
             $$s^2 = \frac{M_n}{n-1}$$
         </div>
         </section>
