@@ -146,7 +146,7 @@ elemento.style.fontWeight = "bold";</code></pre>
             $$M_n = M_{n-1} + (n-1)(\bar{x}_n - \bar{x}_{n-1})^2 + (x_n - \bar{x}_n)^2$$
         
             <h3>5. Conclusione</h3>
-            <p>Sostituendo la relazione trovata al punto 2 e raccogliendo i termini, otteniamo la formula di aggiornamento ricorsiva di Welford:</p>
+            <p>Sostituendo la relazione ricavata nella sezione 2 e raccogliendo i termini si ottiene l'algorirmo per la varianza di Welford:</p>
             $$M_n = M_{n-1} + (x_n - \bar{x}_n)(x_n - \bar{x}_{n-1})$$
             
             <p>La varianza campionaria $s^2$ si può ottenere dividendo $M_n$ per i gradi di libertà:</p>
