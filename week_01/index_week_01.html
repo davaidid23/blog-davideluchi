@@ -98,11 +98,11 @@ elemento.style.fontWeight = "bold";</code></pre>
             <hr>
 
             <h2>Dimostrazione della Varianza di Welford</h2>
-            <p>L'algoritmo di Welford è fondamentale per calcolare la varianza campionaria in un singolo passaggio, prevenendo gli errori di approssimazione. Di seguito la dimostrazione matematica rigorosa.</p>
+            <p>L'algoritmo di Welford permette di calcolare la varianza in modo ricorsivo. Questo è fondamentale quando si ha a che fare con valori molto grandi, perchè calcolar la varianza in modo standard potrebbe portare alla saturazione della memoria e alla conseguente perdita o approssimazione dei valori. Di seguito è riportata la dimostrazione matematica rigorosa.</p>
             
             <div class="math-box">
-                <h3>1. Definizioni Preliminari</h3>
-                <p>Sia la sequenza di dati composta da n campioni. Definiamo la media campionaria al passo n come:</p>
+                <h3>1. Qualche definizione basilare</h3>
+                <p>Sia $x_1, x_2, \dots, x_n$ la sequenza di dati composta da n campioni. Definiamo la media campionaria al passo n come:</p>
                 $$\bar{x}_n = \frac{1}{n}\sum_{i=1}^n x_i$$
                 <p>Definiamo la somma dei quadrati delle differenze dalla media al passo n come:</p>
                 $$M_n = \sum_{i=1}^n (x_i - \bar{x}_n)^2$$
