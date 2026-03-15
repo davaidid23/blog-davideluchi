@@ -5,6 +5,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Compito Settimana 1</title>
     <link rel="stylesheet" href="style_week_01.css">
+    
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        /* Stile extra per i blocchi di codice */
+        .code-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            background: #34495e;
+            color: white;
+            font-size: 0.8em;
+            border-radius: 4px 4px 0 0;
+            margin-top: 10px;
+        }
+        pre {
+            background: #282c34; /* Colore scuro tipo VS Code */
+            color: #abb2bf;
+            padding: 15px;
+            border-radius: 0 5px 5px 5px;
+            overflow-x: auto;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.9em;
+            line-height: 1.5;
+            border: 1px solid #181a1f;
+            margin-bottom: 20px;
+        }
+        .math-box {
+            background: #fff;
+            border: 1px solid #e1e4e8;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
     <div class="project-container">
@@ -15,25 +50,50 @@
         </header>
 
         <section class="content">
-            <h2>Esercizio 1: modificare un testo cambiando parole e colore utilizzando un file div esterno.</h2>
-            <p>Nella casella sottostante appare il risultato del programmino creato. Il codice scritto è riportato successivamente.</p>
+            <h2>Esercizio 1: Manipolazione del DOM</h2>
+            <p>In questo esercizio, un file JavaScript esterno modifica il contenuto di un DIV esistente cambiandone il testo e lo stile.</p>
             
             <div class="box">
                 <div id="target">
                     Questo testo originale verrà rimpiazzato dal JavaScript...
                 </div>
             </div>
-            <h2> File index.html:</h2>
-            <p>qui devo inserire il codice scritto in index.html</p>
-            <h2> File funzioni.js:</h2>
-            <p>qui devo inserire il codice scritto in funzioni.js</p>
 
-            
-            
+            <hr>
 
-            <div class="box" style="margin-top: 20px;">
-                <h2>Dimostrazione della Varianza di Welford</h2>
-                <p>Inseriremo qui la formula matematica nel prossimo passaggio.</p>
+            <span class="code-badge">index.html</span>
+            <pre><code>&lt;div id="target"&gt;
+    Questo testo originale verrà rimpiazzato...
+&lt;/div&gt;
+
+&lt;script src="funzioni.js"&gt;&lt;/script&gt;</code></pre>
+
+            <span class="code-badge">funzioni.js</span>
+            <pre><code>// Seleziono l'elemento tramite l'ID 'target'
+const elemento = document.getElementById('target');
+
+// Cambio il contenuto del testo
+elemento.textContent = "Testo modificato con JS esterno!";
+
+// Imposto colore e stile
+elemento.style.color = "#ff4500";
+elemento.style.fontSize = "24px";
+elemento.style.fontWeight = "bold";</code></pre>
+
+            <hr>
+
+            <h2>Dimostrazione della Varianza di Welford</h2>
+            <p>L'algoritmo di Welford permette di calcolare la varianza in modo incrementale. Ecco le formule principali:</p>
+            
+            <div class="math-box">
+                <p>Aggiornamento della media:</p>
+                $$\bar{x}_n = \bar{x}_{n-1} + \frac{x_n - \bar{x}_{n-1}}{n}$$
+                
+                <p>Aggiornamento della somma dei quadrati ($M_n$):</p>
+                $$M_n = M_{n-1} + (x_n - \bar{x}_{n-1})(x_n - \bar{x}_n)$$
+                
+                <p>Varianza finale:</p>
+                $$s^2 = \frac{M_n}{n-1}$$
             </div>
         </section>
 
