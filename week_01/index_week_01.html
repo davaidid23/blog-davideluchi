@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Compito Settimana 1</title>
     <link rel="stylesheet" href="style_week_01.css">
+    
     <script>
       window.MathJax = {
         tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] }
@@ -42,12 +43,6 @@
             text-align: left;
             line-height: 1.6;
         }
-        .math-box h3 {
-            color: #2c3e50;
-            margin-top: 25px;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 5px;
-        }
     </style>
 </head>
 <body>
@@ -59,45 +54,47 @@
         </header>
 
         <section class="content">
+            
             <h2>Esercizio 1.1: Modifica testo automatica</h2>
-            <p>Il testo nel box sottostante viene manipolato dal file JS esterno non appena la pagina viene caricata.</p>
             <div class="box">
-                <div id="target">Questo testo originale verrà rimpiazzato dal JavaScript...</div>
+                <div id="target">Questo testo originale verrà rimpiazzato...</div>
             </div>
 
+            <span class="code-badge">HTML (Struttura 1.1)</span>
+            <pre><code>&lt;div id="target"&gt;Questo testo verrà rimpiazzato...&lt;/div&gt;</code></pre>
+
             <span class="code-badge">funzioni.js (Logica 1.1)</span>
-            <pre><code>// Selezione dell'elemento tramite ID 'target'
-const elemento = document.getElementById('target');
+            <pre><code>const elemento = document.getElementById('target');
 if (elemento) {
     elemento.textContent = "Testo inserito tramite file JS esterno!";
     elemento.style.color = "#ff4500";
-    elemento.style.fontSize = "24px";
 }</code></pre>
 
             <hr>
             
-            <h2>Esercizio 1.2: Programma Interattivo con Pulsanti</h2>
-            <p>Sperimentazione dell'uso degli Event Listeners per rispondere all'input dell'utente.</p>
+            <h2>Esercizio 1.2: Programma Interattivo</h2>
             <div class="box" style="text-align: center;">
                 <p id="testo-interattivo" style="font-weight: bold; font-size: 1.2em;">Questo è il testo da modificare</p>
                 <button id="btn-testo" style="padding: 10px 20px; cursor: pointer; background: #3498db; color: white; border: none; border-radius: 5px; margin-right: 10px;">Cambia Testo</button>
                 <button id="btn-colore" style="padding: 10px 20px; cursor: pointer; background: #e67e22; color: white; border: none; border-radius: 5px;">Cambia Colore</button>
             </div>
 
-            <span class="code-badge">funzioni.js (Logica 1.2)</span>
-            <pre><code>// Selezione dei pulsanti e aggiunta degli eventi 'click'
-const testoDaModificare = document.getElementById('testo-interattivo');
-const btnTesto = document.getElementById('btn-testo');
-const btnColore = document.getElementById('btn-colore');
+            <span class="code-badge">HTML (Struttura 1.2)</span>
+            <pre><code>&lt;p id="testo-interattivo"&gt;Questo è il testo da modificare&lt;/p&gt;
+&lt;button id="btn-testo"&gt;Cambia Testo&lt;/button&gt;
+&lt;button id="btn-colore"&gt;Cambia Colore&lt;/button&gt;</code></pre>
 
-btnTesto.addEventListener('click', function() {
-    testoDaModificare.textContent = "Hai cliccato il pulsante! Testo modificato via JS.";
+            <span class="code-badge">funzioni.js (Logica 1.2)</span>
+            <pre><code>const btnT = document.getElementById('btn-testo');
+const btnC = document.getElementById('btn-colore');
+
+btnT.addEventListener('click', function() {
+    document.getElementById('testo-interattivo').textContent = "Testo cambiato!";
 });
 
-btnColore.addEventListener('click', function() {
-    const colori = ["#27ae60", "#8e44ad", "#c0392b", "#f39c12", "#2c3e50"];
-    const coloreCasuale = colori[Math.floor(Math.random() * colori.length)];
-    testoDaModificare.style.color = coloreCasuale;
+btnC.addEventListener('click', function() {
+    const colori = ["#27ae60", "#8e44ad", "#c0392b"];
+    document.getElementById('testo-interattivo').style.color = colori[0]; // Esempio
 });</code></pre>
 
             <hr>
