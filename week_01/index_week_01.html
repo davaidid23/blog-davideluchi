@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Compito Settimana 1</title>
     <link rel="stylesheet" href="style_week_01.css">
-    
     <script>
       window.MathJax = {
         tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] }
@@ -60,14 +59,14 @@
         </header>
 
         <section class="content">
-            <h2>Esercizio 1.1: Modifica testo via JS</h2>
+            <h2>Esercizio 1.1: modificare un testo cambiando parole e colore utilizzando un file JS esterno.</h2>
             <div class="box">
-                <div id="target">Questo testo originale verrà rimpiazzato...</div>
+                <div id="target">Questo testo originale verrà rimpiazzato dal JavaScript...</div>
             </div>
 
             <hr>
             
-            <h2>Esercizio 1.2: Programma Interattivo</h2>
+            <h2>Esercizio 1.2: Programma Interattivo con Pulsanti</h2>
             <div class="box" style="text-align: center;">
                 <p id="testo-interattivo" style="font-weight: bold; font-size: 1.2em;">Questo è il testo da modificare</p>
                 <button id="btn-testo" style="padding: 10px 20px; cursor: pointer; background: #3498db; color: white; border: none; border-radius: 5px; margin-right: 10px;">Cambia Testo</button>
@@ -76,76 +75,28 @@
 
             <hr>
 
-            <span class="code-badge">funzioni.js (Logica dei pulsanti)</span>
-            <pre><code>// document.addEventListener("DOMContentLoaded", function() {
+            <span class="code-badge">index_week_01.html (struttura interattiva)</span>
+            <pre><code>&lt;p id="testo-interattivo"&gt;Questo è il testo da modificare&lt;/p&gt;
+&lt;button id="btn-testo"&gt;Cambia Testo&lt;/button&gt;
+&lt;button id="btn-colore"&gt;Cambia Colore&lt;/button&gt;</code></pre>
 
-    // --- ESERCIZIO 1.1: Sostituzione automatica del testo ---
-    const elemento = document.getElementById('target');
-    if (elemento) {
-        elemento.textContent = "Questo testo non è stato scritto sul file .html, ma è stato inserito tramite un file JS esterno!";
-        elemento.style.color = "#ff4500";
-        elemento.style.fontSize = "24px";
-        elemento.style.fontFamily = "sans-serif";
-    }
+            <span class="code-badge">funzioni.js (logica completa)</span>
+            <pre><code>document.addEventListener("DOMContentLoaded", function() {
+    const testo = document.getElementById('testo-interattivo');
+    const btnT = document.getElementById('btn-testo');
+    const btnC = document.getElementById('btn-colore');
 
-    // --- ESERCIZIO 1.2: Programma Interattivo con Pulsanti ---
-    const testoDaModificare = document.getElementById('testo-interattivo');
-    const btnTesto = document.getElementById('btn-testo');
-    const btnColore = document.getElementById('btn-colore');
+    btnT.addEventListener('click', function() {
+        testo.textContent = "Testo modificato tramite JS esterno!";
+    });
 
-    if (btnTesto && testoDaModificare) {
-        btnTesto.addEventListener('click', function() {
-            testoDaModificare.textContent = "Hai cliccato il pulsante! Il testo è cambiato: questo non è stato scritto sul file .html, ma è stato inserito tramite un file JS esterno!";
-        });
-    }
-
-    if (btnColore && testoDaModificare) {
-        btnColore.addEventListener('click', function() {
-            const colori = ["#27ae60", "#8e44ad", "#c0392b", "#f39c12", "#2c3e50"];
-            const coloreCasuale = colori[Math.floor(Math.random() * colori.length)];
-            testoDaModificare.style.color = coloreCasuale;
-        });
-    }
-
-});
-btnTesto.addEventListener('click', function() {
-    testoDaModificare.textContent = "Testo cambiato!";
+    btnC.addEventListener('click', function() {
+        const colori = ["#27ae60", "#8e44ad", "#c0392b", "#f39c12", "#2c3e50"];
+        testo.style.color = colori[Math.floor(Math.random() * colori.length)];
+    });
 });</code></pre>
-
- <span class="code-badge">funzioni.js (Logica dei pulsanti)</span>
-            <pre><code>// document.addEventListener("DOMContentLoaded", function() {
-
-});</code></pre>
-
-
-
-            <span class="code-badge">funzioni.js (Logica dei pulsanti)</span>
-            <pre><code>// document.addEventListener("DOMContentLoaded", function() {
-
-        <section class="content">
-            <h2>Esercizio 1.1: Modifica testo via JS</h2>
-            <div class="box">
-                <div id="target">Questo testo originale verrà rimpiazzato...</div>
-            </div>
 
             <hr>
-            
-            <h2>Esercizio 1.2: Programma Interattivo</h2>
-            <div class="box" style="text-align: center;">
-                <p id="testo-interattivo" style="font-weight: bold; font-size: 1.2em;">Questo è il testo da modificare</p>
-                <button id="btn-testo" style="padding: 10px 20px; cursor: pointer; background: #3498db; color: white; border: none; border-radius: 5px; margin-right: 10px;">Cambia Testo</button>
-                <button id="btn-colore" style="padding: 10px 20px; cursor: pointer; background: #e67e22; color: white; border: none; border-radius: 5px;">Cambia Colore</button>
-            </div>
-
-            <hr>
-});</code></pre>
-
- <span class="code-badge">funzioni.js (Logica dei pulsanti)</span>
-            <pre><code>// document.addEventListener("DOMContentLoaded", function() {
-
-});</code></pre>
-
-
 
             
         <h2>Esercizio 2: Dimostrazione della varianza di Welford</h2>
