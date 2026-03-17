@@ -20,7 +20,7 @@
             color: white;
             font-size: 0.8em;
             border-radius: 4px 4px 0 0;
-            margin-top: 10px;
+            margin-top: 15px;
         }
         pre {
             background: #282c34;
@@ -29,7 +29,7 @@
             border-radius: 0 5px 5px 5px;
             overflow-x: auto;
             font-family: 'Consolas', 'Monaco', monospace;
-            font-size: 0.9em;
+            font-size: 0.85em;
             line-height: 1.5;
             border: 1px solid #181a1f;
             margin-bottom: 20px;
@@ -59,41 +59,45 @@
         </header>
 
         <section class="content">
-            <h2>Esercizio 1.1: modificare un testo cambiando parole e colore utilizzando un file JS esterno.</h2>
+            <h2>Esercizio 1.1: Modifica testo automatica</h2>
+            <p>Il testo nel box sottostante viene manipolato dal file JS esterno non appena la pagina viene caricata.</p>
             <div class="box">
                 <div id="target">Questo testo originale verrà rimpiazzato dal JavaScript...</div>
             </div>
 
+            <span class="code-badge">funzioni.js (Logica 1.1)</span>
+            <pre><code>// Selezione dell'elemento tramite ID 'target'
+const elemento = document.getElementById('target');
+if (elemento) {
+    elemento.textContent = "Testo inserito tramite file JS esterno!";
+    elemento.style.color = "#ff4500";
+    elemento.style.fontSize = "24px";
+}</code></pre>
+
             <hr>
             
             <h2>Esercizio 1.2: Programma Interattivo con Pulsanti</h2>
+            <p>Sperimentazione dell'uso degli Event Listeners per rispondere all'input dell'utente.</p>
             <div class="box" style="text-align: center;">
                 <p id="testo-interattivo" style="font-weight: bold; font-size: 1.2em;">Questo è il testo da modificare</p>
                 <button id="btn-testo" style="padding: 10px 20px; cursor: pointer; background: #3498db; color: white; border: none; border-radius: 5px; margin-right: 10px;">Cambia Testo</button>
                 <button id="btn-colore" style="padding: 10px 20px; cursor: pointer; background: #e67e22; color: white; border: none; border-radius: 5px;">Cambia Colore</button>
             </div>
 
-            <hr>
+            <span class="code-badge">funzioni.js (Logica 1.2)</span>
+            <pre><code>// Selezione dei pulsanti e aggiunta degli eventi 'click'
+const testoDaModificare = document.getElementById('testo-interattivo');
+const btnTesto = document.getElementById('btn-testo');
+const btnColore = document.getElementById('btn-colore');
 
-            <span class="code-badge">index_week_01.html (struttura interattiva)</span>
-            <pre><code>&lt;p id="testo-interattivo"&gt;Questo è il testo da modificare&lt;/p&gt;
-&lt;button id="btn-testo"&gt;Cambia Testo&lt;/button&gt;
-&lt;button id="btn-colore"&gt;Cambia Colore&lt;/button&gt;</code></pre>
+btnTesto.addEventListener('click', function() {
+    testoDaModificare.textContent = "Hai cliccato il pulsante! Testo modificato via JS.";
+});
 
-            <span class="code-badge">funzioni.js (logica completa)</span>
-            <pre><code>document.addEventListener("DOMContentLoaded", function() {
-    const testo = document.getElementById('testo-interattivo');
-    const btnT = document.getElementById('btn-testo');
-    const btnC = document.getElementById('btn-colore');
-
-    btnT.addEventListener('click', function() {
-        testo.textContent = "Testo modificato tramite JS esterno!";
-    });
-
-    btnC.addEventListener('click', function() {
-        const colori = ["#27ae60", "#8e44ad", "#c0392b", "#f39c12", "#2c3e50"];
-        testo.style.color = colori[Math.floor(Math.random() * colori.length)];
-    });
+btnColore.addEventListener('click', function() {
+    const colori = ["#27ae60", "#8e44ad", "#c0392b", "#f39c12", "#2c3e50"];
+    const coloreCasuale = colori[Math.floor(Math.random() * colori.length)];
+    testoDaModificare.style.color = coloreCasuale;
 });</code></pre>
 
             <hr>
