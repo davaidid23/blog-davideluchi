@@ -1,7 +1,6 @@
-// Aspettiamo che il documento sia completamente caricato prima di eseguire il codice
 document.addEventListener("DOMContentLoaded", function() {
 
-    // --- ESERCIZIO 1.1: Sostituzione testo automatica ---
+    // --- ESERCIZIO 1.1: Sostituzione automatica del testo ---
     const elemento = document.getElementById('target');
     if (elemento) {
         elemento.textContent = "Questo testo non è stato scritto sul file .html, ma è stato inserito tramite un file JS esterno!";
@@ -15,10 +14,9 @@ document.addEventListener("DOMContentLoaded", function() {
     const btnTesto = document.getElementById('btn-testo');
     const btnColore = document.getElementById('btn-colore');
 
-    // Controllo che i pulsanti esistano nella pagina prima di aggiungere le funzioni
     if (btnTesto && testoDaModificare) {
         btnTesto.addEventListener('click', function() {
-            testoDaModificare.textContent = "Hai cliccato il pulsante! Il testo è cambiato 🎉";
+            testoDaModificare.textContent = "Hai cliccato il pulsante! Il testo è cambiato: questo non è stato scritto sul file .html, ma è stato inserito tramite un file JS esterno!";
         });
     }
 
