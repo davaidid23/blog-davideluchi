@@ -57,16 +57,16 @@
             
             <h2>Esercizio 1.1: Modifica testo automatica</h2>
             <div class="box">
-                <div id="target">Questo testo originale verrà rimpiazzato...</div>
+                <div id="target">Questo testo è ininfluente e verrà sostituito da un div esterno</div>
             </div>
 
             <span class="code-badge">HTML (Struttura 1.1)</span>
-            <pre><code>&lt;div id="target"&gt;Questo testo verrà rimpiazzato...&lt;/div&gt;</code></pre>
+            <pre><code>&lt;div id="target"&gt;Questo testo è ininfluente e verrà sostituito da un div esterno&lt;/div&gt;</code></pre>
 
             <span class="code-badge">funzioni.js (Logica 1.1)</span>
             <pre><code>const elemento = document.getElementById('target');
 if (elemento) {
-    elemento.textContent = "Testo inserito tramite file JS esterno!";
+    elemento.textContent = "Questo testo non è stato scritto sul file .html, ma è stato inserito tramite un file JS esterno!";
     elemento.style.color = "#ff4500";
 }</code></pre>
 
@@ -74,13 +74,13 @@ if (elemento) {
             
             <h2>Esercizio 1.2: Programma Interattivo</h2>
             <div class="box" style="text-align: center;">
-                <p id="testo-interattivo" style="font-weight: bold; font-size: 1.2em;">Questo è il testo da modificare</p>
+                <p id="testo-interattivo" style="font-weight: bold; font-size: 1.2em;">Testo da modificare</p>
                 <button id="btn-testo" style="padding: 10px 20px; cursor: pointer; background: #3498db; color: white; border: none; border-radius: 5px; margin-right: 10px;">Cambia Testo</button>
                 <button id="btn-colore" style="padding: 10px 20px; cursor: pointer; background: #e67e22; color: white; border: none; border-radius: 5px;">Cambia Colore</button>
             </div>
 
             <span class="code-badge">HTML (Struttura 1.2)</span>
-            <pre><code>&lt;p id="testo-interattivo"&gt;Questo è il testo da modificare&lt;/p&gt;
+            <pre><code>&lt;p id="testo-interattivo"&gt;Testo da modificare&lt;/p&gt;
 &lt;button id="btn-testo"&gt;Cambia Testo&lt;/button&gt;
 &lt;button id="btn-colore"&gt;Cambia Colore&lt;/button&gt;</code></pre>
 
@@ -89,7 +89,7 @@ if (elemento) {
 const btnC = document.getElementById('btn-colore');
 
 btnT.addEventListener('click', function() {
-    document.getElementById('testo-interattivo').textContent = "Testo cambiato!";
+    document.getElementById('testo-interattivo').textContent = "Questo testo non è stato scritto sul file .html, ma è stato inserito tramite un file JS esterno!";
 });
 
 btnC.addEventListener('click', function() {
