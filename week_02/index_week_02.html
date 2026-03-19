@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compito Settimana 1</title>
+    <link rel="stylesheet" href="style_week_01.css">
+    
+    <script>
+      window.MathJax = {
+        tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] }
+      };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        .code-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            background: #34495e;
+            color: white;
+            font-size: 0.8em;
+            border-radius: 4px 4px 0 0;
+            margin-top: 15px;
+        }
+        pre {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 15px;
+            border-radius: 0 5px 5px 5px;
+            overflow-x: auto;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.85em;
+            line-height: 1.5;
+            border: 1px solid #181a1f;
+            margin-bottom: 20px;
+        }
+        .math-box {
+            background: #fff;
+            border: 1px solid #e1e4e8;
+            padding: 30px;
+            border-radius: 8px;
+            text-align: left;
+            line-height: 1.6;
+        }
+        .math-box h3 {
+            color: #2c3e50;
+            margin-top: 25px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="project-container">
+        <a href="../index.html" class="back-btn">← Torna al Blog</a>
+        
+        <header>
+            <h1>Progetto Settimana 1</h1>
+        </header>
+
+        <section class="content">
+            
+            <h2>Esercizio 1.1: modificare un testo cambiando parole e colore utilizzando un file JS esterno.</h2>
+            <div class="box">
+                <div id="target">Testo ininfluente che verrà sostituito</div>
+            </div>
+
+            <span class="code-badge">Parte HTML: Esercizio 1.1</span>
+            <pre><code>&lt;div id="target"&gt;Testo ininfluente che verrà sostituito&lt;/div&gt;</code></pre>
+
+            <hr>
+            
+            <h2>Esercizio 1.2: Programma Interattivo con Pulsanti</h2>
+            <div class="box" style="text-align: center;">
+                <p id="testo-interattivo" style="font-weight: bold; font-size: 1.2em;">Questo è il testo da modificare utilizzando un div esterno</p>
+                <button id="btn-testo" style="padding: 10px 20px; cursor: pointer; background: #3498db; color: white; border: none; border-radius: 5px; margin-right: 10px;">Cambia Testo</button>
+                <button id="btn-colore" style="padding: 10px 20px; cursor: pointer; background: #e67e22; color: white; border: none; border-radius: 5px;">Cambia Colore</button>
+            </div>
+
+            <span class="code-badge">Parte HTML: Esercizio 1.2</span>
+            <pre><code>&lt;p id="testo-interattivo"&gt;Questo è il testo da modificare utilizzando un div esterno&lt;/p&gt;
+&lt;button id="btn-testo"&gt;Cambia Testo&lt;/button&gt;
+&lt;button id="btn-colore"&gt;Cambia Colore&lt;/button&gt;</code></pre>
+
+            <hr>
+
+            <span class="code-badge">funzioni.js (Codice Completo)</span>
+            <pre><code>document.addEventListener("DOMContentLoaded", function() {
+
+    // --- ESERCIZIO 1.1: Sostituzione automatica del testo ---
+    const elemento = document.getElementById('target');
+    if (elemento) {
+        elemento.textContent = "Questo testo non è stato scritto sul file .html, ma è stato inserito tramite un file JS esterno!";
+        elemento.style.color = "#ff4500";
+        elemento.style.fontSize = "24px";
+        elemento.style.fontFamily = "sans-serif";
+    }
+
+    // --- ESERCIZIO 1.2: Programma Interattivo con Pulsanti ---
+    const testoDaModificare = document.getElementById('testo-interattivo');
+    const btnTesto = document.getElementById('btn-testo');
+    const btnColore = document.getElementById('btn-colore');
+
+    if (btnTesto && testoDaModificare) {
+        btnTesto.addEventListener('click', function() {
+            testoDaModificare.textContent = "Hai cliccato il pulsante! Il testo è cambiato: questo non è stato scritto sul file .html, ma è stato inserito tramite un file JS esterno!";
+        });
+    }
+
+    if (btnColore && testoDaModificare) {
+        btnColore.addEventListener('click', function() {
+            const colori = ["#27ae60", "#8e44ad", "#c0392b", "#f39c12", "#2c3e50"];
+            const coloreCasuale = colori[Math.floor(Math.random() * colori.length)];
+            testoDaModificare.style.color = coloreCasuale;
+        });
+    }
+
+});</code></pre>
+
+            <hr>
+            
+        <h2>Esercizio 2: Dimostrazione della varianza di Welford</h2>
+        <p>L'algoritmo di Welford permette di calcolare la varianza in modo ricorsivo. Questo è fondamentale quando si ha a che fare con dataset di grandi dimensioni, poiché calcolare la varianza in modo standard potrebbe portare a errori di precisione numerica (cancellazione catastrofica). Di seguito è riportata la dimostrazione matematica rigorosa.</p>
+        
+        <div class="math-box">
+            <h3>1. Qualche definizione basilare</h3>
+            <p>Sia $x_1, x_2, \dots, x_N$ la sequenza di dati composta da $N$ campioni. Definiamo la media campionaria al passo $n < N$ come:</p>
+            $$\bar{x}_n = \frac{1}{n}\sum_{i=1}^n x_i$$
+            
+            <p>Definiamo la somma dei quadrati delle differenze dalla media al passo $n$ come:</p>
+            $$M_n = \sum_{i=1}^n (x_i - \bar{x}_n)^2$$
+        
+            <h3>2. Relazione tra $\bar{x}_n$ e $\bar{x}_{n-1}$</h3>
+            <p>Dobbiamo trovare il legame tra $\bar{x}_n$ e $\bar{x}_{n-1}$ per costruire la relazione ricorsiva. Possiamo osservare che isolando la somma dei dati, possiamo separare l'ennesimo termine $x_n$ per trovare il legame tra $\bar{x}_n$ e $\bar{x}_{n-1}$:</p>
+            
+            $$\bar{x}_n = \frac{(n-1)\bar{x}_{n-1} + x_n}{n}$$ 
+            $$n\bar{x}_n = (n-1)\bar{x}_{n-1} + x_n$$
+            
+            <p>A questo punto sottraendo $\bar{x}_n$ da entrambi i membri e portando $(n-1)\bar{x}_{n-1}$ dall'altra parte, si ottiene:</p>
+            $$(n-1)(\bar{x}_n - \bar{x}_{n-1}) = x_n - \bar{x}_n$$
+        
+            <h3>3. Scomposizione di $M_n$</h3>
+            <p>Tolgo l'$n-1$-esimo elemento dalla sommatoria:</p>
+            $$M_n = \sum_{i=1}^{n-1} (x_i - \bar{x}_n)^2 + (x_n - \bar{x}_n)^2$$
+            <p>Aggiungo e tolgo $\bar{x}_{n-1}$ all'interno della sommatoria:</p>
+            $$M_n = \sum_{i=1}^{n-1} [(x_i - \bar{x}_{n-1}) - (\bar{x}_n - \bar{x}_{n-1})]^2 + (x_n - \bar{x}_n)^2$$
+            
+            <p>Sviluppando il quadrato del binomio otteniamo:</p>
+            $$M_n = \sum_{i=1}^{n-1} (x_i - \bar{x}_{n-1})^2 - 2(\bar{x}_n - \bar{x}_{n-1})\sum_{i=1}^{n-1} (x_i - \bar{x}_{n-1}) + \sum_{i=1}^{n-1} (\bar{x}_n - \bar{x}_{n-1})^2 + (x_n - \bar{x}_n)^2$$
+        
+            <h3>4. Semplificazione</h3>
+            <p>Ora si possono osservare i singoli pezzi dell'equazione precedente:</p>
+            <ul>
+                <li>Il primo termine è proprio $M_{n-1}$</li>
+                <li>Il secondo termine è nullo poiché la somma degli scarti dalla media $\sum (x_i - \bar{x}_{n-1})$ è per definizione zero</li>
+                <li>Il terzo termine, essendo una costante sommata $n-1$ volte, diventa $(n-1)(\bar{x}_n - \bar{x}_{n-1})^2$</li>
+            </ul>
+            
+            <p>L'equazione diventa quindi:</p>
+            $$M_n = M_{n-1} + (n-1)(\bar{x}_n - \bar{x}_{n-1})^2 + (x_n - \bar{x}_n)^2$$
+        
+            <h3>5. Conclusione</h3>
+            <p>Sostituendo la relazione ricavata nella sezione 2 e raccogliendo i termini si ottiene l'algoritmo per la varianza di Welford:</p>
+            $$M_n = M_{n-1} + (x_n - \bar{x}_n)(x_n - \bar{x}_{n-1})$$
+            
+            <p>La varianza campionaria $s^2$ si può ottenere dividendo $M_n$ per i gradi di libertà:</p>
+            $$s^2 = \frac{M_n}{n-1}$$
+        </div>
+        </section>
+
+        <div class="project-footer">
+            Progetto realizzato per il blog scolastico • 2026
+        </div>
+    </div>
+
+    <script src="funzioni.js"></script>
+</body>
