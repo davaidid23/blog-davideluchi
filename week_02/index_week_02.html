@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Compito Settimana 1</title>
+    <title>Compito Settimana 2</title>
     <link rel="stylesheet" href="style_week_02.css">
     
     <script>
@@ -14,6 +14,18 @@
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
     <style>
+        .output-console {
+            background: #1e1e1e;
+            color: #00ff00;
+            padding: 15px;
+            font-family: monospace;
+            text-align: left;
+            border-radius: 5px;
+            margin-top: 15px;
+            white-space: pre-wrap;
+            min-height: 100px;
+        }
+        /* Stili per il codice se decidi di mostrarlo */
         .code-badge {
             display: inline-block;
             padding: 2px 8px;
@@ -34,20 +46,6 @@
             line-height: 1.5;
             border: 1px solid #181a1f;
             margin-bottom: 20px;
-        }
-        .math-box {
-            background: #fff;
-            border: 1px solid #e1e4e8;
-            padding: 30px;
-            border-radius: 8px;
-            text-align: left;
-            line-height: 1.6;
-        }
-        .math-box h3 {
-            color: #2c3e50;
-            margin-top: 25px;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 5px;
         }
     </style>
 </head>
@@ -60,78 +58,10 @@
         </header>
 
         <section class="content">
-<!DOCTYPE html>
-<html lang="it">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Compito Settimana 2</title>
-    <link rel="stylesheet" href="style_week_02.css">
-    
-    <script>
-      window.MathJax = {
-        tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] }
-      };
-    </script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-
-    <style>
-        .code-badge {
-            display: inline-block;
-            padding: 2px 8px;
-            background: #34495e;
-            color: white;
-            font-size: 0.8em;
-            border-radius: 4px 4px 0 0;
-            margin-top: 15px;
-        }
-        pre {
-            background: #282c34;
-            color: #abb2bf;
-            padding: 15px;
-            border-radius: 0 5px 5px 5px;
-            overflow-x: auto;
-            font-family: 'Consolas', 'Monaco', monospace;
-            font-size: 0.85em;
-            line-height: 1.5;
-            border: 1px solid #181a1f;
-            margin-bottom: 20px;
-        }
-        .math-box {
-            background: #fff;
-            border: 1px solid #e1e4e8;
-            padding: 30px;
-            border-radius: 8px;
-            text-align: left;
-            line-height: 1.6;
-        }
-        .math-box h3 {
-            color: #2c3e50;
-            margin-top: 25px;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 5px;
-        }
-        .output-console {
-            background: #1e1e1e;
-            color: #00ff00;
-            padding: 15px;
-            font-family: monospace;
-            text-align: left;
-            border-radius: 5px;
-            margin-top: 15px;
-            white-space: pre-wrap;
-            min-height: 100px;
-        }
-    </style>
-</head>
-<body>
-    <div class="project-container">
-        <a href="../index.html" class="back-btn">← Torna al Blog</a>
-
-        <section class="content">
             
             <h2>Esercizio 3: Test Algoritmi (Naive vs Welford)</h2>
-            <p>Verifichiamo empiricamente quanto dimostrato sopra. Premi i pulsanti per generare 100.000 numeri casuali e calcolare media e varianza con entrambi i metodi.</p>
+            <p>Verifichiamo empiricamente la stabilità numerica. Premi i pulsanti per generare 100.000 numeri casuali e calcolare media e varianza con entrambi i metodi.</p>
+            
             <div class="box" style="text-align: center;">
                 <button id="btn-test-normale" style="padding: 10px 20px; cursor: pointer; background: #27ae60; color: white; border: none; border-radius: 5px; margin-right: 10px; font-weight: bold;">Test Numeri Normali</button>
                 <button id="btn-test-difficile" style="padding: 10px 20px; cursor: pointer; background: #c0392b; color: white; border: none; border-radius: 5px; font-weight: bold;">Test Numeri Difficili</button>
@@ -146,7 +76,6 @@
         </div>
     </div>
 
-    <script src="funzioni.js"></script>
     <script src="funzioni_week_02.js"></script>
 </body>
 </html>
