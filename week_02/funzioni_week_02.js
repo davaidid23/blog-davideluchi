@@ -1,8 +1,6 @@
 document.addEventListener("DOMContentLoaded", function() {
-    console.log("--- INIZIO CONFRONTO ALGORITMI ---");
 
-    // Funzione per generare un array di numeri casuali
-    // 'offset' serve per spostare i numeri su valori enormi, 'scala' è la grandezza della variazione
+    // Funzione per generare array di numeri casuali
     function generaNumeri(N, offset, scala) {
         const dati = [];
         for (let i = 0; i < N; i++) {
@@ -11,32 +9,26 @@ document.addEventListener("DOMContentLoaded", function() {
         return dati;
     }
 
-    // --- ALGORITMO 1: NAIVE (Formula scolastica standard) ---
+    // Algoritmo Naive
     function calcolaNaive(array) {
         const n = array.length;
         if (n < 2) return { media: 0, varianza: 0 };
-        
         let somma = 0;
         let sommaQuadrati = 0;
-
         for (let x of array) {
             somma += x;
             sommaQuadrati += x * x;
         }
-
         const media = somma / n;
-        // Varianza = (Somma(x^2) - (Somma(x)^2)/n) / (n-1)
         const varianza = (sommaQuadrati - (somma * somma) / n) / (n - 1);
-        
         return { media: media, varianza: varianza };
     }
 
-    // --- ALGORITMO 2: WELFORD (Formula Ricorsiva) ---
+    // Algoritmo Welford
     function calcolaWelford(array) {
         let n = 0;
         let media = 0;
         let M2 = 0;
-
         for (let x of array) {
             n++;
             let delta = x - media;
@@ -44,43 +36,56 @@ document.addEventListener("DOMContentLoaded", function() {
             let delta2 = x - media;
             M2 += delta * delta2;
         }
-
         const varianza = n > 1 ? M2 / (n - 1) : 0;
         return { media: media, varianza: varianza };
     }
 
-    // Numero di campioni da generare (100.000 per rendere evidente il problema)
+    // Collegamento all'interfaccia HTML
+    const btnNormale = document.getElementById('btn-test-normale');
+    const btnDifficile = document.getElementById('btn-test-difficile');
+    const displayOutput = document.getElementById('output-algoritmi');
     const numeroCampioni = 100000;
 
-    // ==========================================
-    // TEST 1: NUMERI "NORMALI" (es. tra 0 e 100)
-    // ==========================================
-    console.log("TEST 1: Numeri Normali (es. da 0 a 100)");
-    const datiNormali = generaNumeri(numeroCampioni, 0, 100);
-    
-    const naiveNormale = calcolaNaive(datiNormali);
-    const welfordNormale = calcolaWelford(datiNormali);
-    
-    console.log("Naive   -> Media: " + naiveNormale.media.toFixed(4) + " | Varianza: " + naiveNormale.varianza.toFixed(4));
-    console.log("Welford -> Media: " + welfordNormale.media.toFixed(4) + " | Varianza: " + welfordNormale.varianza.toFixed(4));
-    console.log("Differenza Varianza: " + Math.abs(naiveNormale.varianza - welfordNormale.varianza));
-    console.log("--------------------------------------");
-
-    // ==========================================
-    // TEST 2: NUMERI "DIFFICILI" (1 miliardo + piccola variazione)
-    // ==========================================
-    console.log("TEST 2: Numeri Difficili (es. 1 miliardo + variazione da 0 a 10)");
-    const datiDifficili = generaNumeri(numeroCampioni, 1000000000, 10);
-    
-    const naiveDifficile = calcolaNaive(datiDifficili);
-    const welfordDifficile = calcolaWelford(datiDifficili);
-    
-    console.log("Naive   -> Media: " + naiveDifficile.media.toFixed(4) + " | Varianza: " + naiveDifficile.varianza.toFixed(4));
-    console.log("Welford -> Media: " + welfordDifficile.media.toFixed(4) + " | Varianza: " + welfordDifficile.varianza.toFixed(4));
-    console.log("Differenza Varianza: " + Math.abs(naiveDifficile.varianza - welfordDifficile.varianza));
-    
-    if (naiveDifficile.varianza < 0 || Math.abs(naiveDifficile.varianza - welfordDifficile.varianza) > 1) {
-        console.log("🚨 ATTENZIONE: L'algoritmo Naive ha fallito! Ha perso precisione numerica a causa di valori troppo grandi (cancellazione catastrofica). Welford invece ha retto perfettamente.");
+    if(btnNormale) {
+        btnNormale.addEventListener('click', function() {
+            displayOutput.textContent = "Calcolo in corso sui numeri normali...\n";
+            
+            const datiNormali = generaNumeri(numeroCampioni, 0, 100);
+            const naive = calcolaNaive(datiNormali);
+            const welford = calcolaWelford(datiNormali);
+            
+            let risultato = "--- TEST 1: Numeri da 0 a 100 ---\n\n";
+            risultato += "NAIVE   -> Media: " + naive.media.toFixed(4) + " | Varianza: " + naive.varianza.toFixed(4) + "\n";
+            risultato += "WELFORD -> Media: " + welford.media.toFixed(4) + " | Varianza: " + welford.varianza.toFixed(4) + "\n\n";
+            risultato += "Differenza varianza: " + Math.abs(naive.varianza - welford.varianza) + "\n";
+            risultato += "\nRisultato: Entrambi gli algoritmi funzionano perfettamente con numeri piccoli.";
+            
+            displayOutput.textContent = risultato;
+            displayOutput.style.color = "#00ff00"; // Verde
+        });
     }
-    console.log("--------------------------------------");
+
+    if(btnDifficile) {
+        btnDifficile.addEventListener('click', function() {
+            displayOutput.textContent = "Calcolo in corso sui numeri difficili...\n";
+            
+            const datiDifficili = generaNumeri(numeroCampioni, 1e9, 10);
+            const naive = calcolaNaive(datiDifficili);
+            const welford = calcolaWelford(datiDifficili);
+            
+            let risultato = "--- TEST 2: 1 Miliardo + Variazione (0-10) ---\n\n";
+            risultato += "NAIVE   -> Media: " + naive.media.toFixed(4) + " | Varianza: " + naive.varianza.toFixed(4) + "\n";
+            risultato += "WELFORD -> Media: " + welford.media.toFixed(4) + " | Varianza: " + welford.varianza.toFixed(4) + "\n\n";
+            risultato += "Differenza varianza: " + Math.abs(naive.varianza - welford.varianza) + "\n";
+            
+            if (naive.varianza < 0 || Math.abs(naive.varianza - welford.varianza) > 1) {
+                risultato += "\n🚨 ATTENZIONE: L'algoritmo Naive ha fallito miseramente a causa della 'cancellazione catastrofica'.\nWelford ha mantenuto la precisione.";
+                displayOutput.style.color = "#ff4d4d"; // Rosso
+            } else {
+                displayOutput.style.color = "#00ff00";
+            }
+            
+            displayOutput.textContent = risultato;
+        });
+    }
 });
