@@ -64,35 +64,39 @@
         
         <header>
             <h1>Progetto Settimana 2</h1>
-            <p style="text-align: center; color: #7f8c8d;">Analisi della stabilità numerica negli algoritmi di varianza</p>
         </header>
 
         <section class="content">
             
-            <h2>Esercizio 1: Test Algoritmi (Naive vs Welford)</h2>
-            <p>Verifichiamo empiricamente la stabilità numerica. Genera 100.000 campioni per confrontare l'algoritmo classico (Naive) con quello iterativo di Welford. 
-               In seguito, puoi scaricare il dataset completo per verificare i dati.</p>
+            <h2>Esercizio 1: Confronto tra algoritmi per media e varianza (Naive vs Welford)</h2>
+            <p>Verifichiamo empiricamente la stabilità degli algoritmi per calcolare media e varianza di una serie di numeri. 
+                Generiamo 100.000 numeri per confrontare l'algoritmo classico (Naive) con quello iterativo di Welford! 
+                Cliccando sul tasto verde in basso verranno generati numeri compresi tra 0 e 100 e potrai osservare che gli algoritmi produrranno gli stessi risultati. 
+                Premendo il tasto rosso, invece, verranno generati numeri dell'ordine del miliardo, che differiscono tra loro per le cifre decimali. 
+                In questo caso l'algoritmo naive per la varianza va incontro al processo detto cancellazione catastrofica, in quanto il calcolatore ha difficoltà a eseguire differenze tra numeri molto grandi che differiscono di qualche cifra decimale.
+               
+                In seguito, cliccando sul pulsante azzurro, si può scaricare il dataset completo per verificare i risultati.</p>
             
             <div class="box">
                 <div class="btn-group">
-                    <button id="btn-test-normale" class="btn">Test Numeri Normali</button>
-                    <button id="btn-test-difficile" class="btn">Test Numeri Difficili</button>
-                    <button id="btn-scarica-csv" class="btn">📥 Scarica Dati (CSV)</button>
+                    <button id="btn-test-normale" class="btn">Test numeri "per bene"</button>
+                    <button id="btn-test-difficile" class="btn">Test numeri problematici</button>
+                    <button id="btn-scarica-csv" class="btn">📥 Scarica i dati! (CSV)</button>
                 </div>
                 
                 <div id="output-algoritmi" class="output-console">In attesa di eseguire il test...</div>
             </div>
 <section class="content">
     <h2>Esercizio 2: Generazione di Distribuzioni dalla Uniforme $U(0,1)$</h2>
-    <p>La distribuzione Uniforme è il "mattone fondamentale": quasi ogni variabile casuale può essere ottenuta trasformando opportunamente un valore $u \in [0,1]$. Ecco le metodologie e le distribuzioni derivate più significative.</p>
+    <p>La distribuzione Uniforme è il "mattone fondamentale": molte variabili aleatorie possono essere ottenute grazie a un'opportuna trasformazione di un valore $u \in [0,1]$. Di seguito sono riportate alcune tra le metodologie e distribuzioni derivate più significative.</p>
 
     <div class="box">
         <h3>1. Metodologie di Trasformazione</h3>
-        <p>Per passare dal "rumore bianco" dell'uniforme a una struttura specifica, si utilizzano quattro approcci principali:</p>
+        <p>Per passare dall'uniforme a una struttura specifica, si utilizzano quattro approcci principali:</p>
         <ul style="line-height: 1.6;">
-            <li><strong>Metodo della Trasformata Inversa:</strong> Si risolve $u = F(x)$ per $x$, ottenendo $x = F^{-1}(u)$. Ideale quando la funzione di ripartizione è invertibile analiticamente.</li>
+            <li><strong>Metodo della Trasformata Inversa:</strong> Si risolve $u = F(x)$ per $x$, ottenendo $x = F^{-1}(u)$. Molto utile se la funzione di ripartizione è analiticamente. invertibile</li>
             <li><strong>Metodo di Box-Muller:</strong> Sfrutta le coordinate polari per generare coppie di variabili <b>Normali</b> indipendenti partendo da due Uniformi.</li>
-            <li><strong>Metodo di Composizione:</strong> La variabile desiderata è vista come somma o combinazione di altre variabili (es. la <b>Binomiale</b> come somma di Bernoulli).</li>
+            <li><strong>Metodo di Composizione:</strong> La variabile di output è vista come somma o combinazione di altre variabili (es. la <b>Binomiale</b> come somma di Bernoulli).</li>
             <li><strong>Metodo di Rigetto (Acceptance-Rejection):</strong> Si genera un punto in un'area nota e lo si "accetta" solo se cade sotto la densità della distribuzione target.</li>
         </ul>
 
