@@ -83,87 +83,52 @@
                 <div id="output-algoritmi" class="output-console">In attesa di eseguire il test...</div>
             </div>
 
-        </section>
-
         <section class="content">
             <h2>Esercizio 2: Generazione di Distribuzioni dalla Uniforme $U(0,1)$</h2>
-            <p>La distribuzione Uniforme è il "mattone fondamentale": quasi ogni variabile casuale può essere ottenuta trasformando opportunamente un valore $u \in [0,1]$. Ecco le metodologie e le distribuzioni derivate più significative.</p>
+            <p>La distribuzione Uniforme è il mattone fondamentale della simulazione statistica. Attraverso metodi come la <strong>Trasformazione Inversa</strong> o il <strong>Metodo di Box-Muller</strong>, possiamo generare quasi ogni altra distribuzione di probabilità.</p>
         
             <div class="box">
-                <h3>1. Metodologie di Trasformazione</h3>
-                <p>Per passare dal "rumore bianco" dell'uniforme a una struttura specifica, si utilizzano quattro approcci principali:</p>
-                <ul style="line-height: 1.6;">
-                    <li><strong>Metodo della Trasformata Inversa:</strong> Si risolve $u = F(x)$ per $x$, ottenendo $x = F^{-1}(u)$. Ideale quando la funzione di ripartizione è invertibile analiticamente.</li>
-                    <li><strong>Metodo di Box-Muller:</strong> Sfrutta le coordinate polari per generare coppie di variabili <b>Normali</b> indipendenti partendo da due Uniformi.</li>
-                    <li><strong>Metodo di Composizione:</strong> La variabile desiderata è vista come somma o combinazione di altre variabili (es. la <b>Binomiale</b> come somma di Bernoulli).</li>
-                    <li><strong>Metodo di Rigetto (Acceptance-Rejection):</strong> Si genera un punto in un'area nota e lo si "accetta" solo se cade sotto la densità della distribuzione target.</li>
-                </ul>
-        
-                <hr style="border: 0; border-top: 1px solid #eee; margin: 25px 0;">
-        
-                <h3>2. Distribuzioni Continue</h3>
-                <table style="width:100%; border-collapse: collapse; margin-bottom: 25px; font-size: 0.95em;">
-                    <tr style="background-color: #34495e; color: white; text-align: left;">
-                        <th style="padding: 12px; border: 1px solid #444;">Distribuzione</th>
-                        <th style="padding: 12px; border: 1px solid #444;">Metodo Principale</th>
-                        <th style="padding: 12px; border: 1px solid #444;">Formula di Generazione ($u \sim U$)</th>
+                <h3>1. Distribuzioni Continue</h3>
+                <table style="width:100%; border-collapse: collapse; margin-bottom: 20px;">
+                    <tr style="background-color: #34495e; color: white;">
+                        <th style="padding: 10px; border: 1px solid #444;">Distribuzione</th>
+                        <th style="padding: 10px; border: 1px solid #444;">Metodo di Generazione (da $u \sim U(0,1)$)</th>
                     </tr>
                     <tr>
                         <td style="padding: 10px; border: 1px solid #ddd;"><strong>Esponenziale</strong></td>
-                        <td style="padding: 10px; border: 1px solid #ddd;">Trasf. Inversa</td>
-                        <td style="padding: 10px; border: 1px solid #ddd;">$x = -\frac{1}{\lambda} \ln(u)$</td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">$x = -\frac{1}{\lambda} \ln(1-u)$</td>
                     </tr>
                     <tr>
-                        <td style="padding: 10px; border: 1px solid #ddd;"><strong>Normale (Gauss)</strong></td>
-                        <td style="padding: 10px; border: 1px solid #ddd;">Box-Muller</td>
-                        <td style="padding: 10px; border: 1px solid #ddd;">$z = \sqrt{-2\ln u_1} \cos(2\pi u_2)$</td>
+                        <td style="padding: 10px; border: 1px solid #ddd;"><strong>Normal (Gaussiana)</strong></td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">Box-Muller: $z_0 = \sqrt{-2\ln u_1} \cos(2\pi u_2)$</td>
                     </tr>
                     <tr>
                         <td style="padding: 10px; border: 1px solid #ddd;"><strong>Cauchy</strong></td>
-                        <td style="padding: 10px; border: 1px solid #ddd;">Trasf. Inversa</td>
                         <td style="padding: 10px; border: 1px solid #ddd;">$x = x_0 + \gamma \tan(\pi(u - 0.5))$</td>
                     </tr>
                     <tr>
                         <td style="padding: 10px; border: 1px solid #ddd;"><strong>Triangolare</strong></td>
-                        <td style="padding: 10px; border: 1px solid #ddd;">Composizione</td>
-                        <td style="padding: 10px; border: 1px solid #ddd;">$x = u_1 + u_2$ (Distribuzione a "tenda")</td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">Somma di due uniformi: $x = u_1 + u_2$ (su $[0,2]$)</td>
                     </tr>
                     <tr>
                         <td style="padding: 10px; border: 1px solid #ddd;"><strong>Chi-Quadro ($\chi^2$)</strong></td>
-                        <td style="padding: 10px; border: 1px solid #ddd;">Composizione</td>
-                        <td style="padding: 10px; border: 1px solid #ddd;">$\sum_{i=1}^{k} Z_i^2$ (con $Z \sim N(0,1)$)</td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">Somma dei quadrati di $k$ Normali standard $Z^2$</td>
                     </tr>
                     <tr>
                         <td style="padding: 10px; border: 1px solid #ddd;"><strong>F di Fisher</strong></td>
-                        <td style="padding: 10px; border: 1px solid #ddd;">Composizione</td>
-                        <td style="padding: 10px; border: 1px solid #ddd;">$X = \frac{\chi^2_{d1}/d_1}{\chi^2_{d2}/d_2}$</td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">Rapporto tra due Chi-Quadro divise per i gradi di libertà</td>
                     </tr>
                 </table>
         
-                <h3>3. Distribuzioni Discrete</h3>
-                <table style="width:100%; border-collapse: collapse; font-size: 0.95em;">
-                    <tr style="background-color: #2c3e50; color: white; text-align: left;">
-                        <th style="padding: 12px; border: 1px solid #444;">Distribuzione</th>
-                        <th style="padding: 12px; border: 1px solid #444;">Logica di Generazione</th>
-                    </tr>
-                    <tr>
-                        <td style="padding: 10px; border: 1px solid #ddd;"><strong>Bernoulli</strong></td>
-                        <td style="padding: 10px; border: 1px solid #ddd;">Se $u < p \implies 1$, altrimenti $0$.</td>
-                    </tr>
-                    <tr>
-                        <td style="padding: 10px; border: 1px solid #ddd;"><strong>Binomiale</strong></td>
-                        <td style="padding: 10px; border: 1px solid #ddd;">Somma di $n$ variabili di Bernoulli indipendenti.</td>
-                    </tr>
-                    <tr>
-                        <td style="padding: 10px; border: 1px solid #ddd;"><strong>Geometrica</strong></td>
-                        <td style="padding: 10px; border: 1px solid #ddd;">$x = \lfloor \frac{\ln(u)}{\ln(1-p)} \rfloor$ (Tentativi fino al successo).</td>
-                    </tr>
-                    <tr>
-                        <td style="padding: 10px; border: 1px solid #ddd;"><strong>Poisson</strong></td>
-                        <td style="padding: 10px; border: 1px solid #ddd;">Numero di eventi esponenziali che accadono in un tempo $T$.</td>
-                    </tr>
-                </table>
+                <h3>2. Distribuzioni Discrete</h3>
+                <ul style="line-height: 1.8;">
+                    <li><strong>Bernoulli:</strong> Si assegna 1 se $u < p$, altrimenti 0.</li>
+                    <li><strong>Binomiale:</strong> Somma di $n$ variabili di Bernoulli indipendenti.</li>
+                    <li><strong>Geometrica:</strong> Numero di fallimenti prima del primo successo: $x = \lfloor \frac{\ln(1-u)}{\ln(1-p)} \rfloor$.</li>
+                    <li><strong>Poisson:</strong> Generata contando quanti tempi di inter-arrivo esponenziali sommati restano sotto una soglia $T$.</li>
+                </ul>
             </div>
+        </section>
         </section>
 
         <div class="project-footer">
