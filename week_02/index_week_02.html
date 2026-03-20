@@ -83,6 +83,52 @@
                 <div id="output-algoritmi" class="output-console">In attesa di eseguire il test...</div>
             </div>
 
+        <section class="content">
+            <h2>Esercizio 2: Generazione di Distribuzioni dalla Uniforme $U(0,1)$</h2>
+            <p>La distribuzione Uniforme è il mattone fondamentale della simulazione statistica. Attraverso metodi come la <strong>Trasformazione Inversa</strong> o il <strong>Metodo di Box-Muller</strong>, possiamo generare quasi ogni altra distribuzione di probabilità.</p>
+        
+            <div class="box">
+                <h3>1. Distribuzioni Continue</h3>
+                <table style="width:100%; border-collapse: collapse; margin-bottom: 20px;">
+                    <tr style="background-color: #34495e; color: white;">
+                        <th style="padding: 10px; border: 1px solid #444;">Distribuzione</th>
+                        <th style="padding: 10px; border: 1px solid #444;">Metodo di Generazione (da $u \sim U(0,1)$)</th>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px; border: 1px solid #ddd;"><strong>Esponenziale</strong></td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">$x = -\frac{1}{\lambda} \ln(1-u)$</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px; border: 1px solid #ddd;"><strong>Normal (Gaussiana)</strong></td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">Box-Muller: $z_0 = \sqrt{-2\ln u_1} \cos(2\pi u_2)$</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px; border: 1px solid #ddd;"><strong>Cauchy</strong></td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">$x = x_0 + \gamma \tan(\pi(u - 0.5))$</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px; border: 1px solid #ddd;"><strong>Triangolare</strong></td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">Somma di due uniformi: $x = u_1 + u_2$ (su $[0,2]$)</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px; border: 1px solid #ddd;"><strong>Chi-Quadro ($\chi^2$)</strong></td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">Somma dei quadrati di $k$ Normali standard $Z^2$</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px; border: 1px solid #ddd;"><strong>F di Fisher</strong></td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">Rapporto tra due Chi-Quadro divise per i gradi di libertà</td>
+                    </tr>
+                </table>
+        
+                <h3>2. Distribuzioni Discrete</h3>
+                <ul style="line-height: 1.8;">
+                    <li><strong>Bernoulli:</strong> Si assegna 1 se $u < p$, altrimenti 0.</li>
+                    <li><strong>Binomiale:</strong> Somma di $n$ variabili di Bernoulli indipendenti.</li>
+                    <li><strong>Geometrica:</strong> Numero di fallimenti prima del primo successo: $x = \lfloor \frac{\ln(1-u)}{\ln(1-p)} \rfloor$.</li>
+                    <li><strong>Poisson:</strong> Generata contando quanti tempi di inter-arrivo esponenziali sommati restano sotto una soglia $T$.</li>
+                </ul>
+            </div>
+        </section>
         </section>
 
         <div class="project-footer">
