@@ -79,7 +79,7 @@ document.addEventListener("DOMContentLoaded", function() {
             risultato += "Differenza varianza: " + Math.abs(naive.varianza - welford.varianza) + "\n";
             
             if (naive.varianza < 0 || Math.abs(naive.varianza - welford.varianza) > 1) {
-                risultato += "\n🚨 ATTENZIONE: L'algoritmo Naive ha fallito miseramente a causa della 'cancellazione catastrofica'.\nWelford ha mantenuto la precisione.";
+                risultato += "\n🚨 ATTENZIONE: L'algoritmo Naive ha fallito a causa della 'cancellazione catastrofica'.\nWelford ha mantenuto la precisione.";
                 displayOutput.style.color = "#ff4d4d"; // Rosso
             } else {
                 displayOutput.style.color = "#00ff00";
