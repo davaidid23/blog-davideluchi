@@ -18,34 +18,43 @@
             background: #1e1e1e;
             color: #00ff00;
             padding: 15px;
-            font-family: monospace;
+            font-family: 'Consolas', 'Monaco', monospace;
             text-align: left;
             border-radius: 5px;
             margin-top: 15px;
             white-space: pre-wrap;
-            min-height: 100px;
+            min-height: 120px;
+            border: 1px solid #333;
         }
-        /* Stili per il codice se decidi di mostrarlo */
-        .code-badge {
-            display: inline-block;
-            padding: 2px 8px;
-            background: #34495e;
-            color: white;
-            font-size: 0.8em;
-            border-radius: 4px 4px 0 0;
-            margin-top: 15px;
-        }
-        pre {
-            background: #282c34;
-            color: #abb2bf;
-            padding: 15px;
-            border-radius: 0 5px 5px 5px;
-            overflow-x: auto;
-            font-family: 'Consolas', 'Monaco', monospace;
-            font-size: 0.85em;
-            line-height: 1.5;
-            border: 1px solid #181a1f;
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
             margin-bottom: 20px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: opacity 0.2s;
+        }
+
+        .btn:hover { opacity: 0.9; }
+
+        #btn-test-normale { background: #27ae60; color: white; }
+        #btn-test-difficile { background: #c0392b; color: white; }
+        #btn-scarica-csv { background: #2980b9; color: white; } /* Blu per l'azione di download */
+
+        .project-footer {
+            margin-top: 40px;
+            font-size: 0.8em;
+            color: #7f8c8d;
+            text-align: center;
         }
     </style>
 </head>
@@ -55,16 +64,21 @@
         
         <header>
             <h1>Progetto Settimana 2</h1>
+            <p style="text-align: center; color: #7f8c8d;">Analisi della stabilità numerica negli algoritmi di varianza</p>
         </header>
 
         <section class="content">
             
             <h2>Esercizio 1: Test Algoritmi (Naive vs Welford)</h2>
-            <p>Verifichiamo empiricamente la stabilità numerica. Premi i pulsanti per generare 100.000 numeri casuali e calcolare media e varianza con entrambi i metodi.</p>
+            <p>Verifichiamo empiricamente la stabilità numerica. Genera 100.000 campioni per confrontare l'algoritmo classico (Naive) con quello iterativo di Welford. 
+               In seguito, puoi scaricare il dataset completo per verificare i dati.</p>
             
-            <div class="box" style="text-align: center;">
-                <button id="btn-test-normale" style="padding: 10px 20px; cursor: pointer; background: #27ae60; color: white; border: none; border-radius: 5px; margin-right: 10px; font-weight: bold;">Test Numeri Normali</button>
-                <button id="btn-test-difficile" style="padding: 10px 20px; cursor: pointer; background: #c0392b; color: white; border: none; border-radius: 5px; font-weight: bold;">Test Numeri Difficili</button>
+            <div class="box">
+                <div class="btn-group">
+                    <button id="btn-test-normale" class="btn">Test Numeri Normali</button>
+                    <button id="btn-test-difficile" class="btn">Test Numeri Difficili</button>
+                    <button id="btn-scarica-csv" class="btn">📥 Scarica Dati (CSV)</button>
+                </div>
                 
                 <div id="output-algoritmi" class="output-console">In attesa di eseguire il test...</div>
             </div>
