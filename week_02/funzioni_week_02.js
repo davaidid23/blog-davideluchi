@@ -1,15 +1,16 @@
 document.addEventListener("DOMContentLoaded", function() {
 
-    // Funzione per generare array di numeri casuali
+    let ultimoArrayGenerato = []; 
+
     function generaNumeri(N, offset, scala) {
         const dati = [];
         for (let i = 0; i < N; i++) {
             dati.push(offset + (Math.random() * scala));
         }
+        ultimoArrayGenerato = dati; 
         return dati;
     }
 
-    // Algoritmo Naive
     function calcolaNaive(array) {
         const n = array.length;
         if (n < 2) return { media: 0, varianza: 0 };
@@ -24,7 +25,6 @@ document.addEventListener("DOMContentLoaded", function() {
         return { media: media, varianza: varianza };
     }
 
-    // Algoritmo Welford
     function calcolaWelford(array) {
         let n = 0;
         let media = 0;
@@ -40,52 +40,66 @@ document.addEventListener("DOMContentLoaded", function() {
         return { media: media, varianza: varianza };
     }
 
-    // Collegamento all'interfaccia HTML
     const btnNormale = document.getElementById('btn-test-normale');
     const btnDifficile = document.getElementById('btn-test-difficile');
+    const btnScaricaCSV = document.getElementById('btn-scarica-csv'); // Nuovo tasto
     const displayOutput = document.getElementById('output-algoritmi');
     const numeroCampioni = 100000;
 
-    if(btnNormale) {
-        btnNormale.addEventListener('click', function() {
-            displayOutput.textContent = "Calcolo in corso sui numeri normali...\n";
-            
-            const datiNormali = generaNumeri(numeroCampioni, 0, 100);
-            const naive = calcolaNaive(datiNormali);
-            const welford = calcolaWelford(datiNormali);
-            
-            let risultato = "--- TEST 1: Numeri da 0 a 100 ---\n\n";
-            risultato += "NAIVE   -> Media: " + naive.media.toFixed(4) + " | Varianza: " + naive.varianza.toFixed(4) + "\n";
-            risultato += "WELFORD -> Media: " + welford.media.toFixed(4) + " | Varianza: " + welford.varianza.toFixed(4) + "\n\n";
-            risultato += "Differenza varianza: " + Math.abs(naive.varianza - welford.varianza) + "\n";
-            risultato += "\nRisultato: Entrambi gli algoritmi funzionano perfettamente con numeri piccoli.";
-            
-            displayOutput.textContent = risultato;
-            displayOutput.style.color = "#00ff00"; // Verde
-        });
+    function eseguiTest(tipo) {
+        let dati;
+        if (tipo === 'normale') {
+            dati = generaNumeri(numeroCampioni, 0, 100);
+            displayOutput.style.color = "#00ff00";
+        } else {
+            dati = generaNumeri(numeroCampioni, 1e9, 10);
+        }
+
+        const naive = calcolaNaive(dati);
+        const welford = calcolaWelford(dati);
+
+        let risultato = `--- TEST: ${tipo.toUpperCase()} ---\n\n`;
+        risultato += `NAIVE   -> Media: ${naive.media.toFixed(6)} | Var: ${naive.varianza.toFixed(6)}\n`;
+        risultato += `WELFORD -> Media: ${welford.media.toFixed(6)} | Var: ${welford.varianza.toFixed(6)}\n\n`;
+        risultato += `Differenza Assoluta: ${Math.abs(naive.varianza - welford.varianza).toExponential(4)}\n`;
+
+        if (tipo === 'difficile' && (naive.varianza < 0 || Math.abs(naive.varianza - welford.varianza) > 0.1)) {
+            risultato += "\n🚨 ERRORE RILEVATO: L'algoritmo Naive ha fallito.\nScarica il CSV per vedere l'entità dei numeri.";
+            displayOutput.style.color = "#ff4d4d";
+        }
+        displayOutput.textContent = risultato;
     }
 
-    if(btnDifficile) {
-        btnDifficile.addEventListener('click', function() {
-            displayOutput.textContent = "Calcolo in corso sui numeri difficili...\n";
-            
-            const datiDifficili = generaNumeri(numeroCampioni, 1e9, 10);
-            const naive = calcolaNaive(datiDifficili);
-            const welford = calcolaWelford(datiDifficili);
-            
-            let risultato = "--- TEST 2: 1 Miliardo + Variazione (0-10) ---\n\n";
-            risultato += "NAIVE   -> Media: " + naive.media.toFixed(4) + " | Varianza: " + naive.varianza.toFixed(4) + "\n";
-            risultato += "WELFORD -> Media: " + welford.media.toFixed(4) + " | Varianza: " + welford.varianza.toFixed(4) + "\n\n";
-            risultato += "Differenza varianza: " + Math.abs(naive.varianza - welford.varianza) + "\n";
-            
-            if (naive.varianza < 0 || Math.abs(naive.varianza - welford.varianza) > 1) {
-                risultato += "\n🚨 ATTENZIONE: L'algoritmo Naive ha fallito a causa della 'cancellazione catastrofica'.\nWelford ha mantenuto la precisione.";
-                displayOutput.style.color = "#ff4d4d"; // Rosso
-            } else {
-                displayOutput.style.color = "#00ff00";
+    if(btnNormale) btnNormale.addEventListener('click', () => eseguiTest('normale'));
+    if(btnDifficile) btnDifficile.addEventListener('click', () => eseguiTest('difficile'));
+
+    // Funzione per il download del CSV
+    if(btnScaricaCSV) {
+        btnScaricaCSV.addEventListener('click', function() {
+            if (ultimoArrayGenerato.length === 0) {
+                alert("Esegui prima un test per generare i dati!");
+                return;
             }
+
+            // Creazione contenuto CSV (una colonna con intestazione)
+            let contenutoCSV = "Indice;Valore\n";
+            for (let i = 0; i < ultimoArrayGenerato.length; i++) {
+                // Usiamo il punto come decimale e il punto e virgola come separatore per Excel
+                contenutoCSV += `${i};${ultimoArrayGenerato[i]}\n`;
+            }
+
+            // Creazione del file virtuale (Blob)
+            const blob = new Blob([contenutoCSV], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
             
-            displayOutput.textContent = risultato;
+            // Creazione link temporaneo per il download
+            const link = document.createElement("a");
+            link.setAttribute("href", url);
+            link.setAttribute("download", "dati_varianza.csv");
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
         });
     }
 });
