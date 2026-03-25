@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function() {
     // ESERCIZIO 1: Naive vs Welford
     // ==========================================
     let ultimoArrayGenerato = []; 
-    const numeroCampioniEsercizio1 = 100000; // Fisso per il test di stabilità
+    const numeroCampioniEsercizio1 = 100000;
 
     const btnNormale = document.getElementById('btn-test-normale');
     const btnDifficile = document.getElementById('btn-test-difficile');
@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
         const media = somma / n;
         const varianza = (sommaQuadrati - (somma * somma) / n) / (n - 1);
-        return { media: media, varianza: varianza };
+        return { media, varianza };
     }
 
     function calcolaWelford(array) {
@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", function() {
             M2 += delta * delta2;
         }
         const varianza = n > 1 ? M2 / (n - 1) : 0;
-        return { media: media, varianza: varianza };
+        return { media, varianza };
     }
 
     function eseguiTest(tipo) {
@@ -71,7 +71,6 @@ document.addEventListener("DOMContentLoaded", function() {
         displayOutput.textContent = risultato;
     }
 
-    // Eventi Esercizio 1
     if(btnNormale) btnNormale.addEventListener('click', () => eseguiTest('normale'));
     if(btnDifficile) btnDifficile.addEventListener('click', () => eseguiTest('difficile'));
     
@@ -98,7 +97,6 @@ document.addEventListener("DOMContentLoaded", function() {
     let chartUniforme = null;
     let chartOutput = null;
 
-    // Definiamo i generatori matematici
     const GeneratoriStocastici = {
         normale: () => {
             let u1 = Math.random(), u2 = Math.random();
@@ -107,7 +105,21 @@ document.addEventListener("DOMContentLoaded", function() {
         esponenziale: (lambda = 1) => -Math.log(1.0 - Math.random()) / lambda,
         cauchy: () => Math.tan(Math.PI * (Math.random() - 0.5)),
         pareto: (xm = 1, alpha = 3) => xm / Math.pow(Math.random(), 1.0 / alpha),
-        triangolare: () => Math.random() + Math.random(),
+        triangolare: () => {
+            const u1 = Math.random(), u2 = Math.random();
+            return (u1 + u2) / 2;
+        },
+        weibull: (lambda = 1, k = 1.5) => lambda * Math.pow(-Math.log(1.0 - Math.random()), 1/k),
+        gamma: (k = 3, theta = 1) => {
+            let sum = 0;
+            for(let i=0; i<k; i++) sum += -Math.log(Math.random());
+            return sum * theta;
+        },
+        beta: (a = 2, b = 5) => {
+            let x = GeneratoriStocastici.gamma(a, 1);
+            let y = GeneratoriStocastici.gamma(b, 1);
+            return x / (x + y);
+        },
         poisson: (lambda = 5) => {
             let L = Math.exp(-lambda), p = 1.0, k = 0;
             do { k++; p *= Math.random(); } while (p > L);
@@ -121,24 +133,37 @@ document.addEventListener("DOMContentLoaded", function() {
         chi_quadro: (k = 4) => {
             let sum = 0;
             for(let i=0; i<k; i++) {
-                let u1 = Math.random(), u2 = Math.random();
-                let z = Math.sqrt(-2.0 * Math.log(u1)) * Math.cos(2.0 * Math.PI * u2);
+                let z = GeneratoriStocastici.normale();
                 sum += z * z;
             }
             return sum;
+        },
+        student: (df = 5) => {
+            let z = GeneratoriStocastici.normale();
+            let v = GeneratoriStocastici.chi_quadro(df);
+            return z / Math.sqrt(v / df);
+        },
+        fisher: (d1 = 10, d2 = 20) => {
+            let v1 = GeneratoriStocastici.chi_quadro(d1) / d1;
+            let v2 = GeneratoriStocastici.chi_quadro(d2) / d2;
+            return v1 / v2;
+        },
+        discreta_arbitraria: () => {
+            const r = Math.random();
+            if (r < 0.1) return 10;
+            if (r < 0.4) return 20;
+            if (r < 0.5) return 30;
+            if (r < 0.9) return 40;
+            return 50;
         }
     };
 
-    // Funzione per creare i dati dell'istogramma
     function raggruppaInBin(dati, nBins = 40) {
         if (dati.length === 0) return { etichette: [], conteggi: [] };
-        
         let sorted = [...dati].sort((a,b) => a - b);
-        // Tagliamo gli outlier per una visualizzazione migliore
         let min = sorted[Math.floor(sorted.length * 0.01)];
         let max = sorted[Math.floor(sorted.length * 0.99)];
-        
-        if (min === max) { max = min + 1; min = min - 1; } // Evita divisione per zero
+        if (min === max) { max = min + 1; min = min - 1; }
 
         let ampiezza = (max - min) / nBins;
         let conteggi = new Array(nBins).fill(0);
@@ -152,18 +177,17 @@ document.addEventListener("DOMContentLoaded", function() {
             if(x >= min && x <= max) {
                 let index = Math.floor((x - min) / ampiezza);
                 if(index >= nBins) index = nBins - 1;
+                if(index < 0) index = 0;
                 conteggi[index]++;
             }
         }
         return { etichette, conteggi };
     }
 
-    // Funzione helper per Chart.js
     function disegnaGrafico(canvasId, chartInstance, etichette, dati, titolo, colore) {
         const canvas = document.getElementById(canvasId);
         if (!canvas) return null;
         const ctx = canvas.getContext('2d');
-        
         if (chartInstance) chartInstance.destroy();
 
         return new Chart(ctx, {
@@ -181,7 +205,7 @@ document.addEventListener("DOMContentLoaded", function() {
             },
             options: { 
                 responsive: true,
-                maintainAspectRatio: false,
+                maintainAspectRatio: false, 
                 scales: { 
                     x: { display: false }, 
                     y: { beginAtZero: true } 
@@ -191,39 +215,34 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
-    // Gestione del click per l'Esercizio 2
     const btnGeneraDist = document.getElementById('btn-genera-dist');
     const inputCampioni = document.getElementById('input-campioni');
+    const selectDist = document.getElementById('select-distribuzione');
 
     if (btnGeneraDist) {
         btnGeneraDist.addEventListener('click', () => {
-            const select = document.getElementById('select-distribuzione');
-            const tipoSelezionato = select.value;
-            
-            // Lettura dinamica di N
+            const tipoSelezionato = selectDist.value;
             let N = inputCampioni ? parseInt(inputCampioni.value) : 10000;
             if (isNaN(N) || N <= 0) N = 10000;
-            if (N > 1000000) N = 1000000; // Limite sicurezza
-            
+            if (N > 500000) N = 500000; 
+
             let datiUniformi = [];
             let datiTrasformati = [];
 
-            // Generazione
             for(let i=0; i<N; i++) {
                 datiUniformi.push(Math.random());
-                datiTrasformati.push(GeneratoriStocastici[tipoSelezionato]());
+                const gen = GeneratoriStocastici[tipoSelezionato] || GeneratoriStocastici.normale;
+                datiTrasformati.push(gen());
             }
 
-            // Binning
             const hU = raggruppaInBin(datiUniformi, 30);
             const hO = raggruppaInBin(datiTrasformati, 40);
 
-            // Rendering Grafici
-            chartUniforme = disegnaGrafico('chart-uniforme', chartUniforme, hU.etichette, hU.conteggi, `Input U(0,1) [N=${N}]`, 'rgba(41, 128, 185, 0.6)');
+            chartUniforme = disegnaGrafico('chart-uniforme', chartUniforme, hU.etichette, hU.conteggi, `Input U(0,1)`, 'rgba(41, 128, 185, 0.6)');
             
-            const nomeDist = select.options[select.selectedIndex].text;
+            const nomeDist = selectDist.options[selectDist.selectedIndex].text;
             document.getElementById('titolo-output').innerText = `Output: ${nomeDist}`;
-            chartOutput = disegnaGrafico('chart-output', chartOutput, hO.etichette, hO.conteggi, `${nomeDist} [N=${N}]`, 'rgba(142, 68, 173, 0.6)');
+            chartOutput = disegnaGrafico('chart-output', chartOutput, hO.etichette, hO.conteggi, `${nomeDist}`, 'rgba(142, 68, 173, 0.6)');
         });
     }
 });
