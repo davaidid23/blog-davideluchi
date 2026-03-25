@@ -72,7 +72,35 @@ header p {
     margin: 25px 0;
 }
 
-/* Un tocco di stile per le liste o i dettagli */
+/* =========================
+   GRAFICI (FIX LAYOUT)
+   ========================= */
+
+.chart-container {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.chart-box {
+    flex: 1;
+    min-width: 300px;
+    background: #fff;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+
+    height: 350px;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.chart-box canvas {
+    flex: 1;
+}
+
+/* Footer */
 .project-footer {
     margin-top: 50px;
     font-size: 0.8em;
