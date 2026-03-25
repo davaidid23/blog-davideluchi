@@ -117,44 +117,45 @@
             </div>
         </section>
 
-        <section class="content">
-            <h2>Esercizio 2: Generazione di Distribuzioni dalla Uniforme U(0,1)</h2>
+<section class="content">
+    <h2>Esercizio 2: Generazione di Distribuzioni dalla Uniforme U(0,1)</h2>
 
-            <p>In questa sezione analizziamo le strategie fondamentali per derivare diverse distribuzioni statistiche a partire dalla distribuzione uniforme: <strong>U ~ U[0,1)</strong>.</p>
-            <p>I principali procedimenti si raggruppano in quattro classi:</p>
-            <ul>
-                <li>Inversione della funzione di ripartizione</li>
-                <li>Trasformazioni funzionali</li>
-                <li>Composizione tramite somme o rapporti di variabili</li>
-                <li>Algoritmi iterativi e Metodi di Accettazione-Rifiuto</li>
-            </ul>
+    <p>In questa sezione analizziamo le strategie fondamentali per derivare diverse distribuzioni statistiche a partire dalla distribuzione sorgente uniforme: <strong>U ~ U[0,1)</strong>.</p>
+    
+    <div class="box">
+        <h4>1. Metodo dell'Inversione (CDF Inversion)</h4>
+        <p>Utilizzato quando la funzione di ripartizione $F(x)$ è analiticamente invertibile. Si calcola $X = F^{-1}(U)$.</p>
+        <ul>
+            <li><strong>Esponenziale:</strong> $X = -\frac{\ln(U)}{\lambda}$ (modella il tempo tra eventi).</li>
+            <li><strong>Weibull:</strong> $X = \lambda(-\ln(U))^{1/k}$ (analisi di sopravvivenza).</li>
+            <li><strong>Pareto:</strong> $X = x_m U^{-1/\alpha}$ (distribuzione del reddito/ricchezza).</li>
+            <li><strong>Cauchy:</strong> $X = \tan(\pi(U - 1/2))$ (distribuzione a "code pesanti").</li>
+            <li><strong>Discreta Arbitraria:</strong> Tramite la tecnica del <em>Look-up table</em> confrontando $U$ con le probabilità cumulate.</li>
+        </ul>
 
-            <div class="box">
-                <h4>1. Metodo dell'Inversione (Inversione della CDF)</h4>
-                <p>Se la funzione di ripartizione $F(x)$ è analiticamente invertibile: $X = F^{-1}(U)$.</p>
-                <ul>
-                    <li><strong>Uniforme:</strong> $X = U$</li>
-                    <li><strong>Esponenziale:</strong> $X = -\frac{\ln(U)}{\lambda}$</li>
-                    <li><strong>Weibull:</strong> $X = \lambda(-\ln(U))^{1/k}$</li>
-                    <li><strong>Pareto:</strong> $X = x_m U^{-1/\alpha}$</li>
-                </ul>
+        <hr style="border: 0; border-top: 1px solid #eee; margin: 25px 0;">
 
-                <hr style="border: 0; border-top: 1px solid #eee; margin: 25px 0;">
+        <h4>2. Trasformazioni Funzionali e Geometriche</h4>
+        <p>Tecniche che manipolano una o più variabili uniformi per ottenere la forma desiderata.</p>
+        <ul>
+            <li><strong>Normale (Box-Muller):</strong> $X = \sqrt{-2 \ln(U_1)} \cos(2\pi U_2)$. Fondamentale per il Teorema del Limite Centrale.</li>
+            <li><strong>Triangolare:</strong> Spesso ottenuta come $X = \frac{U_1 + U_2}{2}$, utile per simulazioni con dati scarsi.</li>
+            <li><strong>Beta:</strong> Derivata da trasformazioni di variabili Gamma o tramite statistiche d'ordine.</li>
+        </ul>
 
-                <h4>2. Trasformazioni di Variabili</h4>
-                <p><strong>Normale (Box-Muller):</strong> $X = \sqrt{-2 \ln(U_1)} \cos(2\pi U_2)$</p>
-                <p><strong>Cauchy:</strong> $X = \tan(\pi(U - 1/2))$</p>
+        <hr style="border: 0; border-top: 1px solid #eee; margin: 25px 0;">
 
-                <hr style="border: 0; border-top: 1px solid #eee; margin: 25px 0;">
-
-                <h4>3. Combinazioni e Relazioni Stocastiche</h4>
-                <ul>
-                    <li><strong>Binomiale:</strong> Conteggio dei successi in $n$ prove di Bernoulli.</li>
-                    <li><strong>Chi-quadro ($\chi^2$):</strong> $\sum Z_i^2$.</li>
-                    <li><strong>t di Student:</strong> Rapporto tra normale e Chi-quadro.</li>
-                </ul>
-
-            </div>
+        <h4>3. Relazioni Stocastiche e Composizione</h4>
+        <p>Distribuzioni ottenute tramite somme, rapporti o algoritmi iterativi (Metodo di Accettazione-Rifiuto).</p>
+        <ul>
+            <li><strong>Binomiale:</strong> Somma di $n$ variabili di Bernoulli indipendenti.</li>
+            <li><strong>Poisson:</strong> Calcolata iterativamente tramite il prodotto di variabili uniformi finché $\prod U_i < e^{-\lambda}$.</li>
+            <li><strong>Chi-Quadro ($\chi^2$):</strong> Somma dei quadrati di $k$ variabili Normali standardizzate.</li>
+            <li><strong>Gamma:</strong> Somma di variabili Esponenziali (per parametri interi) o tramite algoritmi di rigetto.</li>
+            <li><strong>t di Student:</strong> Rapporto tra una Normale e la radice di una Chi-Quadro (fondamentale per piccoli campioni).</li>
+            <li><strong>F di Fisher:</strong> Rapporto tra due distribuzioni Chi-Quadro (usata nell'ANOVA).</li>
+        </ul>
+    </div>
 
             <div class="box">
                 <h3 style="color: #8e44ad;">Demo Interattiva</h3>
