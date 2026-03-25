@@ -16,7 +16,7 @@
 
     <style>
         body { font-family: Arial, sans-serif; background: #f4f4f9; padding: 20px; }
-        .project-container { max-width: 900px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .project-container { max-width: 1000px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
         
         .output-console {
             background: #1e1e1e;
@@ -70,6 +70,22 @@
             border-radius: 5px;
         }
 
+        .control-panel {
+            text-align: center;
+            margin: 20px 0;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 1px dashed #ccc;
+        }
+
+        select {
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            font-size: 1rem;
+        }
+
         .project-footer {
             margin-top: 40px;
             font-size: 0.8em;
@@ -89,11 +105,7 @@
         <section class="content">
             <h2>Esercizio 1: Confronto tra algoritmi per media e varianza (Naive vs Welford)</h2>
             <p>Verifichiamo in modo empirico la stabilità dell'algoritmo tradizionale/classico/naive e di Welford per calcolare media e varianza di una serie di numeri. 
-                Per fare questo generiamo 100.000 numeri: cliccando sul tasto verde in basso verranno generati numeri compresi tra 0 e 100 e potremo osservare come i due algoritmi produrranno gli stessi risultati. 
-                Cliccando il tasto rosso, invece, verranno generati numeri molto grandi, dell'ordine del miliardo, che differiscono tra loro per le cifre decimali. 
-                In questo caso l'algoritmo naive per la varianza va incontro al processo chiamato "cancellazione catastrofica". Il calcolatore, infatti, ha difficoltà a eseguire differenze tra numeri molto grandi che differiscono di qualche cifra decimale, per un problema legato all'allocazione della memoria.
-               
-                In seguito, cliccando sul pulsante azzurro, si può scaricare il dataset completo per verificare i risultati.</p>
+               L'algoritmo naive per la varianza va incontro al processo chiamato "cancellazione catastrofica" con numeri molto grandi.</p>
             
             <div class="box">
                 <div class="btn-group">
@@ -101,75 +113,84 @@
                     <button id="btn-test-difficile" class="btn">Test numeri problematici</button>
                     <button id="btn-scarica-csv" class="btn">📥 Scarica i dati! (CSV)</button>
                 </div>
-                
                 <div id="output-algoritmi" class="output-console">In attesa di eseguire il test...</div>
             </div>
         </section>
 
         <section class="content">
             <h2>Esercizio 2: Generazione di Distribuzioni dalla Uniforme U(0,1)</h2>
-<section class="content">
-    <h2>Parte B – Metodologie di Simulazione per la Generazione di Variabili Casuali</h2>
-    <p>In questa sezione analizziamo le strategie fondamentali per derivare diverse distribuzioni statistiche a partire da un generatore di numeri pseudocasuali uniforme <strong>U ~ U[0,1)</strong>.</p>
-    <p>Il concetto cardine della simulazione Monte Carlo risiede nella possibilità di mappare una variabile uniforme in strutture probabilistiche più complesse attraverso trasformazioni analitiche o combinazioni stocastiche. I procedimenti principali possono essere raggruppati in quattro classi metodologiche:</p>
-    <ul>
-        <li>Inversione della funzione di ripartizione (CDF)</li>
-        <li>Trasformazioni funzionali</li>
-        <li>Composizione tramite somme o rapporti di variabili</li>
-        <li>Algoritmi iterativi e Metodi di Accettazione-Rifiuto</li>
-    </ul>
+            
+            <h3>Parte B – Metodologie di Simulazione</h3>
+            <p>In questa sezione analizziamo le strategie fondamentali per derivare diverse distribuzioni statistiche a partire da un generatore <strong>U ~ U[0,1)</strong>.</p>
+            <p>I procedimenti principali possono essere raggruppati in quattro classi:</p>
+            <ul>
+                <li>Inversione della funzione di ripartizione (CDF)</li>
+                <li>Trasformazioni funzionali</li>
+                <li>Composizione tramite somme o rapporti di variabili</li>
+                <li>Algoritmi iterativi e Metodi di Accettazione-Rifiuto</li>
+            </ul>
 
-    <div class="box">
-        <h3>1. Metodo dell'Inversione (Inversione della CDF)</h3>
-        <p>Se la funzione di ripartizione $F(x)$ è analiticamente invertibile, la tecnica più lineare consiste nel processare il valore uniforme $U$ tramite la funzione inversa della distribuzione target:</p>
-        <p style="text-align: center; font-size: 1.2em;">$X = F^{-1}(U)$</p>
-        <p>Questa operazione proietta il dominio [0,1) direttamente sull'asse dei valori della distribuzione desiderata. Tra gli esempi più rilevanti troviamo:</p>
-        <ul>
-            <li><strong>Uniforme:</strong> $X = U$ (identità, non richiede trasformazione).</li>
-            <li><strong>Esponenziale:</strong> $X = -\frac{\ln(U)}{\lambda}$. Modella l'intervallo temporale tra eventi casuali indipendenti.</li>
-            <li><strong>Weibull:</strong> $X = \lambda(-\ln(U))^{1/k}$. Estensione della distribuzione esponenziale, impiegata per l'analisi di affidabilità e longevità.</li>
-            <li><strong>Pareto:</strong> $X = x_m U^{-1/\alpha}$. Tipica dei sistemi con code pesanti (es. la legge "80/20" nella distribuzione del reddito).</li>
-            <li><strong>Triangolare:</strong> Definita tramite un'inversione definita a tratti che tiene conto dei parametri di minimo, massimo e moda.</li>
-        </ul>
+            <div class="box">
+                <h4>1. Metodo dell'Inversione (Inversione della CDF)</h4>
+                <p>Se la funzione di ripartizione $F(x)$ è analiticamente invertibile: $X = F^{-1}(U)$.</p>
+                <ul>
+                    <li><strong>Uniforme:</strong> $X = U$</li>
+                    <li><strong>Esponenziale:</strong> $X = -\frac{\ln(U)}{\lambda}$</li>
+                    <li><strong>Weibull:</strong> $X = \lambda(-\ln(U))^{1/k}$</li>
+                    <li><strong>Pareto:</strong> $X = x_m U^{-1/\alpha}$</li>
+                </ul>
 
-        <hr style="border: 0; border-top: 1px solid #eee; margin: 25px 0;">
+                <hr style="border: 0; border-top: 1px solid #eee; margin: 25px 0;">
 
-        <h3>2. Trasformazioni di Variabili</h3>
-        <p>Qualora la CDF non sia invertibile in forma chiusa, si ricorre a trasformazioni geometriche o trigonometriche applicate a una o più sorgenti uniformi indipendenti.</p>
-        <ul>
-            <li><strong>Normale (Metodo di Box-Muller):</strong> Consente di ottenere una variabile gaussiana standard partendo da una coppia di variabili indipendenti $U_1, U_2 \sim U[0,1)$:
-            <br><br><span style="display:block; text-align:center;">$X = \sqrt{-2 \ln(U_1)} \cos(2\pi U_2)$</span><br>
-            Questa trasformazione è cruciale per generare rumore bianco e fenomeni naturali simmetrici.</li>
-            <li><strong>Cauchy:</strong> Si ottiene applicando la funzione tangente a una variabile uniforme:
-            <br><br><span style="display:block; text-align:center;">$X = \tan(\pi(U - 1/2))$</span><br>
-            A differenza della normale, la Cauchy è caratterizzata da "code" estremamente lunghe, rendendo probabili valori molto distanti dal centro.</li>
-        </ul>
+                <h4>2. Trasformazioni di Variabili</h4>
+                <p><strong>Normale (Box-Muller):</strong> $X = \sqrt{-2 \ln(U_1)} \cos(2\pi U_2)$</p>
+                <p><strong>Cauchy:</strong> $X = \tan(\pi(U - 1/2))$</p>
 
-        <hr style="border: 0; border-top: 1px solid #eee; margin: 25px 0;">
+                <hr style="border: 0; border-top: 1px solid #eee; margin: 25px 0;">
 
-        <h3>3. Combinazioni e Relazioni Stocastiche</h3>
-        <p>Molte distribuzioni derivano dalla sintesi di variabili più elementari, riflettendo teoremi statistici fondamentali (come il Teorema del Limite Centrale).</p>
-        <ul>
-            <li><strong>Binomiale:</strong> Interpretata come il conteggio dei successi in <em>n</em> prove di Bernoulli indipendenti (dove il successo avviene se $U < p$).</li>
-            <li><strong>Chi-quadro ($\chi^2$):</strong> Risultante dalla somma dei quadrati di <em>k</em> variabili normali standard indipendenti:
-            <br><br><span style="display:block; text-align:center;">$X = \sum_{i=1}^{k} Z_i^2$</span></li>
-            <li><strong>t di Student:</strong> Rapporto tra una variabile normale e la radice di una Chi-quadro scalata per i gradi di libertà ($\nu$). Essenziale per inferenze su piccoli campioni.</li>
-            <li><strong>F di Fisher:</strong> Rapporto tra due variabili Chi-quadro indipendenti. Pilastro dei test di analisi della varianza (ANOVA).</li>
-            <li><strong>Beta:</strong> Costruita dal rapporto normalizzato di due variabili Gamma indipendenti:
-            <br><br><span style="display:block; text-align:center;">$X = \frac{X_1}{X_1 + X_2}$</span><br>
-            Utilizzata per descrivere l'incertezza su proporzioni e probabilità (inferenza bayesiana).</li>
-        </ul>
+                <h4>3. Combinazioni e Relazioni Stocastiche</h4>
+                <ul>
+                    <li><strong>Binomiale:</strong> Conteggio dei successi in $n$ prove di Bernoulli.</li>
+                    <li><strong>Chi-quadro ($\chi^2$):</strong> $\sum Z_i^2$.</li>
+                    <li><strong>t di Student:</strong> Rapporto tra normale e Chi-quadro.</li>
+                </ul>
 
-        <hr style="border: 0; border-top: 1px solid #eee; margin: 25px 0;">
+                <hr style="border: 0; border-top: 1px solid #eee; margin: 25px 0;">
 
-        <h3>4. Algoritmi Avanzati e Approcci Iterativi</h3>
-        <p>Per distribuzioni prive di forme analitiche dirette, si impiegano logiche di campionamento selettivo o processi cumulativi.</p>
-        <ul>
-            <li><strong>Distribuzione Gamma:</strong> Se il parametro di forma è intero (Erlang), si genera come somma di variabili esponenziali. Per parametri frazionari, si adottano algoritmi di <em>Acceptance-Rejection</em>, che filtrano i campioni in base a una funzione di densità dominante.</li>
-            <li><strong>Poisson (Algoritmo di Knuth):</strong> Rappresenta il numero di occorrenze in un intervallo fisso. L'algoritmo moltiplica sequenzialmente valori uniformi finché il prodotto non scende sotto la soglia critica $e^{-\lambda}$. Questo metodo evidenzia il legame intrinseco tra la natura discreta di Poisson e il decadimento esponenziale continuo.</li>
-        </ul>
-    </div>
-</section>
+                <h4>4. Algoritmi Avanzati</h4>
+                <p><strong>Poisson (Knuth):</strong> Basato sul prodotto cumulativo di uniformi fino alla soglia $e^{-\lambda}$.</p>
+            </div>
+
+            <div class="box">
+                <h3 style="color: #8e44ad;">Demo Interattiva</h3>
+                <p>Seleziona una distribuzione per testare visivamente le trasformazioni descritte sopra:</p>
+                
+                <div class="control-panel">
+                    <select id="select-distribuzione">
+                        <option value="normale">Normale (Box-Muller)</option>
+                        <option value="esponenziale">Esponenziale</option>
+                        <option value="cauchy">Cauchy</option>
+                        <option value="pareto">Pareto</option>
+                        <option value="triangolare">Triangolare</option>
+                        <option value="binomiale">Binomiale</option>
+                        <option value="poisson">Poisson (Knuth)</option>
+                        <option value="chi_quadro">Chi-Quadro (k=4)</option>
+                    </select>
+                    <button id="btn-genera-dist" class="btn" style="background: #8e44ad; color: white; margin-left: 10px;">Genera e Grafica</button>
+                </div>
+
+                <div class="chart-container">
+                    <div class="chart-box">
+                        <h4 style="text-align:center;">Input: Sorgente $U(0,1)$</h4>
+                        <canvas id="chart-uniforme"></canvas>
+                    </div>
+                    <div class="chart-box">
+                        <h4 id="titolo-output" style="text-align:center;">Output: Distribuzione Target</h4>
+                        <canvas id="chart-output"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
 
         <div class="project-footer">
             Progetto realizzato per il blog scolastico • 2026
