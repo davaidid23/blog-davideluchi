@@ -157,19 +157,45 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
+// ... (resto del codice invariato sopra)
+
+    // Gestione del click su "Genera e Grafica"
     const btnGeneraDist = document.getElementById('btn-genera-dist');
+    const inputCampioni = document.getElementById('input-campioni'); // <--- Selezioniamo l'input
+
     if (btnGeneraDist) {
         btnGeneraDist.addEventListener('click', () => {
-            const tipo = document.getElementById('select-distribuzione').value;
-            let dU = [], dO = [];
-            for(let i=0; i<10000; i++) {
-                dU.push(Math.random());
-                dO.push(GeneratoriStocastici[tipo]());
+            const select = document.getElementById('select-distribuzione');
+            const tipoSelezionato = select.value;
+            
+            // Recuperiamo N dall'input, con un fallback a 10000 se vuoto o errato
+            let N = parseInt(inputCampioni.value);
+            if (isNaN(N) || N <= 0) N = 10000;
+            
+            // Limite di sicurezza per evitare di bloccare il browser
+            if (N > 1000000) {
+                alert("Il numero di campioni è troppo alto. Limitato a 1.000.000 per performance.");
+                N = 1000000;
             }
-            const hU = raggruppaInBin(dU, 30);
-            const hO = raggruppaInBin(dO, 40);
-            chartUniforme = disegnaGrafico('chart-uniforme', chartUniforme, hU.etichette, hU.conteggi, 'U(0,1)', 'rgba(41, 128, 185, 0.6)');
-            chartOutput = disegnaGrafico('chart-output', chartOutput, hO.etichette, hO.conteggi, tipo, 'rgba(142, 68, 173, 0.6)');
+            
+            let datiUniformi = [];
+            let datiTrasformati = [];
+
+            // Generiamo i campioni richiesti dall'utente
+            for(let i=0; i<N; i++) {
+                datiUniformi.push(Math.random());
+                datiTrasformati.push(GeneratoriStocastici[tipoSelezionato]());
+            }
+
+            // Elaborazione istogrammi (nBins fisso o dinamico, qui teniamo 30/40)
+            const hU = raggruppaInBin(datiUniformi, 30);
+            const hO = raggruppaInBin(datiTrasformati, 40);
+
+            // Disegno i due grafici
+            chartUniforme = disegnaGrafico('chart-uniforme', chartUniforme, hU.etichette, hU.conteggi, `U(0,1) [N=${N}]`, 'rgba(41, 128, 185, 0.6)');
+            
+            document.getElementById('titolo-output').innerText = `Output: ${select.options[select.selectedIndex].text}`;
+            chartOutput = disegnaGrafico('chart-output', chartOutput, hO.etichette, hO.conteggi, `${tipoSelezionato} [N=${N}]`, 'rgba(142, 68, 173, 0.6)');
         });
     }
 });
