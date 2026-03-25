@@ -181,23 +181,15 @@ function disegnaGrafico(canvasId, chartInstance, etichette, dati, titolo, colore
         },
         options: { 
             responsive: true,
-            maintainAspectRatio: false, // OBBLIGATORIO: ignora le proporzioni originali
+            maintainAspectRatio: false, // <-- DEVE ESSERE FALSE
             scales: { 
                 x: { display: false }, 
-                y: { 
-                    beginAtZero: true,
-                    ticks: { maxTicksLimit: 8 } // Evita che i numeri dell'asse Y escano sotto
-                } 
+                y: { beginAtZero: true } 
             }, 
-            layout: {
-                padding: {
-                    top: 10,
-                    bottom: 10,
-                    left: 5,
-                    right: 5
-                }
-            },
-            animation: { duration: 400 } 
+            animation: { duration: 400 },
+            plugins: {
+                legend: { display: true }
+            }
         }
     });
 }
