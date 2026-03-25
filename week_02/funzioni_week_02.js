@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function() {
     // ESERCIZIO 1: Naive vs Welford
     // ==========================================
     let ultimoArrayGenerato = []; 
-    const numeroCampioni = 100000;
+    const numeroCampioniEsercizio1 = 100000; // Fisso per il test di stabilità
 
     const btnNormale = document.getElementById('btn-test-normale');
     const btnDifficile = document.getElementById('btn-test-difficile');
@@ -51,8 +51,8 @@ document.addEventListener("DOMContentLoaded", function() {
         displayOutput.textContent = "Calcolo in corso...";
         
         const dati = (tipo === 'normale') 
-            ? generaNumeri(numeroCampioni, 0, 100) 
-            : generaNumeri(numeroCampioni, 1e9, 10);
+            ? generaNumeri(numeroCampioniEsercizio1, 0, 100) 
+            : generaNumeri(numeroCampioniEsercizio1, 1e9, 10);
 
         const naive = calcolaNaive(dati);
         const welford = calcolaWelford(dati);
@@ -71,6 +71,10 @@ document.addEventListener("DOMContentLoaded", function() {
         displayOutput.textContent = risultato;
     }
 
+    // Eventi Esercizio 1
+    if(btnNormale) btnNormale.addEventListener('click', () => eseguiTest('normale'));
+    if(btnDifficile) btnDifficile.addEventListener('click', () => eseguiTest('difficile'));
+    
     if(btnScaricaCSV) {
         btnScaricaCSV.addEventListener('click', function() {
             if (ultimoArrayGenerato.length === 0) {
@@ -83,57 +87,67 @@ document.addEventListener("DOMContentLoaded", function() {
             const url = URL.createObjectURL(blob);
             const link = document.createElement("a");
             link.href = url;
-            link.download = "dati_varianza.csv";
+            link.download = "dati_varianza_2026.csv";
             link.click();
         });
     }
 
-    if(btnNormale) btnNormale.addEventListener('click', () => eseguiTest('normale'));
-    if(btnDifficile) btnDifficile.addEventListener('click', () => eseguiTest('difficile'));
-
     // ==========================================
-    // ESERCIZIO 2: Grafici
+    // ESERCIZIO 2: Distribuzioni e Grafici
     // ==========================================
     let chartUniforme = null;
     let chartOutput = null;
 
+    // Definiamo i generatori matematici
     const GeneratoriStocastici = {
         normale: () => {
             let u1 = Math.random(), u2 = Math.random();
             return Math.sqrt(-2.0 * Math.log(u1)) * Math.cos(2.0 * Math.PI * u2);
         },
-        esponenziale: () => -Math.log(1.0 - Math.random()),
+        esponenziale: (lambda = 1) => -Math.log(1.0 - Math.random()) / lambda,
         cauchy: () => Math.tan(Math.PI * (Math.random() - 0.5)),
-        pareto: () => 1.0 / Math.pow(Math.random(), 1.0 / 3.0),
+        pareto: (xm = 1, alpha = 3) => xm / Math.pow(Math.random(), 1.0 / alpha),
         triangolare: () => Math.random() + Math.random(),
-        poisson: () => {
-            let L = Math.exp(-5), p = 1.0, k = 0;
+        poisson: (lambda = 5) => {
+            let L = Math.exp(-lambda), p = 1.0, k = 0;
             do { k++; p *= Math.random(); } while (p > L);
             return k - 1;
         },
-        binomiale: () => {
+        binomiale: (n = 20, p = 0.5) => {
             let k = 0;
-            for(let i=0; i<20; i++) if(Math.random() < 0.5) k++;
+            for(let i=0; i<n; i++) if(Math.random() < p) k++;
             return k;
         },
-        chi_quadro: () => {
+        chi_quadro: (k = 4) => {
             let sum = 0;
-            for(let i=0; i<4; i++) {
-                let z = Math.sqrt(-2 * Math.log(Math.random())) * Math.cos(2 * Math.PI * Math.random());
+            for(let i=0; i<k; i++) {
+                let u1 = Math.random(), u2 = Math.random();
+                let z = Math.sqrt(-2.0 * Math.log(u1)) * Math.cos(2.0 * Math.PI * u2);
                 sum += z * z;
             }
             return sum;
         }
     };
 
+    // Funzione per creare i dati dell'istogramma
     function raggruppaInBin(dati, nBins = 40) {
+        if (dati.length === 0) return { etichette: [], conteggi: [] };
+        
         let sorted = [...dati].sort((a,b) => a - b);
+        // Tagliamo gli outlier per una visualizzazione migliore
         let min = sorted[Math.floor(sorted.length * 0.01)];
         let max = sorted[Math.floor(sorted.length * 0.99)];
+        
+        if (min === max) { max = min + 1; min = min - 1; } // Evita divisione per zero
+
         let ampiezza = (max - min) / nBins;
         let conteggi = new Array(nBins).fill(0);
         let etichette = [];
-        for(let i=0; i<nBins; i++) etichette.push((min + i*ampiezza).toFixed(2));
+
+        for(let i=0; i<nBins; i++) {
+            etichette.push((min + i*ampiezza).toFixed(2));
+        }
+
         for(let x of dati) {
             if(x >= min && x <= max) {
                 let index = Math.floor((x - min) / ampiezza);
@@ -144,58 +158,72 @@ document.addEventListener("DOMContentLoaded", function() {
         return { etichette, conteggi };
     }
 
+    // Funzione helper per Chart.js
     function disegnaGrafico(canvasId, chartInstance, etichette, dati, titolo, colore) {
-        const ctx = document.getElementById(canvasId).getContext('2d');
+        const canvas = document.getElementById(canvasId);
+        if (!canvas) return null;
+        const ctx = canvas.getContext('2d');
+        
         if (chartInstance) chartInstance.destroy();
+
         return new Chart(ctx, {
             type: 'bar',
             data: {
                 labels: etichette,
-                datasets: [{ label: titolo, data: dati, backgroundColor: colore }]
+                datasets: [{ 
+                    label: titolo, 
+                    data: dati, 
+                    backgroundColor: colore,
+                    borderWidth: 0,
+                    barPercentage: 1.0,
+                    categoryPercentage: 1.0
+                }]
             },
-            options: { scales: { x: { display: false }, y: { beginAtZero: true } }, animation: false }
+            options: { 
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: { 
+                    x: { display: false }, 
+                    y: { beginAtZero: true } 
+                }, 
+                animation: { duration: 400 } 
+            }
         });
     }
 
-// ... (resto del codice invariato sopra)
-
-    // Gestione del click su "Genera e Grafica"
+    // Gestione del click per l'Esercizio 2
     const btnGeneraDist = document.getElementById('btn-genera-dist');
-    const inputCampioni = document.getElementById('input-campioni'); // <--- Selezioniamo l'input
+    const inputCampioni = document.getElementById('input-campioni');
 
     if (btnGeneraDist) {
         btnGeneraDist.addEventListener('click', () => {
             const select = document.getElementById('select-distribuzione');
             const tipoSelezionato = select.value;
             
-            // Recuperiamo N dall'input, con un fallback a 10000 se vuoto o errato
-            let N = parseInt(inputCampioni.value);
+            // Lettura dinamica di N
+            let N = inputCampioni ? parseInt(inputCampioni.value) : 10000;
             if (isNaN(N) || N <= 0) N = 10000;
-            
-            // Limite di sicurezza per evitare di bloccare il browser
-            if (N > 1000000) {
-                alert("Il numero di campioni è troppo alto. Limitato a 1.000.000 per performance.");
-                N = 1000000;
-            }
+            if (N > 1000000) N = 1000000; // Limite sicurezza
             
             let datiUniformi = [];
             let datiTrasformati = [];
 
-            // Generiamo i campioni richiesti dall'utente
+            // Generazione
             for(let i=0; i<N; i++) {
                 datiUniformi.push(Math.random());
                 datiTrasformati.push(GeneratoriStocastici[tipoSelezionato]());
             }
 
-            // Elaborazione istogrammi (nBins fisso o dinamico, qui teniamo 30/40)
+            // Binning
             const hU = raggruppaInBin(datiUniformi, 30);
             const hO = raggruppaInBin(datiTrasformati, 40);
 
-            // Disegno i due grafici
-            chartUniforme = disegnaGrafico('chart-uniforme', chartUniforme, hU.etichette, hU.conteggi, `U(0,1) [N=${N}]`, 'rgba(41, 128, 185, 0.6)');
+            // Rendering Grafici
+            chartUniforme = disegnaGrafico('chart-uniforme', chartUniforme, hU.etichette, hU.conteggi, `Input U(0,1) [N=${N}]`, 'rgba(41, 128, 185, 0.6)');
             
-            document.getElementById('titolo-output').innerText = `Output: ${select.options[select.selectedIndex].text}`;
-            chartOutput = disegnaGrafico('chart-output', chartOutput, hO.etichette, hO.conteggi, `${tipoSelezionato} [N=${N}]`, 'rgba(142, 68, 173, 0.6)');
+            const nomeDist = select.options[select.selectedIndex].text;
+            document.getElementById('titolo-output').innerText = `Output: ${nomeDist}`;
+            chartOutput = disegnaGrafico('chart-output', chartOutput, hO.etichette, hO.conteggi, `${nomeDist} [N=${N}]`, 'rgba(142, 68, 173, 0.6)');
         });
     }
 });
