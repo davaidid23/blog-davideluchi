@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="it">
 <head>
     <meta charset="UTF-8">
@@ -61,7 +61,6 @@
             flex-wrap: wrap;
         }
 
-        /* 🔧 FIX GRAFICI */
         .chart-box {
             flex: 1;
             min-width: 300px;
@@ -69,15 +68,8 @@
             border: 1px solid #ccc;
             padding: 10px;
             border-radius: 5px;
-
-            height: 350px;
-
-            display: flex;
-            flex-direction: column;
-        }
-
-        .chart-box canvas {
-            flex: 1;
+        
+            height: 350px; /* <-- AGGIUNGI QUESTA RIGA */
         }
 
         .control-panel {
@@ -113,47 +105,101 @@
         </header>
 
         <section class="content">
-            <h2>Esercizio 1</h2>
+            <h2>Esercizio 1: Confronto tra algoritmi per media e varianza (Naive vs Welford)</h2>
+            <p>Verifichiamo in modo empirico la stabilità dell'algoritmo tradizionale/classico/naive e di Welford per calcolare media e varianza di una serie di numeri. 
+               L'algoritmo naive per la varianza va incontro al processo chiamato "cancellazione catastrofica" con numeri molto grandi.</p>
+            
             <div class="box">
                 <div class="btn-group">
                     <button id="btn-test-normale" class="btn">Test numeri "per bene"</button>
                     <button id="btn-test-difficile" class="btn">Test numeri problematici</button>
-                    <button id="btn-scarica-csv" class="btn">📥 Scarica i dati</button>
+                    <button id="btn-scarica-csv" class="btn">📥 Scarica i dati! (CSV)</button>
                 </div>
-                <div id="output-algoritmi" class="output-console"></div>
+                <div id="output-algoritmi" class="output-console">In attesa di eseguire il test...</div>
             </div>
         </section>
 
-        <section class="content">
-            <h2>Esercizio 2</h2>
+<section class="content">
+    <h2>Esercizio 2: Generazione di Distribuzioni dalla Uniforme U(0,1)</h2>
 
-            <div class="control-panel">
-                <input type="number" id="input-campioni" value="10000">
-                <select id="select-distribuzione">
-                    <option value="normale">Normale</option>
-                    <option value="esponenziale">Esponenziale</option>
-                    <option value="cauchy">Cauchy</option>
-                    <option value="pareto">Pareto</option>
-                    <option value="triangolare">Triangolare</option>
-                    <option value="binomiale">Binomiale</option>
-                    <option value="poisson">Poisson</option>
-                    <option value="chi_quadro">Chi-Quadro</option>
-                </select>
-                <button id="btn-genera-dist" class="btn">Genera</button>
-            </div>
+    <p>In questa sezione analizziamo le strategie fondamentali per derivare diverse distribuzioni statistiche a partire dalla distribuzione sorgente uniforme: <strong>U ~ U[0,1)</strong>.</p>
+    
+    <div class="box">
+        <h4>1. Metodo dell'Inversione (CDF Inversion)</h4>
+        <p>Utilizzato quando la funzione di ripartizione $F(x)$ è analiticamente invertibile. Si calcola $X = F^{-1}(U)$.</p>
+        <ul>
+            <li><strong>Esponenziale:</strong> $X = -\frac{\ln(U)}{\lambda}$ (modella il tempo tra eventi).</li>
+            <li><strong>Weibull:</strong> $X = \lambda(-\ln(U))^{1/k}$ (analisi di sopravvivenza).</li>
+            <li><strong>Pareto:</strong> $X = x_m U^{-1/\alpha}$ (distribuzione del reddito/ricchezza).</li>
+            <li><strong>Cauchy:</strong> $X = \tan(\pi(U - 1/2))$ (distribuzione a "code pesanti").</li>
+            <li><strong>Discreta Arbitraria:</strong> Tramite la tecnica del <em>Look-up table</em> confrontando $U$ con le probabilità cumulate.</li>
+        </ul>
 
-            <div class="chart-container">
-                <div class="chart-box">
-                    <h4>Input</h4>
-                    <canvas id="chart-uniforme"></canvas>
-                </div>
-                <div class="chart-box">
-                    <h4 id="titolo-output">Output</h4>
-                    <canvas id="chart-output"></canvas>
+        <hr style="border: 0; border-top: 1px solid #eee; margin: 25px 0;">
+
+        <h4>2. Trasformazioni Funzionali e Geometriche</h4>
+        <p>Tecniche che manipolano una o più variabili uniformi per ottenere la forma desiderata.</p>
+        <ul>
+            <li><strong>Normale (Box-Muller):</strong> $X = \sqrt{-2 \ln(U_1)} \cos(2\pi U_2)$</li>
+            <li><strong>Triangolare:</strong> Spesso ottenuta come $X = \frac{U_1 + U_2}{2}$</li>
+            <li><strong>Beta:</strong> Derivata da trasformazioni di variabili Gamma o tramite statistiche d'ordine.</li>
+        </ul>
+
+        <hr style="border: 0; border-top: 1px solid #eee; margin: 25px 0;">
+
+        <h4>3. Relazioni Stocastiche e Composizione</h4>
+        <p>Distribuzioni ottenute tramite somme, rapporti o algoritmi iterativi (Metodo di Accettazione-Rifiuto).</p>
+        <ul>
+            <li><strong>Binomiale:</strong> Somma di $n$ variabili di Bernoulli indipendenti.</li>
+            <li><strong>Poisson:</strong> Calcolata iterativamente tramite il prodotto di variabili uniformi finché $\prod U_i < e^{-\lambda}$.</li>
+            <li><strong>Chi-Quadro ($\chi^2$):</strong> Somma dei quadrati di $k$ variabili Normali standardizzate.</li>
+            <li><strong>Gamma:</strong> Somma di variabili Esponenziali (per parametri interi) o tramite algoritmi di rigetto.</li>
+            <li><strong>t di Student:</strong> Rapporto tra una Normale e la radice di una Chi-Quadro (fondamentale per piccoli campioni).</li>
+            <li><strong>F di Fisher:</strong> Rapporto tra due distribuzioni Chi-Quadro.</li>
+        </ul>
+    </div>
+
+            <div class="box">
+                <h3 style="color: #8e44ad;">Demo Interattiva</h3>
+                <p>Seleziona una distribuzione per testare visivamente alcune delle trasformazioni descritte sopra:</p>
+<div class="control-panel">
+    <label for="input-campioni"><strong>N. Campioni:</strong> </label>
+    <input type="number" id="input-campioni" value="10000" min="100" max="500000" step="1000" 
+           style="width: 100px; padding: 8px; border-radius: 4px; border: 1px solid #ccc; margin-right: 15px;">
+
+    <label for="select-distribuzione"><strong>Distribuzione:</strong> </label>
+    <select id="select-distribuzione">
+        <option value="normale">Normale (Box-Muller)</option>
+        <option value="esponenziale">Esponenziale</option>
+        <option value="cauchy">Cauchy</option>
+        <option value="pareto">Pareto</option>
+        <option value="triangolare">Triangolare</option>
+        <option value="binomiale">Binomiale</option>
+        <option value="poisson">Poisson (Knuth)</option>
+        <option value="chi_quadro">Chi-Quadro (k=4)</option>
+    </select>
+    
+    <button id="btn-genera-dist" class="btn" style="background: #8e44ad; color: white; margin-left: 10px;">Genera e Grafica</button>
+</div>
+
+                <div class="chart-container">
+                    <div class="chart-box">
+                        <h4 style="text-align:center;">Input: Sorgente $U(0,1)$</h4>
+                        <canvas id="chart-uniforme"></canvas>
+                    </div>
+                    <div class="chart-box">
+                        <h4 id="titolo-output" style="text-align:center;">Output: Distribuzione Target</h4>
+                        <canvas id="chart-output"></canvas>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <script src="funzioni_week_02.js"></script>
+        <div class="project-footer">
+            Progetto realizzato per il blog scolastico • 2026
+        </div>
+    </div>
+
+    <script src="funzioni_week_02.js"></script>
 </body>
 </html>
