@@ -81,24 +81,26 @@ header p {
     gap: 20px;
     flex-wrap: wrap;
 }
-
 .chart-box {
     flex: 1;
     min-width: 300px;
     background: #fff;
     border: 1px solid #ccc;
-    padding: 15px; /* Un po' di respiro */
+    padding: 10px;
     border-radius: 5px;
     
-    /* MODIFICHE CRUCIALI */
-    height: 350px;       /* Altezza fissa */
-    position: relative;  /* OBBLIGATORIO per Chart.js */
-    display: block;      /* Cambia da flex a block */
+    /* BLOCCA TUTTO QUI */
+    height: 350px;       /* Altezza totale del rettangolo */
+    position: relative;  /* FONDAMENTALE: il canvas si ancora a questo */
+    overflow: hidden;    /* Se prova a uscire, viene tagliato (misura di sicurezza) */
 }
 
+/* Forza il canvas a stare dentro */
 .chart-box canvas {
-    flex: 1;
+    width: 100% !important;
+    height: 100% !important;
 }
+
 
 /* Footer */
 .project-footer {
