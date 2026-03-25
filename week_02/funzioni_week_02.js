@@ -159,37 +159,40 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // Funzione helper per Chart.js
-    function disegnaGrafico(canvasId, chartInstance, etichette, dati, titolo, colore) {
-        const canvas = document.getElementById(canvasId);
-        if (!canvas) return null;
-        const ctx = canvas.getContext('2d');
-        
-        if (chartInstance) chartInstance.destroy();
+function disegnaGrafico(canvasId, chartInstance, etichette, dati, titolo, colore) {
+    const canvas = document.getElementById(canvasId);
+    if (!canvas) return null;
+    const ctx = canvas.getContext('2d');
+    
+    if (chartInstance) chartInstance.destroy();
 
-        return new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: etichette,
-                datasets: [{ 
-                    label: titolo, 
-                    data: dati, 
-                    backgroundColor: colore,
-                    borderWidth: 0,
-                    barPercentage: 1.0,
-                    categoryPercentage: 1.0
-                }]
-            },
-            options: { 
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: { 
-                    x: { display: false }, 
-                    y: { beginAtZero: true } 
-                }, 
-                animation: { duration: 400 } 
+    return new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: etichette,
+            datasets: [{ 
+                label: titolo, 
+                data: dati, 
+                backgroundColor: colore,
+                borderWidth: 0,
+                barPercentage: 1.0,
+                categoryPercentage: 1.0
+            }]
+        },
+        options: { 
+            responsive: true,
+            maintainAspectRatio: false, // <-- DEVE ESSERE FALSE
+            scales: { 
+                x: { display: false }, 
+                y: { beginAtZero: true } 
+            }, 
+            animation: { duration: 400 },
+            plugins: {
+                legend: { display: true }
             }
-        });
-    }
+        }
+    });
+}
 
     // Gestione del click per l'Esercizio 2
     const btnGeneraDist = document.getElementById('btn-genera-dist');
