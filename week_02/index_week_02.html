@@ -138,8 +138,8 @@
         <h4>2. Trasformazioni Funzionali e Geometriche</h4>
         <p>Tecniche che manipolano una o più variabili uniformi per ottenere la forma desiderata.</p>
         <ul>
-            <li><strong>Normale (Box-Muller):</strong> $X = \sqrt{-2 \ln(U_1)} \cos(2\pi U_2)$. Fondamentale per il Teorema del Limite Centrale.</li>
-            <li><strong>Triangolare:</strong> Spesso ottenuta come $X = \frac{U_1 + U_2}{2}$, utile per simulazioni con dati scarsi.</li>
+            <li><strong>Normale (Box-Muller):</strong> $X = \sqrt{-2 \ln(U_1)} \cos(2\pi U_2)$</li>
+            <li><strong>Triangolare:</strong> Spesso ottenuta come $X = \frac{U_1 + U_2}{2}$</li>
             <li><strong>Beta:</strong> Derivata da trasformazioni di variabili Gamma o tramite statistiche d'ordine.</li>
         </ul>
 
@@ -153,13 +153,13 @@
             <li><strong>Chi-Quadro ($\chi^2$):</strong> Somma dei quadrati di $k$ variabili Normali standardizzate.</li>
             <li><strong>Gamma:</strong> Somma di variabili Esponenziali (per parametri interi) o tramite algoritmi di rigetto.</li>
             <li><strong>t di Student:</strong> Rapporto tra una Normale e la radice di una Chi-Quadro (fondamentale per piccoli campioni).</li>
-            <li><strong>F di Fisher:</strong> Rapporto tra due distribuzioni Chi-Quadro (usata nell'ANOVA).</li>
+            <li><strong>F di Fisher:</strong> Rapporto tra due distribuzioni Chi-Quadro.</li>
         </ul>
     </div>
 
             <div class="box">
                 <h3 style="color: #8e44ad;">Demo Interattiva</h3>
-                <p>Seleziona una distribuzione per testare visivamente le trasformazioni descritte sopra:</p>
+                <p>Seleziona una distribuzione per testare visivamente alcune delle trasformazioni descritte sopra:</p>
 <div class="control-panel">
     <label for="input-campioni"><strong>N. Campioni:</strong> </label>
     <input type="number" id="input-campioni" value="10000" min="100" max="500000" step="1000" 
