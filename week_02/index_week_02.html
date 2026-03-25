@@ -159,33 +159,25 @@
             <div class="box">
                 <h3 style="color: #8e44ad;">Demo Interattiva</h3>
                 <p>Seleziona una distribuzione per testare visivamente le trasformazioni descritte sopra:</p>
-
 <div class="control-panel">
     <label for="input-campioni"><strong>N. Campioni:</strong> </label>
     <input type="number" id="input-campioni" value="10000" min="100" max="500000" step="1000" 
-           style="width: 100px; padding: 8px; border-radius: 4px; border: 1px solid #ccc; margin-right: 10px;">
+           style="width: 100px; padding: 8px; border-radius: 4px; border: 1px solid #ccc; margin-right: 15px;">
 
     <label for="select-distribuzione"><strong>Distribuzione:</strong> </label>
     <select id="select-distribuzione">
-        </select>
+        <option value="normale">Normale (Box-Muller)</option>
+        <option value="esponenziale">Esponenziale</option>
+        <option value="cauchy">Cauchy</option>
+        <option value="pareto">Pareto</option>
+        <option value="triangolare">Triangolare</option>
+        <option value="binomiale">Binomiale</option>
+        <option value="poisson">Poisson (Knuth)</option>
+        <option value="chi_quadro">Chi-Quadro (k=4)</option>
+    </select>
     
     <button id="btn-genera-dist" class="btn" style="background: #8e44ad; color: white; margin-left: 10px;">Genera e Grafica</button>
 </div>
-
-                
-                <div class="control-panel">
-                    <select id="select-distribuzione">
-                        <option value="normale">Normale (Box-Muller)</option>
-                        <option value="esponenziale">Esponenziale</option>
-                        <option value="cauchy">Cauchy</option>
-                        <option value="pareto">Pareto</option>
-                        <option value="triangolare">Triangolare</option>
-                        <option value="binomiale">Binomiale</option>
-                        <option value="poisson">Poisson (Knuth)</option>
-                        <option value="chi_quadro">Chi-Quadro (k=4)</option>
-                    </select>
-                    <button id="btn-genera-dist" class="btn" style="background: #8e44ad; color: white; margin-left: 10px;">Genera e Grafica</button>
-                </div>
 
                 <div class="chart-container">
                     <div class="chart-box">
