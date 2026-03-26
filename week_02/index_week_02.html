@@ -182,17 +182,20 @@
     <button id="btn-genera-dist" class="btn" style="background: #8e44ad; color: white; margin-left: 10px;">Genera e Grafica</button>
 </div>
 
-                <div class="chart-container">
-                    <div class="chart-box">
-                        <h4 style="text-align:center;">Input: Sorgente $U(0,1)$</h4>
-                        <canvas id="chart-uniforme"></canvas>
-                    </div>
-                    <div class="chart-box">
-                        <h4 id="titolo-output" style="text-align:center;">Output: Distribuzione Target</h4>
-                        <canvas id="chart-output"></canvas>
-                    </div>
+        <div class="chart-container">
+            <div class="chart-box">
+                <h4 style="text-align:center;">Input: Sorgente $U(0,1)$</h4>
+                <div class="canvas-wrapper">
+                    <canvas id="chart-uniforme"></canvas>
                 </div>
             </div>
+            <div class="chart-box">
+                <h4 id="titolo-output" style="text-align:center;">Output: Distribuzione Target</h4>
+                <div class="canvas-wrapper">
+                    <canvas id="chart-output"></canvas>
+                </div>
+            </div>
+        </div>
         </section>
 
         <div class="project-footer">
