@@ -87,20 +87,22 @@ header p {
     min-width: 300px;
     background: #fff;
     border: 1px solid #ccc;
-    padding: 15px; /* Un po' di respiro */
+    padding: 15px; 
     border-radius: 5px;
     
-    /* MODIFICHE CRUCIALI */
-    height: 350px;       /* Altezza fissa */
-    position: relative;  /* OBBLIGATORIO per Chart.js */
-    display: block;      /* Cambia da flex a block */
+    height: 350px; 
+    /* MODIFICHE: Usiamo flexbox per disporre titolo e grafico in verticale */
+    display: flex; 
+    flex-direction: column;
 }
 
-/* Forza il canvas a stare dentro */
-.chart-box canvas {
-    flex: 1;
+/* NUOVA REGOLA per il contenitore del grafico */
+.canvas-wrapper {
+    position: relative; /* OBBLIGATORIO per Chart.js */
+    flex-grow: 1;       /* Prende tutto lo spazio rimasto dopo l'<h4> */
+    min-height: 0;      /* Previene bug di overflow nei contenitori flex */
+    width: 100%;
 }
-
 
 /* Footer */
 .project-footer {
