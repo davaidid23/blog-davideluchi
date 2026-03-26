@@ -96,10 +96,19 @@
         </header>
 
         <section class="content">
-            <h2>Esercizio 1: Confronto tra algoritmi per media e varianza (Naive vs Welford)</h2>
+<h2>Esercizio 1: Confronto tra algoritmi per media e varianza (Naive vs Welford)</h2>
+
             <p>Verifichiamo in modo empirico la stabilità dell'algoritmo tradizionale/classico/naive e di Welford per calcolare media e varianza di una serie di numeri. 
-               L'algoritmo naive per la varianza va incontro al processo chiamato "cancellazione catastrofica" con numeri molto grandi.</p>
-            
+
+                Per fare questo generiamo 100.000 numeri: cliccando sul tasto verde in basso verranno generati numeri compresi tra 0 e 100 e potremo osservare come i due algoritmi produrranno gli stessi risultati. 
+
+                Cliccando il tasto rosso, invece, verranno generati numeri molto grandi, dell'ordine del miliardo, che differiscono tra loro per le cifre decimali. 
+
+                In questo caso l'algoritmo naive per la varianza va incontro al processo chiamato "cancellazione catastrofica". Il calcolatore, infatti, ha difficoltà a eseguire differenze tra numeri molto grandi che differiscono di qualche cifra decimale, per un problema legato all'allocazione della memoria.
+
+               
+
+                In seguito, cliccando sul pulsante azzurro, si può scaricare il dataset completo per verificare i risultati.</p>
             <div class="box">
                 <div class="btn-group">
                     <button id="btn-test-normale" class="btn">Test numeri "per bene"</button>
