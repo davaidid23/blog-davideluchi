@@ -1,1 +1,113 @@
+body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background-color: #f7f9fa; /* Stesso sfondo della home */
+    color: #333;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    padding-top: 50px;
+}
 
+.project-container {
+    max-width: 800px;
+    width: 90%;
+    background: white;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+
+/* Tasto Indietro */
+.back-btn {
+    text-decoration: none;
+    color: #95a5a6;
+    font-size: 0.9em;
+    font-weight: 600;
+    transition: color 0.2s;
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+.back-btn:hover {
+    color: #3498db;
+}
+
+/* Header del progetto */
+header {
+    border-bottom: 2px solid #f1f1f1;
+    padding-bottom: 20px;
+    margin-bottom: 30px;
+}
+
+header h1 {
+    margin: 0;
+    color: #2c3e50;
+    font-size: 2em;
+}
+
+header p {
+    color: #7f8c8d;
+    margin: 5px 0 0 0;
+}
+
+/* Contenuto */
+.content h2 {
+    color: #2c3e50;
+    font-size: 1.4em;
+    margin-top: 30px;
+}
+
+.content p {
+    line-height: 1.8;
+    color: #444;
+}
+
+/* Il box evidenziato */
+.box {
+    background: #f8fbfe;
+    padding: 20px;
+    border-radius: 8px;
+    border-left: 4px solid #3498db;
+    margin: 25px 0;
+}
+
+/* =========================
+   GRAFICI (FIX LAYOUT)
+   ========================= */
+
+.chart-container {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.chart-box {
+    flex: 1;
+    min-width: 300px;
+    background: #fff;
+    border: 1px solid #ccc;
+    padding: 15px; 
+    border-radius: 5px;
+    
+    height: 350px; 
+    /* MODIFICHE: Usiamo flexbox per disporre titolo e grafico in verticale */
+    display: flex; 
+    flex-direction: column;
+}
+
+/* NUOVA REGOLA per il contenitore del grafico */
+.canvas-wrapper {
+    position: relative; /* OBBLIGATORIO per Chart.js */
+    flex-grow: 1;       /* Prende tutto lo spazio rimasto dopo l'<h4> */
+    min-height: 0;      /* Previene bug di overflow nei contenitori flex */
+    width: 100%;
+}
+
+/* Footer */
+.project-footer {
+    margin-top: 50px;
+    font-size: 0.8em;
+    color: #bdc3c7;
+    text-align: center;
+}
