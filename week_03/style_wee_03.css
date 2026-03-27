@@ -1,16 +1,17 @@
 body {
     font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-    background-color: #f7f9fa; /* Stesso sfondo della home */
+    background-color: #f7f9fa; 
     color: #333;
     margin: 0;
     padding: 0;
     display: flex;
     justify-content: center;
     padding-top: 50px;
+    padding-bottom: 50px;
 }
 
 .project-container {
-    max-width: 800px;
+    max-width: 900px; /* Allargato leggermente per i testi di teoria */
     width: 90%;
     background: white;
     padding: 40px;
@@ -49,58 +50,99 @@ header h1 {
 header p {
     color: #7f8c8d;
     margin: 5px 0 0 0;
+    font-weight: 500;
 }
 
 /* Contenuto */
 .content h2 {
     color: #2c3e50;
     font-size: 1.4em;
-    margin-top: 30px;
+    margin-top: 40px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
 }
 
 .content p {
-    line-height: 1.8;
+    line-height: 1.6;
     color: #444;
 }
 
-/* Il box evidenziato */
+/* Il box evidenziato per la teoria */
 .box {
     background: #f8fbfe;
     padding: 20px;
     border-radius: 8px;
     border-left: 4px solid #3498db;
-    margin: 25px 0;
+    margin: 20px 0;
+}
+
+.box h4 {
+    margin-top: 0;
+    color: #2980b9;
+    font-size: 1.1em;
+}
+
+.box ul {
+    margin-bottom: 0;
+    padding-left: 20px;
+}
+
+.box li {
+    margin-bottom: 10px;
+    line-height: 1.5;
+}
+
+/* Pannello di controllo */
+.control-panel {
+    text-align: center;
+    margin: 20px 0;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border: 1px dashed #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+/* Bottoni */
+.btn {
+    padding: 10px 20px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: opacity 0.2s;
+}
+
+.btn:hover {
+    opacity: 0.9;
 }
 
 /* =========================
-   GRAFICI (FIX LAYOUT)
+   GRAFICI
    ========================= */
 
 .chart-container {
-    display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
+    width: 100%;
+    margin-top: 20px;
 }
 
 .chart-box {
-    flex: 1;
-    min-width: 300px;
     background: #fff;
-    border: 1px solid #ccc;
-    padding: 15px; 
-    border-radius: 5px;
-    
-    height: 350px; 
-    /* MODIFICHE: Usiamo flexbox per disporre titolo e grafico in verticale */
+    border: 1px solid #e0e0e0;
+    padding: 20px; 
+    border-radius: 8px;
     display: flex; 
     flex-direction: column;
 }
 
-/* NUOVA REGOLA per il contenitore del grafico */
 .canvas-wrapper {
-    position: relative; /* OBBLIGATORIO per Chart.js */
-    flex-grow: 1;       /* Prende tutto lo spazio rimasto dopo l'<h4> */
-    min-height: 0;      /* Previene bug di overflow nei contenitori flex */
+    position: relative; 
+    flex-grow: 1;       
+    min-height: 0;      
     width: 100%;
 }
 
