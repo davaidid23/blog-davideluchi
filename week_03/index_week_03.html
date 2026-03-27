@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Compito Settimana 2</title>
-    <link rel="stylesheet" href="style_week_02.css">
+    <title>Compito Settimana 3</title>
+    <link rel="stylesheet" href="style_week_03.css">
     
     <script>
       window.MathJax = {
@@ -13,189 +13,83 @@
     </script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <style>
-        body { font-family: Arial, sans-serif; background: #f4f4f9; padding: 20px; }
-        .project-container { max-width: 1000px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        
-        .output-console {
-            background: #1e1e1e;
-            color: #00ff00;
-            padding: 15px;
-            font-family: 'Consolas', 'Monaco', monospace;
-            text-align: left;
-            border-radius: 5px;
-            margin-top: 15px;
-            white-space: pre-wrap;
-            min-height: 120px;
-            border: 1px solid #333;
-        }
-
-        .btn-group {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-bottom: 20px;
-        }
-
-        .btn {
-            padding: 10px 20px;
-            cursor: pointer;
-            border: none;
-            border-radius: 5px;
-            font-weight: bold;
-            transition: opacity 0.2s;
-        }
-
-        .btn:hover { opacity: 0.9; }
-
-        #btn-test-normale { background: #27ae60; color: white; }
-        #btn-test-difficile { background: #c0392b; color: white; }
-        #btn-scarica-csv { background: #2980b9; color: white; } 
-
-        .chart-container {
-            display: flex;
-            gap: 20px;
-            margin-top: 20px;
-            flex-wrap: wrap;
-        }
-
-
-
-        .control-panel {
-            text-align: center;
-            margin: 20px 0;
-            padding: 15px;
-            background: #f8f9fa;
-            border-radius: 8px;
-            border: 1px dashed #ccc;
-        }
-
-        select {
-            padding: 8px;
-            border-radius: 4px;
-            border: 1px solid #ccc;
-            font-size: 1rem;
-        }
-
-        .project-footer {
-            margin-top: 40px;
-            font-size: 0.8em;
-            color: #7f8c8d;
-            text-align: center;
-        }
-    </style>
 </head>
 <body>
     <div class="project-container">
         <a href="../index.html" class="back-btn">← Torna al Blog</a>
         
         <header>
-            <h1>Progetto Settimana 2</h1>
+            <h1>Progetto Settimana 3</h1>
+            <p>Random Walk e Introduzione ai Mercati Finanziari</p>
         </header>
 
         <section class="content">
-<h2>Esercizio 1: Confronto tra algoritmi per media e varianza (Naive vs Welford)</h2>
-
-            <p>Verifichiamo in modo empirico la stabilità dell'algoritmo tradizionale/classico/naive e di Welford per calcolare media e varianza di una serie di numeri. 
-
-                Per fare questo generiamo 100.000 numeri: cliccando sul tasto verde in basso verranno generati numeri compresi tra 0 e 100 e potremo osservare come i due algoritmi produrranno gli stessi risultati. 
-
-                Cliccando il tasto rosso, invece, verranno generati numeri molto grandi, dell'ordine del miliardo, che differiscono tra loro per le cifre decimali. 
-
-                In questo caso l'algoritmo naive per la varianza va incontro al processo chiamato "cancellazione catastrofica". Il calcolatore, infatti, ha difficoltà a eseguire differenze tra numeri molto grandi che differiscono di qualche cifra decimale, per un problema legato all'allocazione della memoria.
-
-               
-
-                In seguito, cliccando sul pulsante azzurro, si può scaricare il dataset completo per verificare i risultati.</p>
+            <h2>TEORIA: Intro agli exchange e strumenti finanziari</h2>
+            
             <div class="box">
-                <div class="btn-group">
-                    <button id="btn-test-normale" class="btn">Test numeri "per bene"</button>
-                    <button id="btn-test-difficile" class="btn">Test numeri problematici</button>
-                    <button id="btn-scarica-csv" class="btn">📥 Scarica i dati! (CSV)</button>
-                </div>
-                <div id="output-algoritmi" class="output-console">In attesa di eseguire il test...</div>
+                <h4>1. I principali mercati finanziari del mondo: ruolo e funzionamento</h4>
+                <p>I mercati finanziari sono infrastrutture (fisiche o telematiche) dove gli investitori scambiano strumenti finanziari. La loro funzione principale è trasferire risorse da chi ha risparmi in eccesso a chi necessita di capitali per investimenti, garantendo la liquidità e determinando i prezzi (<em>price discovery</em>).</p>
+                <ul>
+                    <li><strong>NYSE (New York Stock Exchange):</strong> Il più grande mercato azionario al mondo per capitalizzazione. Segue un modello ibrido (elettronico e con market maker fisici chiamati <em>Designated Market Makers</em>).</li>
+                    <li><strong>NASDAQ:</strong> Il primo listino borsistico elettronico al mondo, noto per ospitare i principali colossi del settore tecnologico (Apple, Microsoft, Google).</li>
+                    <li><strong>LSE (London Stock Exchange) & Euronext:</strong> I principali hub finanziari europei.</li>
+                    <li><strong>TSE (Tokyo Stock Exchange):</strong> Il mercato di riferimento per l'Asia-Pacifico.</li>
+                </ul>
+            </div>
+
+            <div class="box">
+                <h4>2. Il ruolo e la funzione dei broker finanziari</h4>
+                <p>Il broker è un intermediario autorizzato che facilita le transazioni tra acquirenti e venditori sui mercati, in cambio di una commissione (fee) o guadagnando sullo spread (differenza tra prezzo di acquisto e vendita).</p>
+                <ul>
+                    <li><strong>Accesso al mercato:</strong> Gli investitori retail (privati) non possono accedere direttamente agli Exchange; devono passare attraverso una piattaforma di brokeraggio.</li>
+                    <li><strong>Esecuzione e Clearing:</strong> Ricevono gli ordini dai clienti, li instradano verso la borsa per l'esecuzione e gestiscono il processo di compensazione e regolamento dei fondi.</li>
+                    <li><strong>Servizi aggiuntivi:</strong> Forniscono leva finanziaria (margine), dati di mercato in tempo reale e strumenti di analisi tecnica.</li>
+                </ul>
+            </div>
+
+            <div class="box">
+                <h4>3. I principali strumenti finanziari utilizzati negli Exchange</h4>
+                <p>Ogni strumento risponde a diverse esigenze di rischio, rendimento e orizzonte temporale:</p>
+                <ul>
+                    <li><strong>Azioni (Stocks):</strong> Rappresentano quote di capitale di una società. L'investitore diventa socio e partecipa ai profitti (dividendi) e al rischio d'impresa. Hanno un rischio elevato ma rendimenti potenzialmente alti.</li>
+                    <li><strong>Obbligazioni (Bonds):</strong> Titoli di debito emessi da Stati (Titoli di Stato) o aziende (Corporate). L'investitore presta denaro in cambio di interessi (cedole) e la restituzione del capitale a scadenza. Sono considerate meno rischiose delle azioni.</li>
+                    <li><strong>Derivati (Futures e Options):</strong> Contratti il cui valore "deriva" dall'andamento di un'attività sottostante (azioni, materie prime, valute).
+                        <ul>
+                            <li><em>Futures:</em> Obbligo di scambiare il sottostante a un prezzo e data futuri prefissati.</li>
+                            <li><em>Opzioni:</em> Diritto (ma non obbligo) di comprare/vendere il sottostante a un prezzo prefissato. Usati per speculazione o copertura (<em>hedging</em>) dei rischi.</li>
+                        </ul>
+                    </li>
+                    <li><strong>ETF (Exchange Traded Funds):</strong> Fondi d'investimento a gestione passiva che replicano passivamente l'andamento di un indice di mercato (es. S&P 500). Sono scambiati come normali azioni e offrono diversificazione a bassi costi.</li>
+                </ul>
             </div>
         </section>
 
-<section class="content">
-    <h2>Esercizio 2: Generazione di Distribuzioni dalla Uniforme U(0,1)</h2>
+        <section class="content">
+            <h2>APPLICAZIONE: Simulazione di una Random Walk</h2>
+            <p>In questa sezione simuliamo una passeggiata aleatoria (<em>Random Walk</em>) per modellare la traiettoria di un prezzo nel tempo. La formula utilizzata è:</p>
+            <p style="text-align: center; font-size: 1.2em;">
+                $x_i = x_{i-1} + S_i$
+            </p>
+            <p>Dove il salto pseudo-casuale $S_i \in \{-1, +1\}$ con probabilità del 50% per entrambi gli esiti. Questo modello di base è spesso utilizzato nella teoria finanziaria per simulare localmente le variazioni di prezzo (ipotesi dei mercati efficienti).</p>
+            
+            <div class="control-panel">
+                <label for="input-start"><strong>Valore Iniziale $x_0$:</strong> </label>
+                <input type="number" id="input-start" value="1000" style="width: 80px; padding: 8px; border-radius: 4px; border: 1px solid #ccc; margin-right: 15px;">
 
-    <p>In questa sezione analizziamo le strategie fondamentali per derivare diverse distribuzioni statistiche a partire dalla distribuzione sorgente uniforme: <strong>U ~ U[0,1)</strong>.</p>
-    
-    <div class="box">
-        <h4>1. Metodo dell'Inversione (CDF Inversion)</h4>
-        <p>Utilizzato quando la funzione di ripartizione $F(x)$ è analiticamente invertibile. Si calcola $X = F^{-1}(U)$.</p>
-        <ul>
-            <li><strong>Esponenziale:</strong> $X = -\frac{\ln(U)}{\lambda}$ (modella il tempo tra eventi).</li>
-            <li><strong>Weibull:</strong> $X = \lambda(-\ln(U))^{1/k}$ (analisi di sopravvivenza).</li>
-            <li><strong>Pareto:</strong> $X = x_m U^{-1/\alpha}$ (distribuzione del reddito/ricchezza).</li>
-            <li><strong>Cauchy:</strong> $X = \tan(\pi(U - 1/2))$ (distribuzione a "code pesanti").</li>
-            <li><strong>Discreta Arbitraria:</strong> Tramite la tecnica del <em>Look-up table</em> confrontando $U$ con le probabilità cumulate.</li>
-        </ul>
+                <label for="input-steps"><strong>Numero di Passi (N):</strong> </label>
+                <input type="number" id="input-steps" value="500" min="10" max="10000" step="100" style="width: 100px; padding: 8px; border-radius: 4px; border: 1px solid #ccc; margin-right: 15px;">
+                
+                <button id="btn-genera-walk" class="btn" style="background: #27ae60; color: white;">Genera Pattern</button>
+            </div>
 
-        <hr style="border: 0; border-top: 1px solid #eee; margin: 25px 0;">
-
-        <h4>2. Trasformazioni Funzionali e Geometriche</h4>
-        <p>Tecniche che manipolano una o più variabili uniformi per ottenere la forma desiderata.</p>
-        <ul>
-            <li><strong>Normale (Box-Muller):</strong> $X = \sqrt{-2 \ln(U_1)} \cos(2\pi U_2)$</li>
-            <li><strong>Triangolare:</strong> Spesso ottenuta come $X = \frac{U_1 + U_2}{2}$</li>
-            <li><strong>Beta:</strong> Derivata da trasformazioni di variabili Gamma o tramite statistiche d'ordine.</li>
-        </ul>
-
-        <hr style="border: 0; border-top: 1px solid #eee; margin: 25px 0;">
-
-        <h4>3. Relazioni Stocastiche e Composizione</h4>
-        <p>Distribuzioni ottenute tramite somme, rapporti o algoritmi iterativi (Metodo di Accettazione-Rifiuto).</p>
-        <ul>
-            <li><strong>Binomiale:</strong> Somma di $n$ variabili di Bernoulli indipendenti.</li>
-            <li><strong>Poisson:</strong> Calcolata iterativamente tramite il prodotto di variabili uniformi finché $\prod U_i < e^{-\lambda}$.</li>
-            <li><strong>Chi-Quadro ($\chi^2$):</strong> Somma dei quadrati di $k$ variabili Normali standardizzate.</li>
-            <li><strong>Gamma:</strong> Somma di variabili Esponenziali (per parametri interi) o tramite algoritmi di rigetto.</li>
-            <li><strong>t di Student:</strong> Rapporto tra una Normale e la radice di una Chi-Quadro (fondamentale per piccoli campioni).</li>
-            <li><strong>F di Fisher:</strong> Rapporto tra due distribuzioni Chi-Quadro.</li>
-        </ul>
-    </div>
-
-            <div class="box">
-                <h3 style="color: #8e44ad;">Demo Interattiva</h3>
-                <p>Seleziona una distribuzione per testare visivamente alcune delle trasformazioni descritte sopra:</p>
-<div class="control-panel">
-    <label for="input-campioni"><strong>N. Campioni:</strong> </label>
-    <input type="number" id="input-campioni" value="10000" min="100" max="500000" step="1000" 
-           style="width: 100px; padding: 8px; border-radius: 4px; border: 1px solid #ccc; margin-right: 15px;">
-
-    <label for="select-distribuzione"><strong>Distribuzione:</strong> </label>
-    <select id="select-distribuzione">
-        <option value="normale">Normale (Box-Muller)</option>
-        <option value="esponenziale">Esponenziale</option>
-        <option value="cauchy">Cauchy</option>
-        <option value="pareto">Pareto</option>
-        <option value="triangolare">Triangolare</option>
-        <option value="binomiale">Binomiale</option>
-        <option value="poisson">Poisson (Knuth)</option>
-        <option value="chi_quadro">Chi-Quadro (k=4)</option>
-    </select>
-    
-    <button id="btn-genera-dist" class="btn" style="background: #8e44ad; color: white; margin-left: 10px;">Genera e Grafica</button>
-</div>
-
-        <div class="chart-container">
-            <div class="chart-box">
-                <h4 style="text-align:center;">Input: Sorgente $U(0,1)$</h4>
-                <div class="canvas-wrapper">
-                    <canvas id="chart-uniforme"></canvas>
+            <div class="chart-container" style="display: block;">
+                <div class="chart-box" style="height: 400px;">
+                    <h4 style="text-align:center; margin-top: 0;">Traiettoria del Prezzo (Random Walk)</h4>
+                    <div class="canvas-wrapper">
+                        <canvas id="chart-random-walk"></canvas>
+                    </div>
                 </div>
             </div>
-            <div class="chart-box">
-                <h4 id="titolo-output" style="text-align:center;">Output: Distribuzione Target</h4>
-                <div class="canvas-wrapper">
-                    <canvas id="chart-output"></canvas>
-                </div>
-            </div>
-        </div>
         </section>
 
         <div class="project-footer">
@@ -203,7 +97,6 @@
         </div>
     </div>
 
-    <script src="funzioni_week_02.js"></script>
+    <script src="funzioni_week_03.js"></script>
 </body>
 </html>
-
