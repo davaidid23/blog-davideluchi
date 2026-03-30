@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", function() {
             data: {
                 labels: labels,
                 datasets: [{
-                    label: 'Prezzo Simulata',
+                    label: 'Prezzo Simulato',
                     data: data,
                     borderColor: lineColor,
                     backgroundColor: fillColor,
@@ -76,7 +76,7 @@ document.addEventListener("DOMContentLoaded", function() {
                         ticks: { maxTicksLimit: 10 }
                     },
                     y: {
-                        title: { display: true, text: 'Valore $x_i$' }
+                        title: { display: true, text: 'Valore x' }
                     }
                 }
             }
