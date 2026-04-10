@@ -1,1 +1,80 @@
-miao
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compito Settimana 4</title>
+    <link rel="stylesheet" href="style_week_04.css">
+    
+    <script>
+      window.MathJax = {
+        tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] }
+      };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="project-container">
+        <a href="../index.html" class="back-btn">← Torna al Blog</a>
+        
+        <header>
+            <h1>Progetto Settimana 4</h1>
+            <p>Convergenza della Random Walk al Moto Browniano Aritmetico</p>
+        </header>
+
+        <section class="content">
+            <h2>TEORIA: Principio di Invarianza di Donsker</h2>
+            
+            <div class="box">
+                <h4>1. Il Teorema del Limite Funzionale</h4>
+                <p>Il <strong>Principio di Invarianza di Donsker</strong> (o teorema del limite centrale funzionale) afferma che una Random Walk discreta con passi indipendenti, identicamente distribuiti, media nulla e varianza finita, se opportunamente scalata nel tempo e nello spazio, converge debolmente al Moto Browniano standard quando il numero di passi tende all'infinito.</p>
+                <p>La caratteristica fondamentale di questo principio è l'<strong>invarianza</strong>: la natura del processo limite (il Moto Browniano) non dipende dalla distribuzione specifica dei singoli passi della passeggiata aleatoria di partenza, purché siano soddisfatte le condizioni di media 0 e varianza finita.</p>
+            </div>
+
+            <div class="box">
+                <h4>2. Scalatura e Convergenza</h4>
+                <p>Per osservare questa convergenza, consideriamo un intervallo temporale $T$ diviso in $n$ parti uguali. Definiamo i punti temporali discreti come:</p>
+                <p style="text-align: center; font-size: 1.1em;">
+                    $t_k = k \cdot \frac{T}{n} \quad \text{con } k = 0, 1, \dots, n$
+                </p>
+                <p>Sia $X_i$ una variabile di Rademacher (che assume valori $\{-1, +1\}$ con probabilità $\frac{1}{2}$). Costruiamo il processo scalato $W_n(t)$ calcolando la somma parziale fino all'indice $k$ e riscalandola per il fattore $\frac{1}{\sqrt{n}}$ in modo da stabilizzare la varianza:</p>
+                <p style="text-align: center; font-size: 1.1em;">
+                    $W_n(t_k) = \frac{1}{\sqrt{n}} \sum_{i=1}^{k} X_i$
+                </p>
+                <p>Aumentando il numero di divisioni $n$, i salti diventano infinitamente piccoli e fitti, e la traiettoria discreta converge verso le traiettorie continue, ma mai differenziabili, tipiche del <strong>Moto Browniano Aritmetico (ABM)</strong>.</p>
+            </div>
+        </section>
+
+        <section class="content">
+            <h2>APPLICAZIONE: Simulazione della Convergenza</h2>
+            <p>In questo grafico simuliamo il processo descritto. Prova ad aumentare il <strong>Numero di divisioni ($n$)</strong>: noterai come, per valori di $n$ bassi, la spezzata risulti evidente, mentre per valori elevati (es. 5000 o 10000) la curva assume l'aspetto "frattale" e tipico del Moto Browniano.</p>
+            
+            <div class="control-panel">
+                <label for="input-t"><strong>Tempo Totale ($T$):</strong> </label>
+                <input type="number" id="input-t" value="1" min="0.1" step="0.1" style="width: 80px; padding: 8px; border-radius: 4px; border: 1px solid #ccc; margin-right: 15px;">
+
+                <label for="input-n"><strong>Divisioni ($n$):</strong> </label>
+                <input type="number" id="input-n" value="1000" min="10" max="50000" step="100" style="width: 100px; padding: 8px; border-radius: 4px; border: 1px solid #ccc; margin-right: 15px;">
+                
+                <button id="btn-genera-abm" class="btn">Simula Processo</button>
+            </div>
+
+            <div class="chart-container" style="display: block;">
+                <div class="chart-box" style="height: 400px;">
+                    <h4 style="text-align:center; margin-top: 0;">Traiettoria (Random Walk Scalata)</h4>
+                    <div class="canvas-wrapper">
+                        <canvas id="chart-abm"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="project-footer">
+            Progetto realizzato per il blog scolastico • 2026
+        </div>
+    </div>
+
+    <script src="funzioni_week_04.js"></script>
+</body>
+</html>
