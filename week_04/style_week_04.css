@@ -1,1 +1,157 @@
+body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background-color: #f7f9fa; 
+    color: #333;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
 
+.project-container {
+    max-width: 900px; 
+    width: 90%;
+    background: white;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+
+/* Tasto Indietro */
+.back-btn {
+    text-decoration: none;
+    color: #95a5a6;
+    font-size: 0.9em;
+    font-weight: 600;
+    transition: color 0.2s;
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+.back-btn:hover {
+    color: #8e44ad; /* Tonalità viola per la Week 4 */
+}
+
+/* Header del progetto */
+header {
+    border-bottom: 2px solid #f1f1f1;
+    padding-bottom: 20px;
+    margin-bottom: 30px;
+}
+
+header h1 {
+    margin: 0;
+    color: #2c3e50;
+    font-size: 2em;
+}
+
+header p {
+    color: #7f8c8d;
+    margin: 5px 0 0 0;
+    font-weight: 500;
+}
+
+/* Contenuto */
+.content h2 {
+    color: #2c3e50;
+    font-size: 1.4em;
+    margin-top: 40px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+
+.content p {
+    line-height: 1.6;
+    color: #444;
+}
+
+/* Il box evidenziato per la teoria (Tema viola/indaco) */
+.box {
+    background: #faf4ff;
+    padding: 20px;
+    border-radius: 8px;
+    border-left: 4px solid #8e44ad;
+    margin: 20px 0;
+}
+
+.box h4 {
+    margin-top: 0;
+    color: #8e44ad;
+    font-size: 1.1em;
+}
+
+.box ul {
+    margin-bottom: 0;
+    padding-left: 20px;
+}
+
+.box li {
+    margin-bottom: 10px;
+    line-height: 1.5;
+}
+
+/* Pannello di controllo */
+.control-panel {
+    text-align: center;
+    margin: 20px 0;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border: 1px dashed #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+/* Bottoni */
+.btn {
+    padding: 10px 20px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: opacity 0.2s;
+    background: #8e44ad;
+    color: white;
+}
+
+.btn:hover {
+    opacity: 0.9;
+}
+
+/* =========================
+   GRAFICI
+   ========================= */
+
+.chart-container {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.chart-box {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    padding: 20px; 
+    border-radius: 8px;
+    display: flex; 
+    flex-direction: column;
+}
+
+.canvas-wrapper {
+    position: relative; 
+    flex-grow: 1;       
+    min-height: 0;      
+    width: 100%;
+}
+
+/* Footer */
+.project-footer {
+    margin-top: 50px;
+    font-size: 0.8em;
+    color: #bdc3c7;
+    text-align: center;
+}
