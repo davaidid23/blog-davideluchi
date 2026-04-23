@@ -1,1 +1,114 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compito Settimana 5</title>
+    <link rel="stylesheet" href="style_week_05.css">
+    
+    <script>
+      window.MathJax = {
+        tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] }
+      };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="project-container">
+        <a href="../index.html" class="back-btn">← Torna al Blog</a>
+        
+        <header>
+            <h1>Progetto Settimana 5</h1>
+            <p>Processi Stocastici: ABM, GBM e Mean Reversion</p>
+        </header>
 
+        <section class="content">
+            <h2>TEORIA: Evoluzione dei Processi Stocastici</h2>
+            
+            <div class="box">
+                <h4>1. Moto Browniano Aritmetico (ABM)</h4>
+                <p>Il <strong>Moto Browniano Aritmetico</strong> è un processo stocastico che modella una traiettoria con una tendenza lineare (drift) e un rumore casuale scalato (volatilità). È definito dall'equazione differenziale stocastica (SDE):</p>
+                <p style="text-align: center; font-size: 1.1em;">
+                    $dX_t = \mu dt + \sigma dW_t$
+                </p>
+                <p>La cui soluzione esplicita è $X_t = X_0 + \mu t + \sigma W_t$. Il limite principale dell'ABM nel modellare i prezzi finanziari è che, avendo incrementi distribuiti normalmente, <strong>può assumere valori negativi</strong>, il che non è realistico per il prezzo di un'azione.</p>
+            </div>
+
+            <div class="box">
+                <h4>2. Moto Browniano Geometrico (GBM)</h4>
+                <p>Per risolvere il problema dei valori negativi, si utilizza il <strong>Moto Browniano Geometrico</strong>. In questo modello, il drift e la volatilità sono proporzionali al valore corrente del processo. È il modello alla base della celebre formula di Black-Scholes. La sua SDE è:</p>
+                <p style="text-align: center; font-size: 1.1em;">
+                    $dS_t = \mu S_t dt + \sigma S_t dW_t$
+                </p>
+                <p>Applicando il Lemma di Itô, otteniamo la soluzione analitica:</p>
+                <p style="text-align: center; font-size: 1.1em;">
+                    $S_t = S_0 \exp\left( \left(\mu - \frac{\sigma^2}{2}\right)t + \sigma W_t \right)$
+                </p>
+                <p>Poiché è una funzione esponenziale, $S_t$ rimane <strong>strettamente positivo</strong> per qualsiasi $t$, assumendo $S_0 > 0$.</p>
+            </div>
+
+            <div class="box">
+                <h4>3. Processi a Ritorno in Media (Mean Reversion)</h4>
+                <p>A differenza delle azioni che possono crescere indefinitamente, alcune variabili (come i tassi di interesse o le temperature) tendono a oscillare attorno a un valore medio di lungo periodo. Il modello più noto per questi fenomeni è il <strong>Processo di Ornstein-Uhlenbeck (OU)</strong>:</p>
+                <p style="text-align: center; font-size: 1.1em;">
+                    $dX_t = \theta (\mu - X_t) dt + \sigma dW_t$
+                </p>
+                <p>Dove $\mu$ è la media di lungo periodo, $\theta > 0$ è la velocità di ritorno verso la media, e $\sigma dW_t$ è lo shock casuale. Se $X_t > \mu$, il termine di drift diventa negativo, "tirando" il processo verso il basso; se $X_t < \mu$, lo spinge verso l'alto.</p>
+            </div>
+        </section>
+
+        <section class="content">
+            <h2>APPLICAZIONE: Simulazione ABM e GBM</h2>
+            <p>Questa applicazione estende il lavoro della settimana scorsa. Verrà generata una singola traiettoria di Moto Browniano standard ($W_t$) che fungerà da base comune per calcolare contemporaneamente l'ABM e il GBM. Prova a variare il drift ($\mu$) e la volatilità ($\sigma$) per osservare come divergono le due traiettorie.</p>
+            
+            <div class="control-panel">
+                <div class="input-group">
+                    <label for="input-s0">Valore Iniziale ($S_0$):</label>
+                    <input type="number" id="input-s0" value="100" min="1" step="1">
+                </div>
+                <div class="input-group">
+                    <label for="input-mu">Drift ($\mu$):</label>
+                    <input type="number" id="input-mu" value="0.05" step="0.01">
+                </div>
+                <div class="input-group">
+                    <label for="input-sigma">Volatilità ($\sigma$):</label>
+                    <input type="number" id="input-sigma" value="0.2" min="0.01" step="0.01">
+                </div>
+                <div class="input-group">
+                    <label for="input-t">Tempo Totale ($T$):</label>
+                    <input type="number" id="input-t" value="1" min="0.1" step="0.1">
+                </div>
+                <div class="input-group">
+                    <label for="input-n">Passi ($n$):</label>
+                    <input type="number" id="input-n" value="1000" min="10" max="10000" step="100">
+                </div>
+                
+                <button id="btn-genera" class="btn">Simula Traiettorie</button>
+            </div>
+
+            <div class="charts-grid">
+                <div class="chart-box">
+                    <h4>Moto Browniano Aritmetico (ABM)</h4>
+                    <div class="canvas-wrapper">
+                        <canvas id="chart-abm"></canvas>
+                    </div>
+                </div>
+                
+                <div class="chart-box">
+                    <h4>Moto Browniano Geometrico (GBM)</h4>
+                    <div class="canvas-wrapper">
+                        <canvas id="chart-gbm"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="project-footer">
+            Progetto realizzato per il blog scolastico • 2026
+        </div>
+    </div>
+
+    <script src="funzioni_week_05.js"></script>
+</body>
+</html>
