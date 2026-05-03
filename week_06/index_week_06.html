@@ -1,1 +1,132 @@
-miao
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compito Settimana 6</title>
+    <link rel="stylesheet" href="style_week_06.css">
+    
+    <script>
+      window.MathJax = {
+        tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] }
+      };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="project-container">
+        <a href="../index.html" class="back-btn">← Torna al Blog</a>
+        
+        <header>
+            <h1>Progetto Settimana 6</h1>
+            <p>Backtesting di una Strategia su Moto Browniano Geometrico</p>
+        </header>
+
+        <section class="content">
+            <h2>TEORIA: Trading Quantitativo e Valutazione delle Performance</h2>
+            
+            <div class="box">
+                <h4>1. Il Sottostante: Moto Browniano Geometrico (GBM)</h4>
+                <p>Riprendiamo il <strong>Moto Browniano Geometrico</strong> dalla scorsa settimana per modellare il prezzo dell'asset. La sua evoluzione garantisce prezzi strettamente positivi ed è definita come:</p>
+                <p style="text-align: center; font-size: 1.1em;">
+                    $S_t = S_0 \exp\left( \left(\mu - \frac{\sigma^2}{2}\right)t + \sigma W_t \right)$
+                </p>
+            </div>
+
+            <div class="box">
+                <h4>2. La Strategia: Media Mobile (Trend Following)</h4>
+                <p>Implementiamo una semplice regola algoritmica basata sulla <strong>Media Mobile Semplice (SMA)</strong>. L'idea è di catturare i trend del prezzo:</p>
+                <ul>
+                    <li><strong>Segnale Long (+1):</strong> Se $S_t > SMA_t$, compriamo l'asset (o manteniamo la posizione), aspettandoci che continui a salire.</li>
+                    <li><strong>Segnale Short (-1):</strong> Se $S_t < SMA_t$, vendiamo allo scoperto, aspettandoci che il prezzo scenda.</li>
+                </ul>
+            </div>
+
+            <div class="box">
+                <h4>3. Valutazione: PnL e Drawdown</h4>
+                <p>Per misurare il successo della strategia utilizziamo due metriche chiave:</p>
+                <ul>
+                    <li><strong>PnL (Profit and Loss):</strong> È il profitto cumulato. Si ottiene sommando i rendimenti giornalieri moltiplicati per il posizionamento (+1 o -1) assunto nel periodo precedente.</li>
+                    <li><strong>Drawdown (DD):</strong> Misura la perdita rispetto al picco massimo storico del PnL ($Peak$). Si calcola come $DD_t = PnL_t - Peak_t$. Il <em>Max Drawdown</em> è il punto più basso raggiunto da questa curva, ed è una misura vitale del rischio.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="content">
+            <h2>APPLICAZIONE: Simulatore di Strategia</h2>
+            <p>Modifica i parametri del processo stocastico e della finestra della media mobile per vedere come reagisce la strategia. Generando nuove traiettorie potrai notare come la stessa strategia performi in modo molto diverso in scenari di mercato differenti a parità di parametri base.</p>
+            
+            <div class="control-panel">
+                <div class="input-group">
+                    <label for="input-s0">Prezzo ($S_0$):</label>
+                    <input type="number" id="input-s0" value="100" min="1" step="1">
+                </div>
+                <div class="input-group">
+                    <label for="input-mu">Drift ($\mu$):</label>
+                    <input type="number" id="input-mu" value="0.05" step="0.01">
+                </div>
+                <div class="input-group">
+                    <label for="input-sigma">Volatilità ($\sigma$):</label>
+                    <input type="number" id="input-sigma" value="0.2" min="0.01" step="0.01">
+                </div>
+                <div class="input-group">
+                    <label for="input-sma">Periodi SMA:</label>
+                    <input type="number" id="input-sma" value="50" min="2" step="1">
+                </div>
+                <div class="input-group">
+                    <label for="input-t">Tempo ($T$):</label>
+                    <input type="number" id="input-t" value="1" min="0.1" step="0.1">
+                </div>
+                <div class="input-group">
+                    <label for="input-n">Passi ($n$):</label>
+                    <input type="number" id="input-n" value="1000" min="10" max="10000" step="100">
+                </div>
+                
+                <button id="btn-genera" class="btn">Esegui Backtest</button>
+            </div>
+
+            <!-- Dashboard Riassuntiva -->
+            <div class="summary-dashboard">
+                <div class="stat-box">
+                    <span>PnL Totale:</span>
+                    <strong id="val-pnl">0.00</strong>
+                </div>
+                <div class="stat-box">
+                    <span>Max Drawdown:</span>
+                    <strong id="val-dd">0.00</strong>
+                </div>
+            </div>
+
+            <div class="charts-grid">
+                <div class="chart-box">
+                    <h4>Evoluzione Prezzo e Media Mobile</h4>
+                    <div class="canvas-wrapper">
+                        <canvas id="chart-price"></canvas>
+                    </div>
+                </div>
+                
+                <div class="chart-box">
+                    <h4>Curva del Profitto (PnL)</h4>
+                    <div class="canvas-wrapper">
+                        <canvas id="chart-pnl"></canvas>
+                    </div>
+                </div>
+
+                <div class="chart-box">
+                    <h4>Drawdown</h4>
+                    <div class="canvas-wrapper">
+                        <canvas id="chart-dd"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="project-footer">
+            Progetto realizzato per il blog scolastico • Settimana 6 • 2026
+        </div>
+    </div>
+
+    <script src="funzioni_week_06.js"></script>
+</body>
+</html>
