@@ -1,1 +1,120 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settimana 7 - Teoria della Misura e Opzioni</title>
+    <link rel="stylesheet" href="style_week_07.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <div class="project-container">
+        <a href="../index.html" class="back-btn">← Torna al Blog</a>
+        
+        <header>
+            <h1>Progetto Settimana 7</h1>
+            <p>Dall'Assiomatica di Kolmogorov ai Payoff delle Opzioni</p>
+        </header>
 
+        <section class="content">
+            <h2>HMW Ricerca: Assiomatica e Teoria della Misura</h2>
+            <div class="box">
+                <h4>Il legame tra Probabilità e Misura</h4>
+                <p>L'approccio di <strong>Andrey Kolmogorov (1933)</strong> formalizza la probabilità come un caso particolare della Teoria della Misura. Uno spazio di probabilità è definito dalla terna $(\Omega, \mathcal{F}, P)$:</p>
+                <ul>
+                    <li>$\Omega$ (Spazio campionario): L'insieme di tutti i possibili esiti.</li>
+                    <li>$\mathcal{F}$ ($\sigma$-algebra): La collezione dei sottoinsiemi misurabili di $\Omega$.</li>
+                    <li>$P$ (Misura di probabilità): Una funzione di insieme tale che $P(\Omega) = 1$.</li>
+                </ul>
+                <p>Questa formalizzazione permette di trattare le variabili aleatorie come <strong>funzioni misurabili</strong> e l'aspettativa come un <strong>integrale di Lebesgue</strong>.</p>
+            </div>
+
+            <h2>Review: Pilastri della Teoria</h2>
+            <div class="box">
+                <h4>LLN, CLT e Processi Aleatori</h4>
+                <ul>
+                    <li><strong>LLN (Legge dei Grandi Numeri):</strong> Garantisce la convergenza della media campionaria alla media teorica ($\bar{X}_n \xrightarrow{p, q.c.} \mu$).</li>
+                    <li><strong>CLT (Teorema del Limite Centrale):</strong> Spiega perché la somma di variabili i.i.d. (e in certe condizioni non-i.i.d.) tende alla distribuzione Normale.</li>
+                    <li><strong>Invariance Principle (Donsker):</strong> Estende il CLT agli interi processi stocastici, mostrando che cammini aleatori riscalati convergono al <strong>Moto Browniano (Wiener Process)</strong>.</li>
+                </ul>
+            </div>
+
+            <h2>Simulatore: Payoff di Strategie in Opzioni</h2>
+            <p>Le opzioni sono derivati il cui valore dipende dal sottostante $S_t$. Sotto, puoi combinare Call e Put per visualizzare il payoff a scadenza ($T$).</p>
+            
+            <div class="options-grid">
+                <!-- Opzione 1 -->
+                <div class="option-card">
+                    <h4>Opzione A</h4>
+                    <div class="input-group">
+                        <label>Tipo</label>
+                        <select id="type-a">
+                            <option value="call">Call</option>
+                            <option value="put">Put</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label>Posizione</label>
+                        <select id="pos-a">
+                            <option value="1">Long (Acquisto)</option>
+                            <option value=" -1">Short (Vendita)</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label>Strike ($K$)</label>
+                        <input type="number" id="strike-a" value="100">
+                    </div>
+                    <div class="input-group">
+                        <label>Premio</label>
+                        <input type="number" id="premium-a" value="5">
+                    </div>
+                </div>
+
+                <!-- Opzione 2 -->
+                <div class="option-card">
+                    <h4>Opzione B</h4>
+                    <div class="input-group">
+                        <label>Tipo</label>
+                        <select id="type-b">
+                            <option value="none">Nessuna</option>
+                            <option value="call">Call</option>
+                            <option value="put">Put</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label>Posizione</label>
+                        <select id="pos-b">
+                            <option value="1">Long</option>
+                            <option value="-1">Short</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label>Strike ($K$)</label>
+                        <input type="number" id="strike-b" value="110">
+                    </div>
+                    <div class="input-group">
+                        <label>Premio</label>
+                        <input type="number" id="premium-b" value="3">
+                    </div>
+                </div>
+            </div>
+
+            <button id="btn-calc" class="btn">Aggiorna Grafico Payoff</button>
+
+            <div class="chart-container">
+                <canvas id="payoffChart"></canvas>
+            </div>
+        </section>
+
+        <div class="project-footer">
+            Progetto realizzato per il blog scolastico • Settimana 7 • 2026
+        </div>
+    </div>
+
+    <script src="funzioni_week_07.js"></script>
+</body>
+</html>
