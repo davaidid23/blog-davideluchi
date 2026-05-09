@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Settimana 7 - Teoria della Misura e Opzioni</title>
+    <title>Settimana 7 - Assiomatica di Kolmogorov e Opzioni</title>
     <link rel="stylesheet" href="style_week_07.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
@@ -17,37 +17,55 @@
         
         <header>
             <h1>Progetto Settimana 7</h1>
-            <p>Dall'Assiomatica di Kolmogorov ai Payoff delle Opzioni</p>
+            <p>Fondamenti di Teoria della Misura e Ingegneria Finanziaria</p>
         </header>
 
         <section class="content">
-            <h2>HMW Ricerca: Assiomatica e Teoria della Misura</h2>
+            <h2>HMW Ricerca: L'Impostazione Assiomatica</h2>
+            
             <div class="box">
-                <h4>Il legame tra Probabilità e Misura</h4>
-                <p>L'approccio di <strong>Andrey Kolmogorov (1933)</strong> formalizza la probabilità come un caso particolare della Teoria della Misura. Uno spazio di probabilità è definito dalla terna $(\Omega, \mathcal{F}, P)$:</p>
+                <h4>1. Lo Spazio di Probabilità $(\Omega, \mathcal{F}, P)$</h4>
+                <p>La moderna teoria della probabilità si fonda sulla formalizzazione di Kolmogorov, che identifica la probabilità come una <strong>misura normalizzata</strong> definita su una struttura algebrica di insiemi.</p>
+                
+                <p><strong>La $\sigma$-algebra ($\mathcal{F}$):</strong> Non tutti i sottoinsiemi dello spazio campionario $\Omega$ possono essere "misurati". La collezione $\mathcal{F}$ dei sottoinsiemi "ammissibili" (eventi) deve soddisfare tre proprietà fondamentali:</p>
                 <ul>
-                    <li>$\Omega$ (Spazio campionario): L'insieme di tutti i possibili esiti.</li>
-                    <li>$\mathcal{F}$ ($\sigma$-algebra): La collezione dei sottoinsiemi misurabili di $\Omega$.</li>
-                    <li>$P$ (Misura di probabilità): Una funzione di insieme tale che $P(\Omega) = 1$.</li>
+                    <li><strong>Presenza dell'evento certo:</strong> $\Omega \in \mathcal{F}$.</li>
+                    <li><strong>Chiusura rispetto al complemento:</strong> Se $A \in \mathcal{F}$, allora il suo complemento $A^c = \Omega \setminus A \in \mathcal{F}$.</li>
+                    <li><strong>Chiusura rispetto all'unione numerabile:</strong> Se $\{A_n\}_{n=1}^{\infty}$ è una successione di eventi in $\mathcal{F}$, allora:
+                        $$\bigcup_{n=1}^{\infty} A_n \in \mathcal{F}$$
+                    </li>
                 </ul>
-                <p>Questa formalizzazione permette di trattare le variabili aleatorie come <strong>funzioni misurabili</strong> e l'aspettativa come un <strong>integrale di Lebesgue</strong>.</p>
+                <p><i>Nota:</i> Dalle leggi di De Morgan deriva automaticamente la <strong>chiusura rispetto all'intersezione numerabile</strong>: $\bigcap_{n=1}^{\infty} A_n \in \mathcal{F}$.</p>
             </div>
 
-            <h2>Review: Pilastri della Teoria</h2>
+            
+
             <div class="box">
-                <h4>LLN, CLT e Processi Aleatori</h4>
+                <h4>2. Gli Assiomi di Kolmogorov</h4>
+                <p>Una funzione $P: \mathcal{F} \to \mathbb{R}$ è una misura di probabilità se soddisfa:</p>
+                <ol>
+                    <li><strong>Non-negatività:</strong> $P(A) \ge 0$ per ogni $A \in \mathcal{F}$.</li>
+                    <li><strong>Normalizzazione:</strong> $P(\Omega) = 1$.</li>
+                    <li><strong>$\sigma$-additività:</strong> Per ogni successione di eventi $\{A_n\}$ a due a due disgiunti ($A_i \cap A_j = \emptyset$ per $i \neq j$):
+                        $$P\left( \bigcup_{n=1}^{\infty} A_n \right) = \sum_{n=1}^{\infty} P(A_n)$$
+                    </li>
+                </ol>
+            </div>
+
+            <h2>Review: Pilastri e Processi</h2>
+            <div class="box">
+                <h4>LLN e Invariance Principle</h4>
+                <p>Il legame con la Teoria della Misura permette di definire rigorosamente la convergenza:</p>
                 <ul>
-                    <li><strong>LLN (Legge dei Grandi Numeri):</strong> Garantisce la convergenza della media campionaria alla media teorica ($\bar{X}_n \xrightarrow{p, q.c.} \mu$).</li>
-                    <li><strong>CLT (Teorema del Limite Centrale):</strong> Spiega perché la somma di variabili i.i.d. (e in certe condizioni non-i.i.d.) tende alla distribuzione Normale.</li>
-                    <li><strong>Invariance Principle (Donsker):</strong> Estende il CLT agli interi processi stocastici, mostrando che cammini aleatori riscalati convergono al <strong>Moto Browniano (Wiener Process)</strong>.</li>
+                    <li><strong>Strong LLN:</strong> Convergenza <i>quasi certa</i> (misura dell'insieme di non-convergenza è nulla).</li>
+                    <li><strong>Invariance Principle (Donsker):</strong> Il Moto Browniano ($W_t$) emerge come limite universale di cammini aleatori riscalati. È l'unico processo a incrementi indipendenti e stazionari con traiettorie continue (quasi certamente).</li>
                 </ul>
             </div>
 
-            <h2>Simulatore: Payoff di Strategie in Opzioni</h2>
-            <p>Le opzioni sono derivati il cui valore dipende dal sottostante $S_t$. Sotto, puoi combinare Call e Put per visualizzare il payoff a scadenza ($T$).</p>
+            <h2>Applicazione: Payoff e Strategie in Opzioni</h2>
+            <p>Le opzioni sono contratti derivati. Il loro valore a scadenza ($T$) è una funzione deterministica del prezzo del sottostante $S_T$, che è una variabile aleatoria definita sullo spazio $(\Omega, \mathcal{F}, P)$.</p>
             
             <div class="options-grid">
-                <!-- Opzione 1 -->
                 <div class="option-card">
                     <h4>Opzione A</h4>
                     <div class="input-group">
@@ -60,27 +78,26 @@
                     <div class="input-group">
                         <label>Posizione</label>
                         <select id="pos-a">
-                            <option value="1">Long (Acquisto)</option>
-                            <option value=" -1">Short (Vendita)</option>
+                            <option value="1">Long (Holder)</option>
+                            <option value="-1">Short (Writer)</option>
                         </select>
                     </div>
                     <div class="input-group">
-                        <label>Strike ($K$)</label>
+                        <label>Strike Price ($K$)</label>
                         <input type="number" id="strike-a" value="100">
                     </div>
                     <div class="input-group">
-                        <label>Premio</label>
+                        <label>Premio (Costo)</label>
                         <input type="number" id="premium-a" value="5">
                     </div>
                 </div>
 
-                <!-- Opzione 2 -->
                 <div class="option-card">
                     <h4>Opzione B</h4>
                     <div class="input-group">
                         <label>Tipo</label>
                         <select id="type-b">
-                            <option value="none">Nessuna</option>
+                            <option value="none">Disattiva</option>
                             <option value="call">Call</option>
                             <option value="put">Put</option>
                         </select>
@@ -93,17 +110,17 @@
                         </select>
                     </div>
                     <div class="input-group">
-                        <label>Strike ($K$)</label>
+                        <label>Strike Price ($K$)</label>
                         <input type="number" id="strike-b" value="110">
                     </div>
                     <div class="input-group">
-                        <label>Premio</label>
+                        <label>Premio (Costo)</label>
                         <input type="number" id="premium-b" value="3">
                     </div>
                 </div>
             </div>
 
-            <button id="btn-calc" class="btn">Aggiorna Grafico Payoff</button>
+            <button id="btn-calc" class="btn">Simula Scenario di Payoff</button>
 
             <div class="chart-container">
                 <canvas id="payoffChart"></canvas>
@@ -111,7 +128,7 @@
         </section>
 
         <div class="project-footer">
-            Progetto realizzato per il blog scolastico • Settimana 7 • 2026
+            Dipartimento di Matematica/Economia • Progetto Week 07 • 2026
         </div>
     </div>
 
