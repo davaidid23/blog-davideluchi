@@ -1,1 +1,74 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settimana 8 - I 4 Payoff di Base e Portafogli di Opzioni</title>
+    <link rel="stylesheet" href="style_week_08.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <div class="project-container">
+        <a href="../index.html" class="back-btn">← Torna al Blog</a>
+        
+        <header>
+            <h1>Progetto Settimana 8</h1>
+            <p>I 4 Payoff Fondamentali e Simulatore di Portafoglio Globale Lineare</p>
+        </header>
 
+        <section class="content">
+            <h2>HMWK Ricerca: I 4 Payoff di Base delle Opzioni</h2>
+            
+            <div class="box">
+                <h4>Definizioni Matematiche dei Payoff Netti ($Y$)</h4>
+                <p>Considerando il prezzo del sottostante a scadenza $S_T$, lo Strike Price $K$, il Premio $P$ e la Quantità $Q$, i quattro profili di profitto/perdita (PnL) sono formalizzati come segue:</p>
+                
+                <ul class="payoff-list">
+                    <li>
+                        <strong>1. Long Call (Acquisto di una Call):</strong> Diritto di acquistare. Profitto potenziale illimitato, perdita limitata al premio.
+                        $$Y = Q \times \max(0, S_T - K) - Q \times P$$
+                    </li>
+                    <li>
+                        <strong>2. Short Call (Vendita di una Call):</strong> Obbligo di vendere se esercitata. Profitto limitato al premio incassato, perdita potenziale illimitata.
+                        $$Y = -Q \times \max(0, S_T - K) + Q \times P$$
+                    </li>
+                    <li>
+                        <strong>3. Long Put (Acquisto di una Put):</strong> Diritto di vendere. Profitto ampio (fino a $S_T = 0$), perdita limitata al premio.
+                        $$Y = Q \times \max(0, K - S_T) - Q \times P$$
+                    </li>
+                    <li>
+                        <strong>4. Short Put (Vendita di una Put):</strong> Obbligo di acquistare se esercitata. Profitto limitato al premio incassato, perdita potenziale ampia.
+                        $$Y = -Q \times \max(0, K - S_T) + Q \times P$$
+                    </li>
+                </ul>
+                <p><i>Proprietà di Linearità:</i> Il payoff complessivo di un portafoglio di $n$ opzioni è la combinazione lineare additiva dei singoli payoff: $$Y_{\text{globale}}(S_T) = \sum_{i=1}^{n} Y_i(S_T)$$</p>
+            </div>
+
+            <h2>Applicazione: Generatore di Payoff Globale Dinamico</h2>
+            <p>Aggiungi le opzioni desiderate al portafoglio, imposta i parametri e clicca su "Calcola Payoff Globale" per visualizzare la strategia risultante.</p>
+            
+            <div id="options-container" class="options-grid">
+                </div>
+
+            <div class="action-buttons">
+                <button id="btn-add" class="btn btn-secondary">+ Aggiungi Nuova Opzione</button>
+                <button id="btn-calc" class="btn">Calcola Payoff Globale</button>
+            </div>
+
+            <div class="chart-container">
+                <canvas id="payoffChart"></canvas>
+            </div>
+        </section>
+
+        <div class="project-footer">
+            Dipartimento di Matematica/Economia • Progetto Week 08 • 2026
+        </div>
+    </div>
+
+    <script src="funzioni_week_08.js"></script>
+</body>
+</html>
